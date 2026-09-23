@@ -1,0 +1,471 @@
+/*
+ * FAQ section — nodes 2655:1110 (1440x859) and 2677:1262 (393x868).
+ *
+ * Fluid values use the same exact-endpoint interpolation as globals.css:
+ *   clamp(<mobile>px, calc(<mobile>px + (<desktop> - <mobile>) *
+ *     (100vw - 393px) / 1047), <desktop>px)
+ *
+ * Both comps position their blocks with absolute top offsets rather than
+ * auto-layout gaps, so --faq-bottom-space and --faq-stack-gap are derived
+ * from those offsets and trued up against scripts/measure.mjs.
+ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding-top: clamp(60px, calc(60px + (130 - 60) * (100vw - 393px) / 1047), 130px);
+  /* Both comps leave the frame open below the last accordion item: content
+     ends at 808 of 868 on mobile and 593 of 859 on desktop, so this is the
+     remainder. The old 91/270 was fitted while the heading, the CTA and
+     every trigger were short, so it was absorbing 31px of error at 393. */
+  padding-bottom: clamp(60px, calc(60px + (266 - 60) * (100vw - 393px) / 1047), 266px);
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* 2677:1263 -- the mobile fill is scaleMode CROP too: the same 1440x1278
+   photo box, shifted to x-600, with the image rendered larger than the box
+   and offset inside it. */
+.photoBox {
+  position: absolute;
+  left: -600px;
+  top: 0;
+  width: 1440px;
+  height: 1278px;
+  overflow: hidden;
+}
+
+.backgroundImage {
+  /* CROP transform sx .634712 sy .844960 ox .056693 oy .137449
+     -> 2268.4x1512.5 at (-128.6, -207.9). max-width: none is required:
+     Tailwind preflight's img { max-width: 100% } clamps it back into the
+     box and squashes the crop. */
+  position: absolute;
+  left: -128.6px;
+  top: -207.9px;
+  max-width: none;
+  width: 2268.4px;
+  height: 1512.5px;
+  object-fit: fill;
+}
+
+/* Mobile background shapes (2677:1317 cream, :1265 glass, :1269 lime,
+   :1270 dark, :1271 darkWide). Same construction as desktop: real elements
+   with filter: blur(LAYER_BLUR / 2), because the ellipses are strongly
+   anisotropic and two are rotated, neither of which a radial-gradient can
+   express. Desktop overrides the geometry below. */
+.cream,
+.glass,
+.darkWide,
+.lime,
+.dark {
+  display: block;
+  position: absolute;
+}
+
+.cream {
+  left: -1183px;
+  top: -474px;
+  width: 1556px;
+  height: 858px;
+  border-radius: 50%;
+  background: #f4ecdd;
+  filter: blur(281.9px);
+}
+
+.glass {
+  left: 12px;
+  top: 333px;
+  width: 369px;
+  height: 627px;
+  border-radius: var(--radius-24);
+  background: rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(42.5px);
+  backdrop-filter: blur(42.5px);
+}
+
+/* 2677:1271 is a VECTOR, so its bounding box (2242x1952) does not describe
+   its path -- placed from that bbox it blanketed the whole 393x868 frame in
+   a uniform mid-tone, 40-90 luminance too dark at the top while still too
+   light at the bottom. Fitted instead to where the reference actually
+   darkens: bright to about y400, black by y750. */
+.darkWide {
+  left: -204px;
+  top: 520px;
+  width: 800px;
+  height: 820px;
+  border-radius: 50%;
+  background: #141507;
+  filter: blur(151.1px);
+}
+
+/* 2677:1269 / :1270 -- one shape twice. Intrinsic 2779x909 (NOT the
+   2808x1004 rotated bbox), centre (-252, 1238), rotation -178.04deg in
+   Figma, which is +178.04 in CSS because Figma measures rotation
+   counter-clockwise-positive and CSS clockwise-positive. */
+.lime,
+.dark {
+  left: -1641.5px;
+  top: 655px;
+  width: 2779px;
+  height: 909px;
+  border-radius: 50%;
+  transform: rotate(178.04deg);
+  filter: blur(78.55px);
+}
+
+.lime {
+  background: rgba(157, 221, 57, 0.22);
+}
+
+.dark {
+  background: #141507;
+}
+
+.headingBreak {
+  display: none;
+}
+
+/* Superseded at both breakpoints by the real blurred shapes above. */
+.overlay {
+  display: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.grid {
+  display: grid;
+  row-gap: 68px;
+}
+
+/* ---- intro column ------------------------------------------------- */
+
+.heading {
+  color: var(--color-ink-canvas);
+  text-transform: capitalize;
+  max-width: 700px;
+}
+
+.subhead {
+  margin-top: clamp(10px, calc(10px + (16 - 10) * (100vw - 393px) / 1047), 16px);
+  max-width: clamp(320px, calc(320px + (493 - 320) * (100vw - 393px) / 1047), 493px);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (18 - 14) * (100vw - 393px) / 1047), 18px);
+  line-height: clamp(22px, calc(22px + (28 - 22) * (100vw - 393px) / 1047), 28px);
+  letter-spacing: -0.28px;
+  color: var(--color-ink-medium);
+  opacity: 0.85;
+}
+
+.ctaRow {
+  margin-top: clamp(32px, calc(32px + (52 - 32) * (100vw - 393px) / 1047), 52px);
+}
+
+/* This button is py-12 at 393 (comp 2677:1314) where the hero's shared lg
+   button is py-14, so the 2px is overridden here rather than in the token. */
+.ctaRow :global(.ds-button-lg) {
+  padding-block: clamp(12px, calc(12px + (14 - 12) * (100vw - 393px) / 1047), 14px);
+}
+
+/* ---- accordion column --------------------------------------------- */
+
+.accordionColumn {
+  position: relative;
+}
+
+/* Translucent card behind the items (2655:1113 / 2677:1265). It bleeds
+   past the bottom of both frames and is clipped by .section. */
+.accordionCard {
+  position: absolute;
+  z-index: 0;
+  top: clamp(-32px, calc(-8px + (-32 + 8) * (100vw - 393px) / 1047), -8px);
+  left: clamp(-32px, calc(-8px + (-32 + 8) * (100vw - 393px) / 1047), -8px);
+  right: clamp(-32px, calc(-8px + (-32 + 8) * (100vw - 393px) / 1047), -8px);
+  height: clamp(627px, calc(627px + (1107 - 627) * (100vw - 393px) / 1047), 1107px);
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-12);
+}
+
+.accordion {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, calc(6px + (10 - 6) * (100vw - 393px) / 1047), 10px);
+}
+
+.accordionItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordionHeading {
+  margin: 0;
+}
+
+.accordionTrigger {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: var(--radius-12);
+  /* Deliberate deviation, and the comp is the thing at fault here. The
+     accordion question text is #ffffff in Figma (verified: 5 of 5 nodes,
+     both frames), but on mobile the comp's own background behind the first
+     items is light, so the comp renders white on ~1.1:1. An earlier
+     implementation hid this by dragging the dark blob left across the whole
+     section; rebuilding the background faithfully brought the failure back.
+     Tinting only the trigger is the smallest deviation that fixes it:
+     0.6 over the comp's lightest backdrop (#f8f3e9) composites to
+     rgb(111,110,97) = 5.15:1 against white, and over the dark lower part of
+     the section it is visually indistinguishable from the comp's 0.1 white. */
+  background: rgba(20, 21, 7, 0.6);
+  text-align: start;
+  cursor: pointer;
+}
+
+.accordionTrigger:hover {
+  background: rgba(20, 21, 7, 0.7);
+}
+
+.accordionTrigger:focus-visible {
+  outline: 2px solid var(--color-lime-bright);
+  outline-offset: 2px;
+}
+
+.accordionQuestion {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(16px, calc(16px + (18 - 16) * (100vw - 393px) / 1047), 18px);
+  line-height: clamp(24px, calc(24px + (32 - 24) * (100vw - 393px) / 1047), 32px);
+  /* The comp gives a one-line question a 32px box at BOTH widths but sets
+     24px leading on the two mobile questions that wrap, so a wrapped one is
+     48 rather than 64. line-height alone cannot express both; the floor can.
+     Without it each of the three one-line mobile triggers was 8px short. */
+  min-height: 32px;
+  letter-spacing: clamp(-0.36px, calc(-0.32px + (-0.36 - -0.32) * (100vw - 393px) / 1047), -0.32px);
+  text-transform: capitalize;
+  color: var(--color-light-white);
+}
+
+.accordionIcon {
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: transform 150ms ease;
+}
+
+.accordionIcon[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+.accordionPanel {
+  padding: 16px;
+  border-radius: var(--radius-12);
+  background: rgba(255, 255, 255, 0.1);
+  /* The two stacked rounded boxes overlap by 1px in the comp (mb-[-1px]).
+     It belongs on the panel, not the heading: the comp only overlaps the
+     OPEN item, and putting it on every heading made all four closed items
+     1px short. :empty below already tells the two cases apart. */
+  margin-top: -1px;
+}
+
+/* Four of the five items have no answer in the extraction, so their panel
+   renders empty — it must not draw as a padded blank box. */
+.accordionPanel:empty {
+  padding: 0;
+  background: none;
+  margin-top: 0;
+}
+
+/* A class selector beats the UA stylesheet's [hidden] rule, so the hidden
+   panel has to be re-hidden explicitly. */
+.accordionPanel[hidden] {
+  display: none;
+}
+
+.accordionAnswer {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  color: var(--color-light-white);
+}
+
+/* ---- desktop comp structure --------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Desktop puts the heading and the accordion side by side, so the light
+     wash has to stay on the left half and the dark blob on the right half
+     instead of stacking top-to-bottom as it does on mobile. */
+  /* The gradient stack is a mobile-only approximation. Desktop draws the
+     real shapes, so the stacked gradients have to be switched off. */
+  .overlay {
+    display: none;
+  }
+
+  /* 2655:1111 photo box: 1440x1278 at (0,0), the image inside it rendered
+     at 2382.2x1588.0 from (-247.3, -360.3) -- scaleMode CROP. */
+  .photoBox {
+    inset: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1278px;
+  }
+
+  .backgroundImage {
+    inset: auto;
+    left: -247.3px;
+    top: -360.3px;
+    /* Tailwind preflight sets img { max-width: 100% }, which silently
+       clamped this to the 1440px box and squashed the crop horizontally. */
+    max-width: none;
+    width: 2382.2px;
+    height: 1588px;
+    object-fit: fill;
+  }
+
+  /* A Figma LAYER_BLUR radius is about twice a CSS blur std-dev, so each
+     shape is a real element with filter: blur(radius / 2) rather than a
+     stack of radial-gradient colour stops -- the ellipses are strongly
+     anisotropic and two of them are rotated, which a radial-gradient
+     cannot express. */
+  .cream,
+  .glass,
+  .darkWide,
+  .lime,
+  .dark {
+    display: block;
+    position: absolute;
+  }
+
+  /* 2655:1112 -- centre (-226, -96), radii (977, 429), LAYER_BLUR 563.8. */
+  .cream {
+    left: -1203px;
+    top: -525px;
+    width: 1954px;
+    height: 858px;
+    border-radius: 50%;
+    background: #f4ecdd;
+    filter: blur(281.9px);
+  }
+
+  /* 2655:1113 -- GLASS radius 85. A plain translucent fill only lightens;
+     the comp averages what is behind it, so this needs a real backdrop
+     blur. */
+  .glass {
+    left: 762px;
+    top: 130px;
+    width: 626px;
+    height: 1107px;
+    border-radius: var(--radius-24);
+    background: rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(42.5px);
+    backdrop-filter: blur(42.5px);
+  }
+
+  /* The extracted layer list skips nodes 2655:1114-1116, and none of the
+     listed shapes can reach the top-right corner, which the comp renders
+     dark. Measuring the dark-overlay alpha the reference implies over the
+     bare photo puts its 50% contour through (1366,60) and (898,540); the
+     2242x1952 / blur 302.2 ellipse this design reuses elsewhere
+     (2655:976, 2677:1271) passes through both points centred at
+     (1941, 898). */
+  .darkWide {
+    left: 820px;
+    top: -78px;
+    width: 2242px;
+    height: 1952px;
+    border-radius: 50%;
+    background: #141507;
+    filter: blur(151.1px);
+  }
+
+  /* 2655:1117 and 2655:1118 are the same shape twice: centre (515, 1143),
+     radii 1389.5 x 454.5, rotated -173.06deg, LAYER_BLUR 157.1.
+     absoluteBoundingBox is the ROTATED bbox and must not be used as the
+     radii. */
+  /* The reported bbox (2868x1238) is not consistent with a rotated
+     2779x909 ellipse, so the bbox centre it was derived from is suspect.
+     Tracing the reference's own 50% dark contour puts this shape 70px
+     higher than the bbox centre implies, at x = 0/240/480/720. */
+  .lime,
+  .dark {
+    left: -874.5px;
+    top: 618.5px;
+    width: 2779px;
+    height: 909px;
+    border-radius: 50%;
+    /* Figma reports rotation counter-clockwise-positive and CSS rotates
+       clockwise-positive, so the sign flips. With -173.06deg the major
+       axis tilts down to the right and the build darkens from the
+       bottom-left; the comp darkens from the top-right. */
+    transform: rotate(173.06deg);
+    filter: blur(78.55px);
+  }
+
+  .lime {
+    background: rgba(157, 221, 57, 0.22);
+  }
+
+  .dark {
+    background: #141507;
+  }
+
+  .headingBreak {
+    display: inline;
+  }
+
+  /* The comp sets the two heading lines 61.7px apart cap-top to cap-top;
+     ds-h2's 1.2 ratio gives 57.6px at the 48px desktop size. */
+  .heading {
+    line-height: 61.7px;
+  }
+
+  .grid {
+    /* The comp's accordion spans x795..1356 inside the 52..1388 content box:
+       701 left column + 42 gutter + 561 accordion + 32 spare on the right. */
+    grid-template-columns: 701fr 561fr;
+    column-gap: 42px;
+    /* The comp's two columns stop 32px short of the container's right edge
+       (accordion 794..1356 inside a 52..1388 content box). */
+    padding-right: 32px;
+    align-items: start;
+  }
+
+  .accordionColumn {
+    /* Heading block starts at y=130, accordion at y=162. */
+    margin-top: 32px;
+  }
+
+  /* Desktop draws the card in the background layer (.glass) so the lime and
+     dark ellipses can cover it, as they do in the comp. */
+  .accordionCard {
+    display: none;
+  }
+
+  /* Desktop needs no deviation: here the accordion sits on the dark blob,
+     so the comp's own rgba(255,255,255,0.1) both matches and clears AA
+     against white text. The dark tint is mobile-only, where the comp's
+     backdrop behind the first items is light. Applying it at both widths
+     cost desktop fidelity (9.48 -> 13.79) for no accessibility gain. */
+  .accordionTrigger {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .accordionTrigger:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+}

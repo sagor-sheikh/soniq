@@ -1,0 +1,343 @@
+@import "tailwindcss";
+
+:root {
+  /* ---- ink (dark surfaces / dark text) ------------------------------- */
+  --color-ink-black: #000000;
+  --color-ink-canvas: #141507; /* page canvas on dark sections */
+  --color-ink-strong: #25251d;
+  --color-ink-medium: #373737;
+  --color-ink-soft: #5f5f5f;
+  --color-ink-faint: #727272;
+
+  /* ---- light (light surfaces / light text) --------------------------- */
+  --color-light-white: #ffffff;
+  /* Two distinct surface creams, deliberately NOT collapsed. An earlier
+     ruling folded #f5f6ee into #fffff5 as a "near-duplicate"; that was
+     backwards. The raw extraction uses #fffff5 22 times, 20 of them inside
+     the two hero frames, while #f5f6ee appears in EVERY section as the
+     page-wide surface (features/transactions backgrounds, the habits stat
+     card, the pricing Pro card, heading ink, the footer brand text).
+     Collapsing to the hero-local value warm-shifted the largest surfaces on
+     the page. --color-lime-text-on-light still clears AA on the corrected
+     cream at 5.42:1 (recomputed, was 5.86:1 on #fffff5). */
+  --color-light-cream: #f5f6ee;
+  --color-light-ivory: #fffff5;
+  --color-light-gray: #f7f7f7;
+  --color-light-sage: #f0f2e7;
+  --color-light-moss: #e6e9d7;
+
+  /* ---- lime (brand accent) -------------------------------------------- */
+  --color-lime-bright: #b0f10e; /* absorbs near-duplicate #b5fa08 */
+  --color-lime-mid: #9ddd39;
+  --color-lime-olive: #9fab26;
+
+  /*
+   * Darkened lime for lime-colored TEXT sitting on a light surface.
+   * No lime in the palette clears WCAG AA on light backgrounds:
+   *   #b0f10e on #ffffff = 1.36:1
+   *   #9fab26 on #ffffff = 2.52:1
+   * #5c6b0a (relative luminance 0.1281) measures:
+   *   vs #ffffff (L 1.0000) -> (1.05 / 0.1781)  = 5.90:1
+   *   vs #fffff5 (L 0.9937) -> (1.0437 / 0.1781) = 5.86:1
+   * Both clear the 4.5:1 AA text threshold with margin. Use this token
+   * ONLY for lime text on a light surface — never as a fill/bg color.
+   */
+  --color-lime-text-on-light: #5c6b0a;
+
+  /* ---- neutral ---------------------------------------------------------- */
+  --color-neutral-200: #bbbcb3;
+  --color-neutral-300: #d9d9d9;
+  --color-neutral-600: #595959;
+  --color-neutral-650: #585a62;
+
+  /*
+   * Six recorded gradient usages in design/sections.json resolve to three
+   * unique gradient values, each used once on the desktop node and once on
+   * the mobile node (hero: 2655:739 + 2672:727; habits: 2655:1003 +
+   * 2676:1091, 2655:1005 + 2676:1093).
+   */
+  --gradient-hero-partner-fade: linear-gradient(
+    90deg,
+    rgb(21, 22, 7) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 75%,
+    rgb(21, 22, 8) 100%
+  );
+  --gradient-habits-photo-bg: linear-gradient(to bottom, #e6e9d7, #b7c353);
+  --gradient-habits-photo-fade: linear-gradient(
+    to bottom,
+    rgba(224, 228, 199, 0),
+    #b3c14b
+  );
+
+  /* ---- radius ------------------------------------------------------------ */
+  --radius-12: 12px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-90: 90px; /* pill-scale: CTA buttons and badges (hero stat cards are radius-24) */
+  --radius-pill: 9999px;
+}
+
+@theme inline {
+  /* Tailwind v4 defaults --breakpoint-md to 48rem, but a media-query rem
+     resolves against the BROWSER's default font size, which the page cannot
+     override. Every CSS module switches structure at `min-width: 768px` (a
+     px length), so on a browser set to a larger default font the two systems
+     disagree: at 20px, 48rem = 960px, and viewports in 768-960px would get
+     the desktop grid from the modules while the header kept its mobile
+     hamburger. Pinning the breakpoint to px keeps the declared 768px switch
+     single-valued for every reader. */
+  --breakpoint-md: 768px;
+
+  --color-ink-black: var(--color-ink-black);
+  --color-ink-canvas: var(--color-ink-canvas);
+  --color-ink-strong: var(--color-ink-strong);
+  --color-ink-medium: var(--color-ink-medium);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-faint: var(--color-ink-faint);
+
+  --color-light-white: var(--color-light-white);
+  --color-light-cream: var(--color-light-cream);
+  --color-light-ivory: var(--color-light-ivory);
+  --color-light-gray: var(--color-light-gray);
+  --color-light-sage: var(--color-light-sage);
+  --color-light-moss: var(--color-light-moss);
+
+  --color-lime-bright: var(--color-lime-bright);
+  --color-lime-mid: var(--color-lime-mid);
+  --color-lime-olive: var(--color-lime-olive);
+  --color-lime-text-on-light: var(--color-lime-text-on-light);
+
+  --color-neutral-200: var(--color-neutral-200);
+  --color-neutral-300: var(--color-neutral-300);
+  --color-neutral-600: var(--color-neutral-600);
+  --color-neutral-650: var(--color-neutral-650);
+
+  --radius-12: var(--radius-12);
+  --radius-20: var(--radius-20);
+  --radius-24: var(--radius-24);
+  --radius-90: var(--radius-90);
+  --radius-pill: var(--radius-pill);
+
+  --font-body: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+body {
+  background: var(--color-light-cream);
+  color: var(--color-ink-strong);
+  font-family: var(--font-body), sans-serif;
+}
+
+/* ---- layout ---------------------------------------------------------- */
+
+.ds-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(
+    12px,
+    calc(12px + (52 - 12) * (100vw - 393px) / 1047),
+    52px
+  );
+}
+
+/* ---- typography --------------------------------------------------------
+ * Sizes use exact-endpoint interpolation between the 393px mobile comp and
+ * the 1440px desktop comp: clamp(mobile, mobile + (desktop-mobile) *
+ * (100vw-393px)/1047, desktop). Color is applied by the consumer via
+ * Tailwind's generated `text-*` utilities so the same class works on both
+ * light and dark surfaces.
+ */
+
+.ds-eyebrow {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.14px;
+}
+
+.ds-h1 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(34px, calc(34px + (60 - 34) * (100vw - 393px) / 1047), 60px);
+  font-weight: 400;
+  /* Fluid px, not a ratio: the comp sets 44px at 393 and 72px at 1440 (1.294
+     and 1.2), so one unitless value is wrong at one end by construction.
+     Nothing renders as="h1" today -- Hero.module.css .headline already
+     carries these same two endpoints -- but this token shadowed it at 1.2. */
+  line-height: clamp(44px, calc(44px + (72 - 44) * (100vw - 393px) / 1047), 72px);
+  /* Also fluid, and descending, so the clamp bounds are swapped: -1.7px at
+     393 widening to -3px at 1440. A flat -3px over-tightened mobile. */
+  letter-spacing: clamp(-3px, calc(-1.7px + (-3 - -1.7) * (100vw - 393px) / 1047), -1.7px);
+}
+
+.ds-h2 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(30px, calc(30px + (48 - 30) * (100vw - 393px) / 1047), 48px);
+  font-weight: 400;
+  /* Same as .ds-h1: the comp uses 42px at 393 and 62px at 1440 (ratios 1.4
+     and 1.292). 1.2 was short at both ends -- 6px per line on mobile, 4.4px
+     on desktop -- which pushed every heading's following content up. */
+  line-height: clamp(42px, calc(42px + (62 - 42) * (100vw - 393px) / 1047), 62px);
+  /* Descending, bounds swapped: every 30px heading in the comp tracks
+     -1.2px, every 48px one -2.4px. The flat -2.4px halved mobile tracking. */
+  letter-spacing: clamp(-2.4px, calc(-1.2px + (-2.4 - -1.2) * (100vw - 393px) / 1047), -1.2px);
+}
+
+/* ---- button ------------------------------------------------------------ */
+
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+  cursor: pointer;
+}
+
+/* ---- motion ----------------------------------------------------------
+ *
+ * Everything here is gated on html[data-motion="on"], which MotionRoot sets
+ * on mount and never sets for a reader who prefers reduced motion. So the
+ * resting state of the document is "fully visible": if the script does not
+ * run, does not hydrate, or throws, nothing is hidden. The hidden state is
+ * opt-in, not opt-out -- the reverse would risk shipping a blank page.
+ *
+ * Only transform and opacity are animated, so none of this contributes to
+ * layout or CLS, and the measured section heights are unaffected.
+ */
+
+[data-motion="on"] [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance, 24px), 0);
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-motion="on"] [data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+  /* Released once the element has arrived so it stops occupying a layer. */
+  will-change: auto;
+}
+
+[data-motion="on"] [data-parallax] {
+  will-change: transform;
+}
+
+/* Stagger steps, as an attribute rather than an inline custom property so
+   server components stay free of React.CSSProperties casts. */
+[data-motion="on"] [data-reveal-delay="1"] { --reveal-delay: 80ms; }
+[data-motion="on"] [data-reveal-delay="2"] { --reveal-delay: 160ms; }
+[data-motion="on"] [data-reveal-delay="3"] { --reveal-delay: 240ms; }
+[data-motion="on"] [data-reveal-delay="4"] { --reveal-delay: 320ms; }
+
+/*
+ * Section transitions.
+ *
+ * The page hands off between full-bleed dark and cream surfaces, and those
+ * surfaces cannot themselves be animated without breaking the comp match --
+ * they are the backgrounds the references are measured against. So the
+ * transition is carried by the content: the block that leads a section
+ * travels further than the items inside it, which reads as the section
+ * arriving rather than seven unrelated elements fading in.
+ *
+ * `data-reveal="lead"` still matches the plain `[data-reveal]` rules above;
+ * the value only raises the travel. Nothing here is new machinery -- it is
+ * the same single observer, the same two animated properties.
+ */
+[data-motion="on"] [data-reveal="lead"] {
+  --reveal-distance: 40px;
+}
+
+/* Interaction states. These are always on -- they do not alter the resting
+   render, so they cannot affect the comp match, and a control that does not
+   respond to the pointer or to focus reads as broken. */
+/*
+ * Size lg. The comp's label box is 19px at font-size 14 and 22px at 16, so
+ * the line-height interpolates with the font size instead of sitting at
+ * Tailwind's text-base 24px -- which made every lg button 2px too tall at
+ * 1440 and 9px too tall at 393, pushing everything below it down.
+ */
+.ds-button-lg {
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(19px, calc(19px + (22 - 19) * (100vw - 393px) / 1047), 22px);
+  padding-block: 14px;
+  padding-inline: clamp(24px, calc(24px + (28 - 24) * (100vw - 393px) / 1047), 28px);
+}
+
+.ds-button,
+button,
+a[href] {
+  transition:
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+@media (hover: hover) {
+  .ds-button:hover,
+  button:not(:disabled):hover {
+    transform: translate3d(0, -1px, 0);
+  }
+}
+
+.ds-button:active,
+button:not(:disabled):active {
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-button,
+  button,
+  a[href] {
+    transition: none;
+  }
+
+  .ds-button:hover,
+  button:not(:disabled):hover,
+  .ds-button:active,
+  button:not(:disabled):active {
+    transform: none;
+  }
+}
+
+/* ---- ambient background loops ----------------------------------------
+ *
+ * Each of these shadows a still image that is already in the markup. The
+ * still is what the comp specifies, so it stays the resting state: these are
+ * transparent until MotionRoot both assigns a src and marks them ready, and
+ * MotionRoot does neither when the reader prefers reduced motion. So a
+ * reduced-motion reader, a no-JS page and every measurement harness keep the
+ * exact Figma image and never download the video at all.
+ *
+ * Only opacity is declared here. Geometry belongs to the section class the
+ * video shares with the still it shadows, so there is no specificity fight.
+ */
+[data-bg-video] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-motion="on"] [data-bg-video][data-ready="true"] {
+  opacity: 1;
+  transition: opacity 900ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-bg-video] {
+    opacity: 0 !important;
+  }
+}

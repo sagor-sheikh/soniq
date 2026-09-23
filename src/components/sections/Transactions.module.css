@@ -1,0 +1,957 @@
+/*
+ * Transaction Overview Section — desktop node 2665:459 (1440 x 1326),
+ * mobile node 2676:988 (393 x 1841).
+ *
+ * Fluid values use the project's exact-endpoint interpolation between the
+ * 393px mobile comp and the 1440px desktop comp:
+ *   clamp(<mobile>px, calc(<mobile>px + (<desktop> - <mobile>) *
+ *     (100vw - 393px) / 1047), <desktop>px)
+ * (for negative lengths the clamp bounds swap, since the desktop end is the
+ * smaller number).
+ *
+ * Structure switches from the mobile comp to the desktop comp at 768px.
+ * Below 768px nothing carries a fixed width — only `width: 100%` plus a
+ * `max-width`, so the 320px overflow check stays clean.
+ *
+ * Two colours in these two nodes are not covered by the globals.css token
+ * layer and are declared locally rather than editing the shared layer:
+ *   #0ece52 — the single green transaction amount (2665:510)
+ *   #b5b5b5 — the masked card numbers in the balance tile (2665:570/571)
+ */
+
+.section {
+  /* Comp value is #0ece52, which measures 2.11:1 on #ffffff -- below WCAG AA
+   * for 14px text. Darkened to the lightest hue-preserving green that clears
+   * 4.5:1 (66% of the original). Deliberate deviation, see PLAN.md T11. */
+  --tx-income: #098836; /* 4.58:1 on #ffffff */
+  --tx-masked: #b5b5b5;
+
+  background: var(--color-light-cream);
+  padding-block: clamp(60px, calc(60px + (140 - 60) * (100vw - 393px) / 1047), 140px);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(52px, calc(52px + (72 - 52) * (100vw - 393px) / 1047), 72px);
+}
+
+/* ---- header ---------------------------------------------------------- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.heading {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(30px, calc(30px + (48 - 30) * (100vw - 393px) / 1047), 48px);
+  line-height: clamp(42px, calc(42px + (62 - 42) * (100vw - 393px) / 1047), 62px);
+  letter-spacing: clamp(-2.4px, calc(-1.2px + (-2.4 - -1.2) * (100vw - 393px) / 1047), -1.2px);
+  color: var(--color-ink-canvas);
+  text-transform: capitalize;
+}
+
+.headerSubhead {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(22px, calc(22px + (26 - 22) * (100vw - 393px) / 1047), 26px);
+  letter-spacing: clamp(-0.28px, calc(-0.28px + (-0.16 - -0.28) * (100vw - 393px) / 1047), -0.16px);
+  color: var(--color-ink-medium);
+  opacity: 0.8;
+  width: 100%;
+  max-width: 320px;
+  /* The comp applies capitalize here; the source string is sentence case,
+     so omitting it rendered visibly different copy. */
+  text-transform: capitalize;
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .heading {
+    font-weight: 400;
+    max-width: 525px;
+  }
+
+  .headerSubhead {
+    max-width: 365px;
+    flex-shrink: 0;
+  }
+}
+
+/* ---- mockup shell ----------------------------------------------------- */
+
+.mockup {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, calc(12px + (16 - 12) * (100vw - 393px) / 1047), 16px);
+  /*
+   * The desktop comp's inner widths are expressed below as percentages of
+   * their own card so they track the card down to the 768px structure
+   * switch. Between roughly 768px and 1100px the mockup is narrower than
+   * the content the 1440px comp puts in it, so this clip is the backstop
+   * that keeps the page's scrollWidth at the viewport width.
+   */
+  overflow: hidden;
+}
+
+.mockupCard {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-light-moss);
+  border-radius: clamp(12px, calc(12px + (24 - 12) * (100vw - 393px) / 1047), 24px);
+  padding-top: clamp(12px, calc(12px + (100 - 12) * (100vw - 393px) / 1047), 100px);
+  padding-bottom: clamp(32px, calc(32px + (100 - 32) * (100vw - 393px) / 1047), 100px);
+  padding-inline: clamp(12px, calc(12px + (64 - 12) * (100vw - 393px) / 1047), 64px);
+}
+
+.mockupDecor {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mockupPhoto {
+  object-fit: cover;
+  object-position: bottom;
+}
+
+/* The still uses next/image `fill`, which writes its positioning inline;
+   a plain <video> needs it declared. */
+.mockupPhotoVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+/*
+ * Both ellipses are soft blurred fills that hang well outside the card.
+ * Their rects fold the Figma wrapper offset and the blur bleed
+ * (`inset-[-51.75%_-15.75%]` etc.) into one absolute rect.
+ */
+.mockupEllipseTop {
+  position: absolute;
+  left: -743.2px;
+  top: -584.2px;
+  width: 2523.4px;
+  height: 1188.4px;
+  max-width: none;
+}
+
+.mockupEllipseBottom {
+  position: absolute;
+  left: -779.1px;
+  top: 379.8px;
+  width: 2705.2px;
+  height: 919.4px;
+  max-width: none;
+}
+
+@media (min-width: 768px) {
+  .mockupEllipseBottom {
+    top: 71.6px;
+    height: 1227.6px;
+  }
+}
+
+/* ---- mockup body ------------------------------------------------------ */
+
+.mockupBody {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mockupPrimary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mockupIntro {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(30px, calc(30px + (36 - 30) * (100vw - 393px) / 1047), 36px);
+  align-items: flex-start;
+}
+
+.mockupIntroText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mockupHeading {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(20px, calc(20px + (32 - 20) * (100vw - 393px) / 1047), 32px);
+  line-height: clamp(28px, calc(28px + (44.16 - 28) * (100vw - 393px) / 1047), 44.16px);
+  letter-spacing: clamp(-1.28px, calc(-0.8px + (-1.28 - -0.8) * (100vw - 393px) / 1047), -0.8px);
+  color: var(--color-ink-black);
+}
+
+.mockupBlurb {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(22px, calc(22px + (26 - 22) * (100vw - 393px) / 1047), 26px);
+  letter-spacing: clamp(-0.16px, calc(-0.14px + (-0.16 - -0.14) * (100vw - 393px) / 1047), -0.14px);
+  color: var(--color-ink-medium);
+  opacity: 0.8;
+  /* The comp applies capitalize here; the source string is sentence case,
+     so omitting it rendered visibly different copy. */
+  text-transform: capitalize;
+}
+
+.mockupCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-light-ivory);
+  border-radius: var(--radius-90);
+  padding-block: clamp(12px, calc(12px + (14 - 12) * (100vw - 393px) / 1047), 14px);
+  padding-inline: clamp(24px, calc(24px + (28 - 24) * (100vw - 393px) / 1047), 28px);
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  letter-spacing: clamp(-0.64px, calc(-0.56px + (-0.64 - -0.56) * (100vw - 393px) / 1047), -0.56px);
+  color: var(--color-ink-black);
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .mockupBody {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  /* Desktop flattens the mobile [list, intro] stack into the same row. */
+  .mockupPrimary {
+    display: contents;
+  }
+
+  .mockupIntro {
+    order: -1;
+    flex: 0 1 auto;
+    min-width: 0;
+    /* 365 / 1208 — the desktop card's content box at 1440. */
+    max-width: 30.2152%;
+  }
+}
+
+/* ---- transaction list ------------------------------------------------- */
+
+.txFrame {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.32);
+  border-radius: clamp(12px, calc(12px + (20 - 12) * (100vw - 393px) / 1047), 20px);
+  padding: clamp(10px, calc(10px + (16 - 10) * (100vw - 393px) / 1047), 16px);
+}
+
+.txList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+  background: var(--color-light-white);
+  border-radius: 11px;
+}
+
+.txItem {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.txDivider {
+  position: relative;
+  height: 0;
+}
+
+.txDividerLine {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 1px;
+  max-width: none;
+}
+
+.txRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.txIdentity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.txIconWrap {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.txIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.txIconRound {
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.txText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.txName {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.42px;
+  color: var(--color-ink-black);
+}
+
+.txCategory {
+  font-family: var(--font-body), sans-serif;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  color: var(--color-ink-faint);
+}
+
+.txAmount {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: -0.36px;
+  color: var(--color-ink-black);
+  white-space: nowrap;
+}
+
+.txAmountIncome {
+  color: var(--tx-income);
+}
+
+@media (min-width: 768px) {
+  .txFrame {
+    /* 390 / 1208 */
+    flex: 0 1 32.2848%;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+/* ---- tick list --------------------------------------------------------- */
+
+.tickList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.tickItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tickIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.tickLabel {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: 1.4;
+  letter-spacing: clamp(-0.48px, calc(-0.42px + (-0.48 - -0.42) * (100vw - 393px) / 1047), -0.42px);
+  color: var(--color-ink-black);
+  opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+  .tickList {
+    gap: 14px;
+    /* 306 / 1208 */
+    flex: 0 1 25.3311%;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+/* ---- floating badges (desktop comp only) ------------------------------ */
+
+.badge {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .badge {
+    position: absolute;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    background: var(--color-light-white);
+    border-radius: var(--radius-90);
+    filter: drop-shadow(0 4px 2.65px rgba(0, 0, 0, 0.1));
+    font-family: var(--font-body), sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: -0.48px;
+    color: var(--color-ink-soft);
+    white-space: nowrap;
+  }
+
+  /* Centres expressed as a fraction of the 1336 x 573 desktop card so the
+     badges stay on the card as it narrows toward the 768px switch. */
+  .badgeExpense {
+    left: 66.5%;
+    top: 31.9%;
+    transform: translate(-50%, -50%) rotate(-12.67deg);
+  }
+
+  .badgeIncome {
+    left: 51.5%;
+    top: 82.5%;
+    transform: translate(-50%, -50%) rotate(-9.04deg);
+  }
+}
+
+/* ---- lower card row ---------------------------------------------------- */
+
+.cardRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .cardRow {
+    flex-direction: row;
+    align-items: stretch;
+    gap: clamp(12px, calc(12px + (16 - 12) * (100vw - 393px) / 1047), 16px);
+  }
+}
+
+/* ---- balance card ------------------------------------------------------ */
+
+.balanceCard {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 16px;
+  min-height: 375px;
+  padding-block: 12px 32px;
+  padding-inline-start: clamp(12px, calc(12px + (32 - 12) * (100vw - 393px) / 1047), 32px);
+  padding-inline-end: clamp(12px, calc(12px + (16 - 12) * (100vw - 393px) / 1047), 16px);
+  background: var(--color-ink-canvas);
+  border-radius: clamp(12px, calc(12px + (24 - 12) * (100vw - 393px) / 1047), 24px);
+}
+
+.balanceGlow {
+  position: absolute;
+  left: 629.16px;
+  top: 42.46px;
+  width: 361.2px;
+  height: 229.6px;
+  max-width: none;
+  transform: translate(-50%, -50%) rotate(-43.95deg);
+}
+
+/*
+ * Two blurred ellipses clipped by a shared alpha mask (Figma "Texture"
+ * group, nodes 2665:556-560). Mask geometry is the desktop export's.
+ */
+.balanceTextureLarge,
+.balanceTextureSmall {
+  position: absolute;
+  transform: rotate(180deg);
+  mask-image: url("/assets/71544ef1e4b2af57ba54280d4e3cf97a5d25427a93f7e71e86ad7c73bcaa192b.png");
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-size: 250.293px 289.616px;
+}
+
+.balanceTextureLarge {
+  left: 47.84px;
+  top: 151.11px;
+  width: 230.689px;
+  height: 156.634px;
+  mask-position: -49.362px 18.131px;
+}
+
+.balanceTextureSmall {
+  left: 43.04px;
+  top: 69.6px;
+  width: 131.061px;
+  height: 71.391px;
+  mask-position: -153.794px -148.627px;
+}
+
+.balanceTextureImage {
+  position: absolute;
+  left: -83.23px;
+  top: -83.22px;
+  width: calc(100% + 166.46px);
+  height: calc(100% + 166.44px);
+  max-width: none;
+}
+
+.balanceCopy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.balanceHeading {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(20px, calc(20px + (24 - 20) * (100vw - 393px) / 1047), 24px);
+  line-height: clamp(28px, calc(28px + (31.68 - 28) * (100vw - 393px) / 1047), 31.68px);
+  letter-spacing: clamp(-0.96px, calc(-0.8px + (-0.96 - -0.8) * (100vw - 393px) / 1047), -0.8px);
+  color: var(--color-light-white);
+  width: 100%;
+  max-width: 238px;
+}
+
+.balanceBody {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  color: var(--color-neutral-200);
+  /* The comp applies capitalize here; the source string is sentence case,
+     so omitting it rendered visibly different copy. */
+  text-transform: capitalize;
+}
+
+.balanceTile {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 229px;
+  overflow: hidden;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: clamp(12px, calc(12px + (20 - 12) * (100vw - 393px) / 1047), 20px);
+}
+
+.balanceTileInner {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.balanceLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-90);
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: -0.48px;
+  color: rgba(255, 255, 255, 0.64);
+  white-space: nowrap;
+}
+
+.balanceValue {
+  width: 100%;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 0.99;
+  letter-spacing: -1.6px;
+  color: var(--color-light-white);
+}
+
+.balanceMeta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  /* Label and masked number overlapped in the 768-1100 band. */
+  flex-wrap: wrap;
+}
+
+.balanceMetaCol {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.balanceMetaLabel {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.42px;
+  color: var(--color-light-white);
+}
+
+.balanceMetaValue {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  line-height: 19px;
+  letter-spacing: -0.42px;
+  color: var(--tx-masked);
+}
+
+.balanceMetaValueLarge {
+  font-size: 14px;
+}
+
+.balanceActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.balanceChip {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 4px 4px 12px;
+  border-radius: var(--radius-90);
+  overflow: hidden;
+}
+
+.balanceChipGhost {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.balanceChipLight {
+  background: var(--color-light-white);
+  filter: drop-shadow(0 4px 2.65px rgba(0, 0, 0, 0.1));
+}
+
+.balanceChipLabel {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: -0.48px;
+  white-space: nowrap;
+}
+
+.balanceChipGhost .balanceChipLabel {
+  color: var(--color-light-white);
+}
+
+.balanceChipLight .balanceChipLabel {
+  color: var(--color-ink-soft);
+}
+
+.balanceChipDot {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 12.5px;
+}
+
+.balanceChipDotLight {
+  background: var(--color-light-white);
+}
+
+.balanceChipDotDark {
+  background: var(--color-ink-black);
+}
+
+.balanceChipIcon {
+  width: 12px;
+  height: 12px;
+}
+
+@media (min-width: 768px) {
+  .balanceCard {
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    min-height: 0;
+    padding-block: 16px;
+  }
+
+  .balanceTextureLarge {
+    left: -29.76px;
+  }
+
+  .balanceTextureSmall {
+    left: -34.56px;
+  }
+
+  .balanceCopy {
+    gap: 10px;
+    min-width: 0;
+    /* 281 / 612 — the desktop card's content box at 1440. */
+    max-width: 45.915%;
+  }
+
+  .balanceTile {
+    /* 276 / 612 */
+    flex: 0 1 45.098%;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+/* ---- plan card --------------------------------------------------------- */
+
+.planCard {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  min-height: 394px;
+  padding-block: 12px 32px;
+  padding-inline-start: clamp(12px, calc(12px + (33 - 12) * (100vw - 393px) / 1047), 33px);
+  padding-inline-end: clamp(12px, calc(12px + (16 - 12) * (100vw - 393px) / 1047), 16px);
+  background: var(--color-lime-mid);
+  border-radius: clamp(12px, calc(12px + (24 - 12) * (100vw - 393px) / 1047), 24px);
+}
+
+.planCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.planHeading {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(20px, calc(20px + (24 - 20) * (100vw - 393px) / 1047), 24px);
+  line-height: clamp(28px, calc(28px + (31.68 - 28) * (100vw - 393px) / 1047), 31.68px);
+  letter-spacing: clamp(-0.96px, calc(-0.8px + (-0.96 - -0.8) * (100vw - 393px) / 1047), -0.8px);
+  color: var(--color-ink-black);
+  width: 100%;
+  max-width: 291px;
+}
+
+.planBody {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  color: rgba(0, 0, 0, 0.68);
+  /* The comp applies capitalize here; the source string is sentence case,
+     so omitting it rendered visibly different copy. */
+  text-transform: capitalize;
+}
+
+.planTiles {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding: 16px;
+  background: var(--color-light-white);
+  border-radius: clamp(12px, calc(12px + (20 - 12) * (100vw - 393px) / 1047), 20px);
+}
+
+.planTileList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.planTile {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px;
+  background: var(--color-light-gray);
+  border-radius: 11px;
+}
+
+.planTileMain {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.planTileIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.planTileText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.planTileName {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.42px;
+  color: var(--color-ink-black);
+}
+
+.planTileDesc {
+  font-family: var(--font-body), sans-serif;
+  font-size: 10px;
+  line-height: 1.26;
+  letter-spacing: -0.2px;
+  color: var(--color-neutral-650);
+}
+
+.planTilePrice {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.42px;
+  color: var(--color-ink-black);
+  white-space: nowrap;
+}
+
+.planCta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 4px 4px 12px;
+  background: var(--color-ink-black);
+  border-radius: var(--radius-90);
+  filter: drop-shadow(0 4px 2.65px rgba(0, 0, 0, 0.1));
+  overflow: hidden;
+}
+
+.planCtaLabel {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: -0.48px;
+  color: var(--color-light-white);
+}
+
+.planCtaDot {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  background: var(--color-light-white);
+}
+
+.planCtaIcon {
+  width: 12px;
+  height: 12px;
+}
+
+@media (min-width: 768px) {
+  .planCard {
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: row;
+    /* Wraps instead of crushing. With percentage bases the copy and tile
+       columns summed to ~100% at every width, so they stayed side by side
+       however narrow the card became -- at 900px the tile column fell to
+       ~190px, the plan name collided with its price and the blurbs broke to
+       one word per line. Pixel bases keep the 1440 layout intact (275 + 285
+       + 50 gap = 610 in a 611px box) and let the columns stack once there is
+       genuinely no room, with no invented breakpoint. */
+    flex-wrap: wrap;
+    align-items: stretch;
+    /* 50 / 611 — the desktop card's content box at 1440. */
+    gap: 8.183%;
+    min-height: 261px;
+    padding-block: 16px;
+  }
+
+  .planCopy {
+    gap: 10px;
+    align-self: center;
+    min-width: 0;
+    flex: 1 1 275px;
+  }
+
+  .planHeading {
+    max-width: 264px;
+  }
+
+  .planTiles {
+    /* 285 / 611 at 1440; a px basis so the pair can wrap when narrower. */
+    flex: 1 1 285px;
+    width: auto;
+    min-width: 0;
+  }
+}

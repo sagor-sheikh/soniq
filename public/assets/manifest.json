@@ -1,0 +1,1208 @@
+[
+  {
+    "nodeIds": [
+      "2655:1058",
+      "2655:1062",
+      "2655:1066",
+      "2655:1070",
+      "2655:1074",
+      "2655:1091",
+      "2655:1095",
+      "2655:1099",
+      "2655:1103",
+      "2655:1107",
+      "2665:534",
+      "2665:538",
+      "2665:542",
+      "2665:546",
+      "2676:1197",
+      "2676:1201",
+      "2676:1205",
+      "2676:1209",
+      "2676:1213",
+      "2676:1242",
+      "2676:1246",
+      "2676:1250",
+      "2676:1254",
+      "2676:1258",
+      "2676:904",
+      "2676:908",
+      "2676:912",
+      "2676:916"
+    ],
+    "section": "pricing",
+    "kind": "vector",
+    "localPath": "public/assets/aed38f19aad617717cd9af46d9121b30102cd670d6a4b372509bf6d39633c216.svg",
+    "width": 16,
+    "height": 16,
+    "sha256": "aed38f19aad617717cd9af46d9121b30102cd670d6a4b372509bf6d39633c216",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1111",
+      "2655:709",
+      "2672:687",
+      "2677:1263"
+    ],
+    "section": "faq",
+    "kind": "image",
+    "localPath": "public/assets/141ed5a52e94bc09de7c21540d2f7831bfd5eebe64afa9b194ae75706951c568.png",
+    "width": 1200,
+    "height": 800,
+    "sha256": "141ed5a52e94bc09de7c21540d2f7831bfd5eebe64afa9b194ae75706951c568",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1112"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/d1c60913e7917a3ce8a1c2373756f9c8b04af3a0911ca785d4034bb84a636316.svg",
+    "width": 3082,
+    "height": 1986,
+    "sha256": "d1c60913e7917a3ce8a1c2373756f9c8b04af3a0911ca785d4034bb84a636316",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1115"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/113f3df01fdcd6d0d3a88d7d44d7685b286ec1dd9c9308ace7e4f48a6a8139b7.svg",
+    "width": 2140,
+    "height": 1565,
+    "sha256": "113f3df01fdcd6d0d3a88d7d44d7685b286ec1dd9c9308ace7e4f48a6a8139b7",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1116",
+      "2677:1268"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/36eae61a02d773194791c4e600f75a1959054addf123eb8cba3a4fea7513ffa7.svg",
+    "width": 2140,
+    "height": 1565,
+    "sha256": "36eae61a02d773194791c4e600f75a1959054addf123eb8cba3a4fea7513ffa7",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1117",
+      "2677:1269"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/96b391f5d4f982778fe2390eb64034cd8150e02ca16d4a4ac98d3a548a998e15.svg",
+    "width": 3093,
+    "height": 1223,
+    "sha256": "96b391f5d4f982778fe2390eb64034cd8150e02ca16d4a4ac98d3a548a998e15",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1118",
+      "2677:1270"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/925a9e1bfd8192e1a0c93e44cfe44607de76bb016fb13f0f525ce911defa9bcd.svg",
+    "width": 3093,
+    "height": 1223,
+    "sha256": "925a9e1bfd8192e1a0c93e44cfe44607de76bb016fb13f0f525ce911defa9bcd",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1119",
+      "2677:1271"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/a1b34a8c34abcd10d56d7eca06f015540eea19b12d336d41100b2de620c914eb.svg",
+    "width": 2847,
+    "height": 2556,
+    "sha256": "a1b34a8c34abcd10d56d7eca06f015540eea19b12d336d41100b2de620c914eb",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1125",
+      "2655:1133",
+      "2655:1139",
+      "2655:1145",
+      "2655:1151",
+      "2677:1277",
+      "2677:1285",
+      "2677:1291",
+      "2677:1297",
+      "2677:1303"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/55b3371cda2543530751d1c3f8a1b5550d0ef7cec37de699eea89d40af8efdaa.svg",
+    "width": 16,
+    "height": 16,
+    "sha256": "55b3371cda2543530751d1c3f8a1b5550d0ef7cec37de699eea89d40af8efdaa",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1166"
+    ],
+    "section": "footer",
+    "kind": "vector",
+    "localPath": "public/assets/3d6fcf85dfc89b6d239b11d864e9f4f8031fa4047deae85f5c16ea5215f8b046.svg",
+    "width": 48,
+    "height": 48,
+    "sha256": "3d6fcf85dfc89b6d239b11d864e9f4f8031fa4047deae85f5c16ea5215f8b046",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1173",
+      "2677:1329"
+    ],
+    "section": "footer",
+    "kind": "vector",
+    "localPath": "public/assets/502994da442dd6ac1a779f416ab41ddcda51304bff316558baeb146ca3f6571e.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "502994da442dd6ac1a779f416ab41ddcda51304bff316558baeb146ca3f6571e",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1175",
+      "2677:1331"
+    ],
+    "section": "footer",
+    "kind": "vector",
+    "localPath": "public/assets/4bab79fcd7601dd2d9d306c705b855631fb3ef752c5e205629e09e4fd11e17f5.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "4bab79fcd7601dd2d9d306c705b855631fb3ef752c5e205629e09e4fd11e17f5",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1180",
+      "2677:1336"
+    ],
+    "section": "footer",
+    "kind": "vector",
+    "localPath": "public/assets/0a34a5d78adfe2c2239cfa19fbb4df65baa8f3b2c2e8a16e5fd0f72364bda0a9.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "0a34a5d78adfe2c2239cfa19fbb4df65baa8f3b2c2e8a16e5fd0f72364bda0a9",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1200"
+    ],
+    "section": "footer",
+    "kind": "vector",
+    "localPath": "public/assets/c6fcb77b522ca466ab56d00fc32297faf8b2546286b21340ff7c797e4e484b62.svg",
+    "width": 1336,
+    "height": 1,
+    "sha256": "c6fcb77b522ca466ab56d00fc32297faf8b2546286b21340ff7c797e4e484b62",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:728",
+      "2672:716"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/8a15046e8d70deec612098004443622184d40b3b2da654b0b3cdc81740b94494.png",
+    "width": 888,
+    "height": 192,
+    "sha256": "8a15046e8d70deec612098004443622184d40b3b2da654b0b3cdc81740b94494",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:730",
+      "2672:718"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/c8603a61bd5046b63954f1a32a2367732d8c11c7482e7c4d331bb8323d021e9e.png",
+    "width": 537,
+    "height": 192,
+    "sha256": "c8603a61bd5046b63954f1a32a2367732d8c11c7482e7c4d331bb8323d021e9e",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:732",
+      "2672:720"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/46b4402c9cc22e430fbd9277d8d59c2c6deacb80d12b4dbfcd0034b6a716519c.png",
+    "width": 628,
+    "height": 192,
+    "sha256": "46b4402c9cc22e430fbd9277d8d59c2c6deacb80d12b4dbfcd0034b6a716519c",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:734",
+      "2672:722"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/ac9b22c61394639e191199ad9ae8930978c3b7f7f38587085eea0c22cdc81ea7.png",
+    "width": 568,
+    "height": 192,
+    "sha256": "ac9b22c61394639e191199ad9ae8930978c3b7f7f38587085eea0c22cdc81ea7",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:736",
+      "2672:724"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/d4e88d8437859e346a45806ee2859478ba21a0ce02c66d4511c3b68931a39ecf.png",
+    "width": 772,
+    "height": 192,
+    "sha256": "d4e88d8437859e346a45806ee2859478ba21a0ce02c66d4511c3b68931a39ecf",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:738",
+      "2672:726"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/e01aa722b991a4c9dc27fb87fbe7bb1b33ecd604869ebe6d027bc21701ec330f.png",
+    "width": 788,
+    "height": 192,
+    "sha256": "e01aa722b991a4c9dc27fb87fbe7bb1b33ecd604869ebe6d027bc21701ec330f",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:746"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/35ff83ac9e7668d0c69b331e610b7274bfffc990f8c36611fbd2706f1ef754db.png",
+    "width": 112,
+    "height": 112,
+    "sha256": "35ff83ac9e7668d0c69b331e610b7274bfffc990f8c36611fbd2706f1ef754db",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:747"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/ee68d43f8729f75ad34c6786432d4db57323fcc49b375ece911e6b8bc7a40bcf.png",
+    "width": 112,
+    "height": 112,
+    "sha256": "ee68d43f8729f75ad34c6786432d4db57323fcc49b375ece911e6b8bc7a40bcf",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:748"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/961f69a6bf8764530487fa26a736a36a29317cecb883950e7098fa76917fd9a9.png",
+    "width": 112,
+    "height": 112,
+    "sha256": "961f69a6bf8764530487fa26a736a36a29317cecb883950e7098fa76917fd9a9",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:766",
+      "2655:767",
+      "2655:786",
+      "2655:787"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/aee3549b390a8eb44a6167d3d337b68f0ecf499a2a70183a01f6336ffc1fef1b.png",
+    "width": 504,
+    "height": 580,
+    "sha256": "aee3549b390a8eb44a6167d3d337b68f0ecf499a2a70183a01f6336ffc1fef1b",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:768",
+      "2672:803"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/b85f579ecd750a673bb68639f5fd95af5348dac3818e67b01fef5b0fc0acef64.jpg",
+    "width": 2732,
+    "height": 4096,
+    "sha256": "b85f579ecd750a673bb68639f5fd95af5348dac3818e67b01fef5b0fc0acef64",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:711"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/569213780d852f8ec39160e6fbab1f3344a76395aa9739aff02df7fa1a65e9aa.svg",
+    "width": 2175,
+    "height": 1587,
+    "sha256": "569213780d852f8ec39160e6fbab1f3344a76395aa9739aff02df7fa1a65e9aa",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:712"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/36391fbac78e5a579f00734fd0ebb51ae17c7f3e3ff785623ae3ccd3d71c75db.svg",
+    "width": 2898,
+    "height": 2601,
+    "sha256": "36391fbac78e5a579f00734fd0ebb51ae17c7f3e3ff785623ae3ccd3d71c75db",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:713"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/8e0ff9b2637e126a788a2420084577d4f91dbf1c3effc447bf8e5b1f1e81b62e.svg",
+    "width": 3606,
+    "height": 1930,
+    "sha256": "8e0ff9b2637e126a788a2420084577d4f91dbf1c3effc447bf8e5b1f1e81b62e",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:714"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/dcc53817fd4276e81331b7ce77c70f4d9c2d9e4c893b38fd1bfedcdb47318dd9.svg",
+    "width": 2774,
+    "height": 1244,
+    "sha256": "dcc53817fd4276e81331b7ce77c70f4d9c2d9e4c893b38fd1bfedcdb47318dd9",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:718"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/a5d598f0fc05d8a497e2c4a772c3f7e6e2c2a97eec5fdc4cc283e2b00efd98f0.svg",
+    "width": 23,
+    "height": 23,
+    "sha256": "a5d598f0fc05d8a497e2c4a772c3f7e6e2c2a97eec5fdc4cc283e2b00efd98f0",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:750",
+      "2672:784"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/d91c923b71d4aa7686f4c9c281ae7489793904bdac11e107873a9b08b92f44c5.svg",
+    "width": 14,
+    "height": 14,
+    "sha256": "d91c923b71d4aa7686f4c9c281ae7489793904bdac11e107873a9b08b92f44c5",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:757",
+      "2655:770",
+      "2655:777",
+      "2655:1013"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/100265fa9c53d094bdb9894f15ba188daeffdd8563aeca5b29490a471280d298.svg",
+    "width": 25,
+    "height": 25,
+    "sha256": "100265fa9c53d094bdb9894f15ba188daeffdd8563aeca5b29490a471280d298",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:762",
+      "2655:782"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/e5dcaf980c9e5878cb8d57938215b4e6503810d4a370e4a167004138909deda7.svg",
+    "width": 361,
+    "height": 230,
+    "sha256": "e5dcaf980c9e5878cb8d57938215b4e6503810d4a370e4a167004138909deda7",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:766",
+      "2655:786"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/3b98ce1d13f1c53df79887c87bd25b63eac1b8617dbe89407143c26895b1e0cb.svg",
+    "width": 397,
+    "height": 323,
+    "sha256": "3b98ce1d13f1c53df79887c87bd25b63eac1b8617dbe89407143c26895b1e0cb",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:767",
+      "2655:787"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/308d8b7b09acc4b85dbc34797f2aeb9bc4dbb735edbab7ca769ae98853c4cea6.svg",
+    "width": 298,
+    "height": 238,
+    "sha256": "308d8b7b09acc4b85dbc34797f2aeb9bc4dbb735edbab7ca769ae98853c4cea6",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:788"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/c0253aba67888ecb6ea7c58f3bf86c4af19a1765eb320db714fb3c959a96a399.svg",
+    "width": 1336,
+    "height": 1,
+    "sha256": "c0253aba67888ecb6ea7c58f3bf86c4af19a1765eb320db714fb3c959a96a399",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:791"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/131fb59a7b8d9b9394d4c84f7a7b1b6b96512392b3b46796b6e6589e0bf66756.svg",
+    "width": 40,
+    "height": 40,
+    "sha256": "131fb59a7b8d9b9394d4c84f7a7b1b6b96512392b3b46796b6e6589e0bf66756",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:961",
+      "2676:1002"
+    ],
+    "section": "features",
+    "kind": "image",
+    "localPath": "public/assets/a0648c705118e8c7ae2424d92dc183ecca29da83f9aa91e78e09a9e1d99f85b6.png",
+    "width": 1535,
+    "height": 1024,
+    "sha256": "a0648c705118e8c7ae2424d92dc183ecca29da83f9aa91e78e09a9e1d99f85b6",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:975"
+    ],
+    "section": "features",
+    "kind": "vector",
+    "localPath": "public/assets/6af6bb2f3b27112369a633af1ab0426f7e6255a613cf7df9918737c8fbee0e9d.svg",
+    "width": 2140,
+    "height": 1565,
+    "sha256": "6af6bb2f3b27112369a633af1ab0426f7e6255a613cf7df9918737c8fbee0e9d",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:976"
+    ],
+    "section": "features",
+    "kind": "vector",
+    "localPath": "public/assets/3cde5777aaf5315331911ebbeb14252fe959a18bb27ee694aed0d3e029cdff7c.svg",
+    "width": 2847,
+    "height": 2556,
+    "sha256": "3cde5777aaf5315331911ebbeb14252fe959a18bb27ee694aed0d3e029cdff7c",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:977"
+    ],
+    "section": "features",
+    "kind": "vector",
+    "localPath": "public/assets/9b4ddc70cac886460c091fbfc143bbdad7ca4efb6216a2fc82e4f29a71087c96.svg",
+    "width": 3093,
+    "height": 1223,
+    "sha256": "9b4ddc70cac886460c091fbfc143bbdad7ca4efb6216a2fc82e4f29a71087c96",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1004",
+      "2676:1092"
+    ],
+    "section": "habits",
+    "kind": "image",
+    "localPath": "public/assets/dd9bfb140bd0ea9275a4428e2624862dcf41b9e357367d759ff300f4a2f8e712.png",
+    "width": 2731,
+    "height": 4096,
+    "sha256": "dd9bfb140bd0ea9275a4428e2624862dcf41b9e357367d759ff300f4a2f8e712",
+    "alt": "Portrait of Michael Chen, a Soniq user, smiling and giving a thumbs up"
+  },
+  {
+    "nodeIds": [
+      "2655:1027",
+      "2676:1128"
+    ],
+    "section": "habits",
+    "kind": "image",
+    "localPath": "public/assets/1467365dbbf91787c76b95ad8088f1896163aa243f530da8463cceaf08349cca.jpg",
+    "width": 1024,
+    "height": 1024,
+    "sha256": "1467365dbbf91787c76b95ad8088f1896163aa243f530da8463cceaf08349cca",
+    "alt": "Portrait of Michael Chen, a Soniq Pro user"
+  },
+  {
+    "nodeIds": [
+      "2655:990",
+      "2655:992",
+      "2655:994",
+      "2655:996",
+      "2655:998"
+    ],
+    "section": "habits",
+    "kind": "vector",
+    "localPath": "public/assets/255819e79ad0bcd91e8ba05ebd8cdbb55c71ad830a72c18d9a04106b1fb55125.svg",
+    "width": 22,
+    "height": 22,
+    "sha256": "255819e79ad0bcd91e8ba05ebd8cdbb55c71ad830a72c18d9a04106b1fb55125",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1022"
+    ],
+    "section": "habits",
+    "kind": "vector",
+    "localPath": "public/assets/a5a819e830a661d5d68403000432836cd39465cabd45f842d43cefd42882c712.svg",
+    "width": 54,
+    "height": 54,
+    "sha256": "a5a819e830a661d5d68403000432836cd39465cabd45f842d43cefd42882c712",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1034",
+      "2676:1135"
+    ],
+    "section": "habits",
+    "kind": "vector",
+    "localPath": "public/assets/f489b9c5c40b6ce0c4e0166740d24b5d4201f13d3dff424bf5cd6907c8f66a25.svg",
+    "width": 20,
+    "height": 20,
+    "sha256": "f489b9c5c40b6ce0c4e0166740d24b5d4201f13d3dff424bf5cd6907c8f66a25",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2655:1037",
+      "2676:1138"
+    ],
+    "section": "habits",
+    "kind": "vector",
+    "localPath": "public/assets/10e0eff98e992ea9a804e1031b6021327d5d96e7c0bacf70b8b19b65977c4153.svg",
+    "width": 20,
+    "height": 20,
+    "sha256": "10e0eff98e992ea9a804e1031b6021327d5d96e7c0bacf70b8b19b65977c4153",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:465"
+    ],
+    "section": "transactions",
+    "kind": "image",
+    "localPath": "public/assets/e0d9e8d0763bdf36fde91f343e135d3474073b5ece6ffa02369f4d149d7f1257.png",
+    "width": 1024,
+    "height": 577,
+    "sha256": "e0d9e8d0763bdf36fde91f343e135d3474073b5ece6ffa02369f4d149d7f1257",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:559",
+      "2665:560"
+    ],
+    "section": "transactions",
+    "kind": "image",
+    "localPath": "public/assets/71544ef1e4b2af57ba54280d4e3cf97a5d25427a93f7e71e86ad7c73bcaa192b.png",
+    "width": 501,
+    "height": 580,
+    "sha256": "71544ef1e4b2af57ba54280d4e3cf97a5d25427a93f7e71e86ad7c73bcaa192b",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:466"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/bffa6c86dbaa41fd0adde85545064171e321c0b20139e9a2736dce25de12da2d.svg",
+    "width": 2523,
+    "height": 1188,
+    "sha256": "bffa6c86dbaa41fd0adde85545064171e321c0b20139e9a2736dce25de12da2d",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:467"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/40b990677a6adf06cd78d0314f579974c8f98dd7fe613bd69c528948acb3c241.svg",
+    "width": 2705,
+    "height": 1228,
+    "sha256": "40b990677a6adf06cd78d0314f579974c8f98dd7fe613bd69c528948acb3c241",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:480"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/d36202918771425c181c4742d5b65a74ce35d7c3a6ca7bf40f98ada271dd4498.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "d36202918771425c181c4742d5b65a74ce35d7c3a6ca7bf40f98ada271dd4498",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:487",
+      "2665:499",
+      "2665:511",
+      "2665:522"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/647b035783dda3259ae08ea949e3d764bfc0b668df148d44fb03362a7b23b4b9.svg",
+    "width": 338,
+    "height": 1,
+    "sha256": "647b035783dda3259ae08ea949e3d764bfc0b668df148d44fb03362a7b23b4b9",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:491",
+      "2676:861"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/ff3b31e0eece1adf95989923bb4c2663314ce1f93d5b8175acdd84fc8fac0bbb.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "ff3b31e0eece1adf95989923bb4c2663314ce1f93d5b8175acdd84fc8fac0bbb",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:503",
+      "2676:873"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/8f080cf1d69aa1a05a0e320d47afd00bc672155f4da9a0bcb4c34e75b5890268.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "8f080cf1d69aa1a05a0e320d47afd00bc672155f4da9a0bcb4c34e75b5890268",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:515"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/ffcc4164122635137255ab52c2dfc7472b7f29db9b590285c7056e544a94d19c.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "ffcc4164122635137255ab52c2dfc7472b7f29db9b590285c7056e544a94d19c",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:526",
+      "2676:896"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/65a1443029bf87c73865c8fbfd3dbfb0643a81be4aeecbf42200300fb0ac8db7.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "65a1443029bf87c73865c8fbfd3dbfb0643a81be4aeecbf42200300fb0ac8db7",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:555"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/0ccc8eb7da3595060ddee87e51e7df651a0a7e5ebe156bea393ab3d49eeb05ae.svg",
+    "width": 361,
+    "height": 230,
+    "sha256": "0ccc8eb7da3595060ddee87e51e7df651a0a7e5ebe156bea393ab3d49eeb05ae",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:559",
+      "2672:800",
+      "2672:825",
+      "2676:929"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/060b173bf1ddb9be5d4eed2c26354ca81a44ca1b7fc6f2998779cbc41594360a.svg",
+    "width": 397,
+    "height": 323,
+    "sha256": "060b173bf1ddb9be5d4eed2c26354ca81a44ca1b7fc6f2998779cbc41594360a",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:560",
+      "2672:801",
+      "2672:826",
+      "2676:930"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/6890ebcd6cb799da9802d3dd91c170eb0c9f2ba4835725593d8cbca3a2cc3e5a.svg",
+    "width": 298,
+    "height": 238,
+    "sha256": "6890ebcd6cb799da9802d3dd91c170eb0c9f2ba4835725593d8cbca3a2cc3e5a",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:576",
+      "2665:614",
+      "2676:946",
+      "2676:984"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/524efdf462d73e50644b1ce7358509ce1eede93574ae15cf5ad0e3bd17576cfa.svg",
+    "width": 12,
+    "height": 12,
+    "sha256": "524efdf462d73e50644b1ce7358509ce1eede93574ae15cf5ad0e3bd17576cfa",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:582",
+      "2676:952"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/eea8985a419e2c06299feabd47ccb86860d46bbd173e52cf9fb6a2c939d3416a.svg",
+    "width": 12,
+    "height": 12,
+    "sha256": "eea8985a419e2c06299feabd47ccb86860d46bbd173e52cf9fb6a2c939d3416a",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:596",
+      "2676:966"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/5ddf73a4745fd21190217667972e7989eee47dda162cd84705f1fd947276a801.svg",
+    "width": 18,
+    "height": 18,
+    "sha256": "5ddf73a4745fd21190217667972e7989eee47dda162cd84705f1fd947276a801",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2665:605",
+      "2676:975"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/d5e1da223ddfeb66b1ae37c211421945589ecffc002e9ca367432fe465bcce30.svg",
+    "width": 18,
+    "height": 18,
+    "sha256": "d5e1da223ddfeb66b1ae37c211421945589ecffc002e9ca367432fe465bcce30",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:780"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/3fe62f91310407f5c9f58c5c27b66ffc15006f2bcc28b40bfa7dde0236b40041.png",
+    "width": 96,
+    "height": 96,
+    "sha256": "3fe62f91310407f5c9f58c5c27b66ffc15006f2bcc28b40bfa7dde0236b40041",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:781"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/248a4869881427046b01ec4ab364ab2de4af10a0a579863e81aa999eae1ee0dd.png",
+    "width": 96,
+    "height": 96,
+    "sha256": "248a4869881427046b01ec4ab364ab2de4af10a0a579863e81aa999eae1ee0dd",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:782"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/0a2807369d230187fde04de1cbcf67f122c9ba2ef567e598da55b33b3f85d600.png",
+    "width": 96,
+    "height": 96,
+    "sha256": "0a2807369d230187fde04de1cbcf67f122c9ba2ef567e598da55b33b3f85d600",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:800",
+      "2672:801",
+      "2672:825",
+      "2672:826"
+    ],
+    "section": "hero",
+    "kind": "image",
+    "localPath": "public/assets/0de13b267cc1d7e59d0b000b0ada5c385bad3a1e13e98fbc817c0d3592610cae.png",
+    "width": 303,
+    "height": 386,
+    "sha256": "0de13b267cc1d7e59d0b000b0ada5c385bad3a1e13e98fbc817c0d3592610cae",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:689"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/177d68edc76db0990cca6d3d92aeac0d6332cc1bd9756d17a1bbf870e1cf2b8d.svg",
+    "width": 1557,
+    "height": 1201,
+    "sha256": "177d68edc76db0990cca6d3d92aeac0d6332cc1bd9756d17a1bbf870e1cf2b8d",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:690"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/f6022ec930dd743f6d9a9afdf5c07ecca7f7fe931baf1dc01792bf604467620d.svg",
+    "width": 1996,
+    "height": 1816,
+    "sha256": "f6022ec930dd743f6d9a9afdf5c07ecca7f7fe931baf1dc01792bf604467620d",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:691"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/d47e24ac67efabf7138338a6be90514af058814dca447fe44f6110a11da82d40.svg",
+    "width": 998,
+    "height": 637,
+    "sha256": "d47e24ac67efabf7138338a6be90514af058814dca447fe44f6110a11da82d40",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:692"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/9ca473f988dcdd312904a7273b86a56d1c043711f3518cbc51e018923596c00a.svg",
+    "width": 1807,
+    "height": 879,
+    "sha256": "9ca473f988dcdd312904a7273b86a56d1c043711f3518cbc51e018923596c00a",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:695"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/adfbe5e3d7e2bba3118c7ee8f7d681a58467d27ed26e22feb0e7395b37b267b0.svg",
+    "width": 30,
+    "height": 30,
+    "sha256": "adfbe5e3d7e2bba3118c7ee8f7d681a58467d27ed26e22feb0e7395b37b267b0",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:712",
+      "2672:728"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/f6268efb07b2b8869dad3c079f10c9a1624759dd91509b5ec762c4f49d1703f3.svg",
+    "width": 369,
+    "height": 1,
+    "sha256": "f6268efb07b2b8869dad3c079f10c9a1624759dd91509b5ec762c4f49d1703f3",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:678"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/27a4801e0d866c5cf63e82f83bf90520fbe75ea49dda08efaeeb7109c2e43828.svg",
+    "width": 23,
+    "height": 23,
+    "sha256": "27a4801e0d866c5cf63e82f83bf90520fbe75ea49dda08efaeeb7109c2e43828",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:791",
+      "2672:811",
+      "2672:817"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/2a89c28730d35d773a15e7a914dda8b3ff44401f2af83c4548f973c5e5bb6f3b.svg",
+    "width": 19,
+    "height": 19,
+    "sha256": "2a89c28730d35d773a15e7a914dda8b3ff44401f2af83c4548f973c5e5bb6f3b",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2672:796",
+      "2672:827"
+    ],
+    "section": "hero",
+    "kind": "vector",
+    "localPath": "public/assets/6313312db782ce3f6b65a5e22f06dfd36e78839345cb28791eca221ded908d35.svg",
+    "width": 252,
+    "height": 213,
+    "sha256": "6313312db782ce3f6b65a5e22f06dfd36e78839345cb28791eca221ded908d35",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:1005"
+    ],
+    "section": "features",
+    "kind": "vector",
+    "localPath": "public/assets/6745b4eb726c4d978e144a9b13ac2cf8e614db6ca0b2e769ed709bdec238ef6b.svg",
+    "width": 1835,
+    "height": 1201,
+    "sha256": "6745b4eb726c4d978e144a9b13ac2cf8e614db6ca0b2e769ed709bdec238ef6b",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:1114"
+    ],
+    "section": "habits",
+    "kind": "vector",
+    "localPath": "public/assets/9914ec66ab7b008866ef39e8b3ce2bfbe2bbd54b1ea65455145d28c7f5db2a70.svg",
+    "width": 19,
+    "height": 19,
+    "sha256": "9914ec66ab7b008866ef39e8b3ce2bfbe2bbd54b1ea65455145d28c7f5db2a70",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:1123"
+    ],
+    "section": "habits",
+    "kind": "vector",
+    "localPath": "public/assets/4fd44b9791f9dd03125439706fff1a3a709e3f8382720b505051305ae89e2182.svg",
+    "width": 48,
+    "height": 48,
+    "sha256": "4fd44b9791f9dd03125439706fff1a3a709e3f8382720b505051305ae89e2182",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:835"
+    ],
+    "section": "transactions",
+    "kind": "image",
+    "localPath": "public/assets/26c4b58254fd6722a5dee095c9169d3be9b59c15e980d6aaeae291d9d6b8a953.png",
+    "width": 1024,
+    "height": 577,
+    "sha256": "26c4b58254fd6722a5dee095c9169d3be9b59c15e980d6aaeae291d9d6b8a953",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:929",
+      "2676:930"
+    ],
+    "section": "transactions",
+    "kind": "image",
+    "localPath": "public/assets/8553b5da0ee38f9f2bbc2a10773f8523bd65860465e48f8c44f58ce05f96a227.png",
+    "width": 562,
+    "height": 580,
+    "sha256": "8553b5da0ee38f9f2bbc2a10773f8523bd65860465e48f8c44f58ce05f96a227",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:836"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/e75577737cbeb184afa5dbe43b7be6658652b4413a3c039ff55976f53ced06e0.svg",
+    "width": 2523,
+    "height": 1188,
+    "sha256": "e75577737cbeb184afa5dbe43b7be6658652b4413a3c039ff55976f53ced06e0",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:837"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/eebbbc1c1b5bfb874052f512e6d8d609480352c2c79997ef60cc4b5ee715e3a6.svg",
+    "width": 2705,
+    "height": 919,
+    "sha256": "eebbbc1c1b5bfb874052f512e6d8d609480352c2c79997ef60cc4b5ee715e3a6",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:850"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/a6f0c717b70ad438af7d3f84b87979a3e9a3bea9a51e80adecb366c05364cabe.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "a6f0c717b70ad438af7d3f84b87979a3e9a3bea9a51e80adecb366c05364cabe",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:857",
+      "2676:869",
+      "2676:881",
+      "2676:892"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/2e9a7b6dccdd9f019bb194a613a999be77008f5f49846709a08f7b3cfa6b13bd.svg",
+    "width": 305,
+    "height": 1,
+    "sha256": "2e9a7b6dccdd9f019bb194a613a999be77008f5f49846709a08f7b3cfa6b13bd",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:885"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/e904f95237f6a7f543dbaec8782bcf779b82e01b6cb287f73ea677489fb49ef2.svg",
+    "width": 24,
+    "height": 24,
+    "sha256": "e904f95237f6a7f543dbaec8782bcf779b82e01b6cb287f73ea677489fb49ef2",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2676:925"
+    ],
+    "section": "transactions",
+    "kind": "vector",
+    "localPath": "public/assets/2399a456c9890b604a7a69731424e49d3e2d48625cee9b29ea6c8de4dda00737.svg",
+    "width": 361,
+    "height": 230,
+    "sha256": "2399a456c9890b604a7a69731424e49d3e2d48625cee9b29ea6c8de4dda00737",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2677:1317"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/132fe2fc8ac75a9228a36c54aae96bec9cdf4b56b50e27fa4bd6126a4412cdb3.svg",
+    "width": 2684,
+    "height": 1986,
+    "sha256": "132fe2fc8ac75a9228a36c54aae96bec9cdf4b56b50e27fa4bd6126a4412cdb3",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2677:1267"
+    ],
+    "section": "faq",
+    "kind": "vector",
+    "localPath": "public/assets/69130d51ed8bcdd5017dbee3014dc5e4e14681206370459e26e119ca26a7bfc4.svg",
+    "width": 2140,
+    "height": 1565,
+    "sha256": "69130d51ed8bcdd5017dbee3014dc5e4e14681206370459e26e119ca26a7bfc4",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2677:1322"
+    ],
+    "section": "footer",
+    "kind": "vector",
+    "localPath": "public/assets/37c19945ec1a01f3458e7c8bc228dff95218905e5ac63aa316c7d7ca5bef9f1a.svg",
+    "width": 36,
+    "height": 36,
+    "sha256": "37c19945ec1a01f3458e7c8bc228dff95218905e5ac63aa316c7d7ca5bef9f1a",
+    "alt": ""
+  },
+  {
+    "nodeIds": [
+      "2677:1359"
+    ],
+    "section": "footer",
+    "kind": "vector",
+    "localPath": "public/assets/89e33b8ed4bca4589eec1d5c10c4702e95ad9b79c0558979b6d17a7775761685.svg",
+    "width": 369,
+    "height": 1,
+    "sha256": "89e33b8ed4bca4589eec1d5c10c4702e95ad9b79c0558979b6d17a7775761685",
+    "alt": ""
+  }
+]

@@ -1,0 +1,491 @@
+/*
+ * Habits — desktop 2655:978 (1440x956), mobile 2676:1010 (393x1042).
+ *
+ * Fluid values use the established exact-endpoint interpolation between the
+ * 393px mobile comp and the 1440px desktop comp:
+ *   clamp(<mobile>px, calc(<mobile>px + (<desktop> - <mobile>) *
+ *     (100vw - 393px) / 1047), <desktop>px)
+ * For a DESCENDING value (letter-spacing tracking tightens as width grows,
+ * so the desktop end is the smaller number) the two bounds swap: clamp() is
+ * max(MIN, min(VAL, MAX)), so writing the mobile end as MIN pins the value
+ * at the mobile figure forever and the interpolation silently never runs.
+ *
+ * Desktop height is structural, not estimated: 70 (pad-top) + 746 + 140
+ * (pad-bottom) = 956, where BOTH columns are 746 tall — the left one by the
+ * explicit h-[746px] on 2655:979, the right one by 366 + 14 + 366 (the quote
+ * card is a fixed 318px inner block inside 24px padding).
+ *
+ * Radii come from the nodes themselves: 24px on the three desktop cards
+ * (2655:1003 / :1010 / :1018), 12px on their mobile counterparts
+ * (2676:1091 / :1098 / :1119), 90px only on the pill-shaped controls (the
+ * CTA and the two 40px chevron buttons).
+ */
+
+.section {
+  --habits-pad-x: clamp(
+    12px,
+    calc(12px + (52 - 12) * (100vw - 393px) / 1047),
+    52px
+  );
+  --habits-pad-top: clamp(
+    60px,
+    calc(60px + (70 - 60) * (100vw - 393px) / 1047),
+    70px
+  );
+  --habits-pad-bottom: clamp(
+    60px,
+    calc(60px + (140 - 60) * (100vw - 393px) / 1047),
+    140px
+  );
+  --habits-card-radius: var(--radius-12);
+  background: var(--color-ink-canvas);
+  /* Clips the intentionally overflowing mobile card row, as the Figma
+     frame does. Without this the 572px row would scroll the page. */
+  overflow: hidden;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--habits-pad-x);
+  padding-top: var(--habits-pad-top);
+  padding-bottom: var(--habits-pad-bottom);
+}
+
+/* ---- left column ------------------------------------------------------ */
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, calc(10px + (18 - 10) * (100vw - 393px) / 1047), 18px);
+}
+
+.heading {
+  /*
+   * Both comps hard-break the headline after "Financial" (2655:982,
+   * 2676:1088). The copy stays one unbroken string in the markup, so the
+   * break is done by width instead: measured at 393px the first line runs
+   * 264px and adding "Habits" runs 337px, so 300px lands between them; the
+   * upper bound is the 475px left column of 2655:979, where "Build Better
+   * Financial" measures 422px.
+   */
+  max-width: clamp(
+    300px,
+    calc(300px + (475 - 300) * (100vw - 393px) / 1047),
+    475px
+  );
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(30px, calc(30px + (48 - 30) * (100vw - 393px) / 1047), 48px);
+  line-height: clamp(42px, calc(42px + (62 - 42) * (100vw - 393px) / 1047), 62px);
+  letter-spacing: clamp(
+    -2.4px,
+    calc(-1.2px + (-2.4 - -1.2) * (100vw - 393px) / 1047),
+    -1.2px
+  );
+  text-transform: capitalize;
+  color: var(--color-light-cream);
+}
+
+.subhead {
+  max-width: clamp(
+    320px,
+    calc(320px + (408 - 320) * (100vw - 393px) / 1047),
+    408px
+  );
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(22px, calc(22px + (26 - 22) * (100vw - 393px) / 1047), 26px);
+  letter-spacing: clamp(
+    -0.48px,
+    calc(-0.28px + (-0.48 - -0.28) * (100vw - 393px) / 1047),
+    -0.28px
+  );
+  color: var(--color-neutral-200);
+}
+
+/* 2655:984 and 2655:986 exist on the desktop comp only. */
+.cta,
+.rating {
+  display: none;
+}
+
+/* ---- right column ----------------------------------------------------- */
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardRow {
+  display: flex;
+  gap: 8px;
+}
+
+/*
+ * The mobile comp gives both cards a fixed 282px width with an 8px gap
+ * (2676:1010 -> a 572px row starting at x12 inside a 393px frame), so the
+ * second card is deliberately cut off by the frame edge. Sharing the row
+ * with flex: 1 1 0 avoided the horizontal overflow but rendered both cards
+ * at the wrong width -- the photo 173 against 282, the stat card 195. The
+ * real widths are used instead and .section clips them exactly as the Figma
+ * frame does, so the page still never scrolls sideways.
+ */
+.photoCard,
+.statCard {
+  flex: 0 0 282px;
+  height: 338px;
+  border-radius: var(--habits-card-radius);
+}
+
+.photoCard {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  background: var(--gradient-habits-photo-bg);
+}
+
+/*
+ * Crop read off 2655:1004 / 2676:1092: the fill is drawn at 127.96% height
+ * with a -8.74% top offset, i.e. 31% down its own overflow.
+ */
+.portrait {
+  object-fit: cover;
+  object-position: 50% 31%;
+}
+
+.photoFade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 78px;
+  background: var(--gradient-habits-photo-fade);
+}
+
+.photoCaption {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, calc(6px + (8 - 6) * (100vw - 393px) / 1047), 8px);
+}
+
+.personName {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(16px, calc(16px + (18 - 16) * (100vw - 393px) / 1047), 18px);
+  line-height: 1.1;
+  letter-spacing: clamp(
+    -0.36px,
+    calc(-0.32px + (-0.36 - -0.32) * (100vw - 393px) / 1047),
+    -0.32px
+  );
+  text-transform: capitalize;
+  color: var(--color-light-white);
+}
+
+.personRole {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: 1.1;
+  letter-spacing: clamp(
+    -0.16px,
+    calc(-0.14px + (-0.16 - -0.14) * (100vw - 393px) / 1047),
+    -0.14px
+  );
+  text-transform: capitalize;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--color-light-cream);
+}
+
+.statTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.statIcon {
+  flex-shrink: 0;
+  width: clamp(19px, calc(19px + (25 - 19) * (100vw - 393px) / 1047), 25px);
+  height: auto;
+}
+
+.statBody {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(20px, calc(20px + (24 - 20) * (100vw - 393px) / 1047), 24px);
+  letter-spacing: clamp(
+    -0.32px,
+    calc(-0.28px + (-0.32 - -0.28) * (100vw - 393px) / 1047),
+    -0.28px
+  );
+  color: var(--color-ink-black);
+  opacity: 0.8;
+}
+
+.statValue {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(40px, calc(40px + (60 - 40) * (100vw - 393px) / 1047), 60px);
+  line-height: 0.99;
+  letter-spacing: clamp(-3px, calc(-2px + (-3 - -2) * (100vw - 393px) / 1047), -2px);
+  color: var(--color-ink-black);
+}
+
+/* ---- quote card ------------------------------------------------------- */
+
+.quoteCard {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--habits-card-radius);
+  background: var(--color-ink-strong);
+}
+
+.quoteBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quoteIcon {
+  width: clamp(48px, calc(48px + (54 - 48) * (100vw - 393px) / 1047), 54px);
+  height: auto;
+}
+
+.quote {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(21px, calc(21px + (24 - 21) * (100vw - 393px) / 1047), 24px);
+  line-height: clamp(30px, calc(30px + (34 - 30) * (100vw - 393px) / 1047), 34px);
+  letter-spacing: clamp(
+    -0.42px,
+    calc(-0.42px + (-0.24 - -0.42) * (100vw - 393px) / 1047),
+    -0.24px
+  );
+  color: var(--color-light-white);
+}
+
+.quoteAuthor {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: clamp(52px, calc(52px + (56 - 52) * (100vw - 393px) / 1047), 56px);
+  height: clamp(52px, calc(52px + (56 - 52) * (100vw - 393px) / 1047), 56px);
+  border-radius: var(--radius-90);
+  object-fit: cover;
+  background: var(--color-light-white);
+}
+
+.personText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---- chevrons --------------------------------------------------------- */
+
+.arrows {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.arrowButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-90);
+}
+
+.arrowPrev {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 2655:1033 wraps the glyph in `-scale-y-100 rotate-180`, which is a
+ * horizontal mirror of the same arrow-right-01 vector. */
+.arrowPrev .arrowIcon {
+  transform: scaleX(-1);
+}
+
+.arrowNext {
+  background: var(--color-lime-bright);
+}
+
+.arrowIcon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---- desktop comp ----------------------------------------------------- */
+
+@media (min-width: 768px) {
+  .section {
+    --habits-card-radius: var(--radius-24);
+  }
+
+  .inner {
+    position: relative;
+    flex-direction: row;
+    /* Wraps rather than overflowing. The columns are 475 + 709 + 24 gap =
+       1208 inside the 1336 content box at 1440, so they never wrap there,
+       but pinning the cards to the comp's 348px stopped .right shrinking
+       and the pair ran 314px past the viewport at 768 -- hidden only
+       because .section now clips. Wrapping stacks them where they stop
+       fitting instead of cutting the right column off. */
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .left {
+    /* No grow: with flex-grow the pair expanded to fill the 1336 box and
+       left the comp's 475/709 widths behind (6.41 -> 18.15). The basis
+       alone is enough for flex-wrap to stack them when they do not fit. */
+    flex: 0 1 475px;
+    height: 746px;
+    justify-content: space-between;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    padding: 14px 28px;
+    border-radius: var(--radius-90);
+    background: var(--color-lime-bright);
+    box-shadow: inset 0 4px 12px rgba(85, 145, 219, 0.5);
+    font-family: var(--font-body), sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.32px;
+    color: var(--color-ink-black);
+    cursor: pointer;
+  }
+
+  .rating {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 322px;
+  }
+
+  .ratingRow {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .ratingScore {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.18;
+    letter-spacing: -0.56px;
+    color: var(--color-light-white);
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+  }
+
+  .star {
+    width: 22px;
+    height: 22px;
+    margin-right: -1px;
+  }
+
+  .ratingCaption {
+    font-family: var(--font-body), sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.32px;
+    color: var(--color-neutral-200);
+  }
+
+  .right {
+    flex: 0 1 709px;
+    gap: 14px;
+  }
+
+  .cardRow {
+    gap: 14px;
+  }
+
+  .photoCard,
+  .statCard {
+    /* Desktop comp 2655:978: both cards 348 wide with a 14px gap inside the
+       709px right column. The mobile 282px basis must not leak past the
+       breakpoint -- it cost desktop 8.52 -> 17.62 when it did. The earlier
+       flex: 0 1 475/709 split let .rating's definite width floor the left
+       column, so the photo rendered 323 and the stat card 372. */
+    flex: 0 0 348px;
+    height: 366px;
+  }
+
+  .photoFade {
+    height: 101px;
+  }
+
+  .photoCaption {
+    left: 20px;
+    bottom: 20px;
+  }
+
+  .statCard {
+    padding: 24px 24px 24px 25px;
+  }
+
+  .quoteCard {
+    height: 366px;
+    padding: 24px;
+    gap: 0;
+    justify-content: space-between;
+  }
+
+  /* 2655:1032 sits in the quote card's bottom row on desktop and below the
+   * whole card stack on mobile, so it is authored once in mobile DOM order
+   * and lifted into the card's bottom-right corner here: 24px of card
+   * padding inside the section's own inline / bottom padding. */
+  .arrows {
+    position: absolute;
+    right: calc(var(--habits-pad-x) + 24px);
+    bottom: calc(var(--habits-pad-bottom) + 24px);
+  }
+}

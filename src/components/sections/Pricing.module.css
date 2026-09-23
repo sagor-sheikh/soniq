@@ -1,0 +1,252 @@
+/*
+ * Pricing section.
+ *
+ * Fluid values interpolate between the 393px mobile comp (2676:1141, 1370px
+ * tall) and the 1440px desktop comp (2655:1039, 933px tall), matching the
+ * pattern in globals.css:
+ *   clamp(<mobile>px, calc(<mobile>px + (<desktop> - <mobile>) *
+ *     (100vw - 393px) / 1047), <desktop>px)
+ *
+ * Both comps hold the same content; the mobile comp is taller purely because
+ * the two cards stack. No min-height is used anywhere.
+ */
+
+.section {
+  background: var(--color-ink-canvas);
+  padding-top: clamp(60px, calc(60px + (70 - 60) * (100vw - 393px) / 1047), 70px);
+  padding-bottom: clamp(60px, calc(60px + (120 - 60) * (100vw - 393px) / 1047), 120px);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, calc(36px + (72 - 36) * (100vw - 393px) / 1047), 72px);
+}
+
+/* ---- heading ----------------------------------------------------------- */
+
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, calc(10px + (14 - 10) * (100vw - 393px) / 1047), 14px);
+}
+
+.subhead {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(22px, calc(22px + (26 - 22) * (100vw - 393px) / 1047), 26px);
+  letter-spacing: clamp(-0.48px, calc(-0.28px + (-0.48 - -0.28) * (100vw - 393px) / 1047), -0.28px);
+  color: var(--color-neutral-200);
+  opacity: 0.8;
+}
+
+/*
+ * Heading text-box width: 277px on the mobile comp, 749px on the desktop
+ * one. The narrow mobile box is load-bearing — it is what wraps the title
+ * onto two lines there, and ds-h2's -2.4px tracking otherwise keeps it on
+ * one line at 393px, costing the section a full line of height.
+ */
+.heading {
+  max-width: clamp(277px, calc(277px + (749 - 277) * (100vw - 393px) / 1047), 749px);
+  /* The comp applies capitalize here; the source string is sentence case,
+     so omitting it rendered visibly different copy. */
+  text-transform: capitalize;
+}
+
+@media (min-width: 768px) {
+  .headingBlock {
+    align-items: center;
+    text-align: center;
+  }
+
+  .subhead {
+    max-width: 470px;
+    opacity: 1;
+  }
+}
+
+/* ---- plan cards -------------------------------------------------------- */
+
+.plans {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.planItem {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .plans {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  padding: 20px 20px 52px;
+  border-radius: var(--radius-12);
+  overflow: hidden;
+  color: var(--color-ink-black);
+}
+
+@media (min-width: 768px) {
+  .card {
+    border-radius: var(--radius-24);
+  }
+}
+
+.cardLime {
+  background: var(--color-lime-mid);
+}
+
+.cardCream {
+  background: var(--color-light-cream);
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.planName {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.32px;
+}
+
+.planBlurb {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: 0.7;
+}
+
+.priceRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.price {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 45px;
+  letter-spacing: -1px;
+}
+
+.period {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ---- cta --------------------------------------------------------------- */
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius-90);
+  padding-inline: 18px;
+  padding-block: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  font-family: var(--font-body), sans-serif;
+  font-size: 16px;
+  /* The comp's label box is 22px, not the inherited 24px, so every card was
+     2px too tall: 50/54 in the comp against 52/56 here. */
+  line-height: 22px;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.ctaDark {
+  background: var(--color-ink-black);
+  color: var(--color-light-white);
+  font-weight: 500;
+  letter-spacing: -0.48px;
+}
+
+.ctaDark:hover {
+  background: var(--color-ink-strong);
+}
+
+/*
+ * The comp fills this button with #eaecdf, which T4 did not tokenise;
+ * --color-light-moss (#e6e9d7) is the nearest token in the palette.
+ */
+.ctaLight {
+  background: var(--color-light-moss);
+  color: var(--color-ink-black);
+  letter-spacing: -0.32px;
+}
+
+.ctaLight:hover {
+  background: var(--color-light-sage);
+}
+
+/* ---- feature list ------------------------------------------------------ */
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/*
+ * The comp sets this label to black at 48% on both card fills, which
+ * measures 3.36:1 on the lime card and 3.71:1 on the cream one — below the
+ * 4.5:1 AA threshold for 14px text. 60% clears it on both (4.88:1 lime,
+ * 5.73:1 cream).
+ */
+.featuresLabel {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.14px;
+  opacity: 0.6;
+}
+
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.featureText {
+  font-family: var(--font-body), sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.2px;
+  opacity: 0.7;
+}

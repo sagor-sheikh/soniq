@@ -1,0 +1,265 @@
+/*
+ * Features — desktop 2655:959 (1440x1238), mobile 2676:1004 (393x849).
+ *
+ * Fluid values use the established exact-endpoint interpolation between the
+ * 393px mobile comp and the 1440px desktop comp:
+ *   clamp(<mobile>px, calc(<mobile>px + (<desktop> - <mobile>) *
+ *     (100vw - 393px) / 1047), <desktop>px)
+ * For a DESCENDING value (letter-spacing tracking tightens as width grows,
+ * so the desktop end is the smaller number) the two bounds swap: clamp() is
+ * max(MIN, min(VAL, MAX)), so writing the mobile end as MIN pins the value
+ * at the mobile figure forever and the interpolation silently never runs.
+ *
+ * This is the one image-driven section (18 nodes, a single baked raster), so
+ * the desktop height is carried by a min-height rather than by content: in
+ * 2655:959 the photo is an absolutely positioned fill at top 152px that runs
+ * past the clipped frame bounds, and the live text occupies only the top
+ * ~330px of the 1238px frame.
+ *
+ * --features-photo-aspect is NOT a literal spec value. The mobile comp gives
+ * the photo a 393/579 box, but it also lays the three columns out as a
+ * 780px-wide row inside a 369px frame (Figma clips it; a browser would
+ * scroll). Stacking the columns below 768px — the only overflow-safe reading —
+ * spends that horizontal budget vertically, so the photo box absorbs the
+ * difference to keep the section at its measured 849px. Tuned against
+ * scripts/measure.mjs.
+ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 40px;
+  background: var(--color-light-cream);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-inline: clamp(
+    12px,
+    calc(12px + (52 - 12) * (100vw - 393px) / 1047),
+    52px
+  );
+  position: relative;
+  z-index: 2;
+}
+
+.heading {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(30px, calc(30px + (48 - 30) * (100vw - 393px) / 1047), 48px);
+  line-height: clamp(42px, calc(42px + (62 - 42) * (100vw - 393px) / 1047), 62px);
+  letter-spacing: clamp(
+    -2.4px,
+    calc(-1.2px + (-2.4 - -1.2) * (100vw - 393px) / 1047),
+    -1.2px
+  );
+  text-transform: capitalize;
+  color: var(--color-ink-canvas);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.columnTitle {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(16px, calc(16px + (18 - 16) * (100vw - 393px) / 1047), 18px);
+  line-height: 24px;
+  letter-spacing: clamp(
+    -0.54px,
+    calc(-0.48px + (-0.54 - -0.48) * (100vw - 393px) / 1047),
+    -0.48px
+  );
+  color: var(--color-ink-black);
+}
+
+.columnBody {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(22px, calc(22px + (24 - 22) * (100vw - 393px) / 1047), 24px);
+  letter-spacing: clamp(
+    -0.48px,
+    calc(-0.42px + (-0.48 - -0.42) * (100vw - 393px) / 1047),
+    -0.42px
+  );
+  color: var(--color-ink-medium);
+  opacity: 0.8;
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 393 / 383;
+}
+
+/*
+ * Mobile crop, read off 2676:1002: the fill is drawn at 268.19% width /
+ * 121.44% height, offset left -27.99% / top -21.43%, i.e. the visible window
+ * starts at 10.4% from the image's left edge and is flush with its bottom.
+ */
+.photoImage {
+  object-fit: cover;
+  object-position: 10% 100%;
+}
+
+/* Mobile stack, from 2676:1004: a #b6bd75 -> #141507 gradient ellipse
+   (2676:1006) under a solid #141507 ellipse (2676:1007). The blur radii
+   (302 and 200) exceed the shapes' own radii, so both are almost entirely
+   feather -- hence the very low solid stops. */
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+    background:
+    radial-gradient(
+      796px 346px at 430px 836px,
+      rgba(20, 21, 7, 1) 0%,
+      rgba(20, 21, 7, 0.95) 42%,
+      rgba(20, 21, 7, 0) 100%
+    ),
+    radial-gradient(
+      628px 449px at 270px 858px,
+      rgba(107, 116, 64, 0.9) 0%,
+      rgba(40, 44, 18, 0.78) 33%,
+      rgba(20, 21, 7, 0) 100%
+    );
+}
+
+
+@media (min-width: 768px) {
+  .section {
+    display: block;
+    padding-top: 0;
+    /* The comp's 1238 is the frame height at 1440 only. Applied flat from
+       768px up it left a growing dead band, because the .photo that fills
+       this section is sized from the viewport (127.15% wide, 1831/1222) and
+       so shrinks while the min-height did not -- 434px of empty cream at
+       768. Interpolated instead between the photo's own bottom edge at 768
+       (152 + 768 * 1.271528 * 1222/1831 = 804) and the comp's 1238 at 1440,
+       which keeps the designed value at the designed width and keeps the
+       same proportion of the photo cropped in between. */
+    min-height: clamp(
+      804px,
+      calc(804px + (1238 - 804) * (100vw - 768px) / 672),
+      1238px
+    );
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-top: 60px;
+    gap: 72px;
+  }
+
+  /* 2655:964: 288 / 248 / 248 with a 52px gutter — proportional so the row
+   * shrinks instead of overflowing between 768px and 1440px. */
+  .columns {
+    grid-template-columns: 288fr 248fr 248fr;
+    gap: 52px;
+    max-width: 888px;
+  }
+
+  /* 2655:961: left -10px, top 152px, 1831x1222 on the 1440px frame. */
+  .photo {
+    position: absolute;
+    left: -0.6944%;
+    top: 152px;
+    width: 127.1528%;
+    aspect-ratio: 1831 / 1222;
+  }
+
+  /* The desktop box (1.498) matches the raster's own aspect (1535/1024 =
+   * 1.499), so there is no crop to re-centre here. */
+  .photoImage {
+    object-position: 50% 50%;
+  }
+
+  /* Desktop stack, from 2655:959. Listed topmost-first, matching Figma's
+     top-to-bottom child order 977 -> 976 -> 975:
+       2655:977  centre (902, 1458)  radii (1404, 502)  blur 157  #141507
+       2655:976  centre (824, 1688)  radii (1121, 976)  blur 302  #141507
+       2655:975  centre (481, 1171)  radii (767, 480)   blur 302  #b6bd75 -> #141507
+     All three are centred below the 1238px frame, so they read as a
+     full-width fade rising from the bottom edge. */
+  .glow {
+    /* Positioned in percentages, not px. The px values were measured on the
+       1238px-tall frame, so once min-height became fluid they fell below a
+       shorter section entirely and the bottom fade vanished across the whole
+       768-1100 band. Percentages resolve against the section box, so the
+       same geometry holds at 1440 and scales with it.
+         x: 30/1440 = 2.1%, 482/1440 = 33.5%
+         y: 820/1238 = 66.2%, 1172/1238 = 94.7%
+         size: 330x300 -> 22.9% x 24.2%, 780x520 -> 54.2% x 42% */
+    background:
+      radial-gradient(
+        22.9% 24.2% at 2.1% 66.2%,
+        rgba(20, 21, 7, 0.95) 0%,
+        rgba(20, 21, 7, 0.5) 50%,
+        rgba(20, 21, 7, 0) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(20, 21, 7, 0) 69%,
+        rgba(20, 21, 7, 0.18) 73%,
+        rgba(20, 21, 7, 0.5) 81%,
+        rgba(20, 21, 7, 0.82) 89%,
+        rgba(20, 21, 7, 0.94) 97%,
+        #141507 100%
+      ),
+      radial-gradient(
+        54.2% 42% at 33.5% 95.3%,
+        rgba(107, 116, 64, 0.22) 0%,
+        rgba(46, 50, 21, 0.14) 52%,
+        rgba(20, 21, 7, 0) 100%
+      );
+  }
+}
+
+/*
+ * 768-1100 has no comp. The desktop grid (288fr 248fr 248fr, max-width 888)
+ * scales down with the container while the .photo is sized from the
+ * viewport, so by 900px the third column's text sits on top of the model's
+ * face. Two columns held to the same 66.5% share of the content box that
+ * 888/1336 gives at 1440 keeps the text clear of the photo and readable.
+ * Above 1100 the comp's own three-column grid takes over unchanged.
+ */
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    max-width: 66.5%;
+  }
+
+  /* With the columns on two rows the second row met the cards, because the
+     photo is anchored at a flat top: 152px however short the section gets.
+     Pushing it down across the band keeps the text clear; it also crops a
+     little more of the photo, which is what the comp does at 1440 anyway. */
+  .photo {
+    top: clamp(
+      152px,
+      calc(300px + (152 - 300) * (100vw - 768px) / 332),
+      300px
+    );
+  }
+}

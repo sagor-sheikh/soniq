@@ -1,0 +1,233 @@
+/*
+ * Footer — nodes 2655:1159 (1440x554) and 2677:1369 (393x550).
+ *
+ * Fluid values use the same exact-endpoint interpolation as globals.css:
+ *   clamp(<mobile>px, calc(<mobile>px + (<desktop> - <mobile>) *
+ *     (100vw - 393px) / 1047), <desktop>px)
+ *
+ * The content block is positioned from the top of the frame in both comps
+ * (desktop y=237 under the bleeding wordmark, mobile y=100), so that offset
+ * is carried as padding-top rather than as a gap below the wordmark.
+ */
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-ink-canvas);
+  padding-top: clamp(91px, calc(91px + (230 - 91) * (100vw - 393px) / 1047), 230px);
+  padding-bottom: clamp(0px, calc(0px + (15 - 0) * (100vw - 393px) / 1047), 15px);
+}
+
+/* Decorative oversized wordmark bleeding off the top edge. Its font-size is
+   33.05% of the comp width at both breakpoints (441.482/1336, 129.867/393)
+   and its tracking is -0.05em at both. */
+.wordmark {
+  position: absolute;
+  z-index: 0;
+  top: clamp(-192px, calc(-61px + (-192 + 61) * (100vw - 393px) / 1047), -61px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1440px;
+  padding-inline: clamp(12px, calc(12px + (52 - 12) * (100vw - 393px) / 1047), 52px);
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 400;
+  font-size: clamp(129.867px, calc(129.867px + (441.482 - 129.867) * (100vw - 393px) / 1047), 441.482px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink-strong);
+  pointer-events: none;
+  user-select: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- brand + nav --------------------------------------------------- */
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, calc(24px + (36 - 24) * (100vw - 393px) / 1047), 36px);
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 11.776px;
+}
+
+.logoMark {
+  width: clamp(36px, calc(36px + (48 - 36) * (100vw - 393px) / 1047), 48px);
+  height: auto;
+}
+
+.logoWord {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 400;
+  font-size: clamp(24px, calc(24px + (28 - 24) * (100vw - 393px) / 1047), 28px);
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+  color: var(--color-light-cream);
+}
+
+.brandBody {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(26px, calc(26px + (30 - 26) * (100vw - 393px) / 1047), 30px);
+}
+
+.description {
+  max-width: 369px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.28px;
+  color: var(--color-neutral-200);
+}
+
+.socialList {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, calc(10px + (14 - 10) * (100vw - 393px) / 1047), 14px);
+}
+
+.socialLink {
+  display: inline-flex;
+  border-radius: var(--radius-pill);
+  /* UA button reset: these render as <button> because the comp gives them no
+     destination. Without this they would gain a border, padding and a grey
+     fill, which would change the footer's measured height. */
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.socialLink:focus-visible,
+.navLink:focus-visible {
+  outline: 2px solid var(--color-lime-bright);
+  outline-offset: 3px;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.navColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navHeading {
+  margin: 0;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(16px, calc(16px + (26 - 16) * (100vw - 393px) / 1047), 26px);
+  letter-spacing: -0.4px;
+  /* The comp dims these labels to 40% of #bbbcb3, which measures 2.5:1 on
+     #141507. 70% measures 5.1:1 and keeps the same muted reading. */
+  color: rgba(187, 188, 179, 0.7);
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navLink {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: 26px;
+  letter-spacing: -0.5px;
+  color: var(--color-neutral-200);
+  transition: color 150ms ease;
+  /* Shared by the nav <a> elements and the legal-row <button> elements (the
+     latter have no destination in the comp). Inert on an anchor; on a button
+     it strips the UA border, padding, fill and centring. */
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.navLink:hover {
+  color: var(--color-light-cream);
+}
+
+/* ---- legal row ------------------------------------------------------ */
+
+.legal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: clamp(34px, calc(34px + (52 - 34) * (100vw - 393px) / 1047), 52px);
+  padding-top: clamp(14px, calc(14px + (20 - 14) * (100vw - 393px) / 1047), 20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.address {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: 26px;
+  letter-spacing: -0.4px;
+  color: var(--color-neutral-200);
+}
+
+.legalLinks {
+  display: flex;
+  gap: clamp(26px, calc(26px + (32 - 26) * (100vw - 393px) / 1047), 32px);
+}
+
+/* ---- desktop comp structure ----------------------------------------- */
+
+@media (min-width: 768px) {
+  .top {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .brand {
+    flex: 0 1 313px;
+  }
+
+  .description {
+    max-width: 306px;
+  }
+
+  .nav {
+    flex: 0 1 479px;
+  }
+
+  .navColumn,
+  .navLinks {
+    gap: 8px;
+  }
+
+  .legal {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

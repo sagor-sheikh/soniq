@@ -1,0 +1,207 @@
+{
+  "project": "soniq-landing",
+  "root": "D:/Orbix Sofrwares/projects/soniq-landing",
+  "shell": "Git Bash (all verify commands assume POSIX tools: grep, wc, node, curl. Never PowerShell. Never /tmp — use repo-relative paths).",
+  "figma": {
+    "fileKey": "JLWztY7Ce18rqZzozztzcX",
+    "section": "2655:706",
+    "forbidden_node_ids": ["2655:706", "2655:707", "2665:311"],
+    "sections": [
+      { "id": "hero",         "desktopNodeId": "2655:708",  "desktopHeight": 1923, "mobileNodeId": "2672:686",  "mobileHeight": 1951 },
+      { "id": "transactions", "desktopNodeId": "2665:459",  "desktopHeight": 1326, "mobileNodeId": "2676:988",  "mobileHeight": 1841 },
+      { "id": "features",     "desktopNodeId": "2655:959",  "desktopHeight": 1238, "mobileNodeId": "2676:1004", "mobileHeight": 849  },
+      { "id": "habits",       "desktopNodeId": "2655:978",  "desktopHeight": 956,  "mobileNodeId": "2676:1010", "mobileHeight": 1042 },
+      { "id": "pricing",      "desktopNodeId": "2655:1039", "desktopHeight": 933,  "mobileNodeId": "2676:1141", "mobileHeight": 1370 },
+      { "id": "faq",          "desktopNodeId": "2655:1110", "desktopHeight": 859,  "mobileNodeId": "2677:1262", "mobileHeight": 868  },
+      { "id": "footer",       "desktopNodeId": "2655:1159", "desktopHeight": 554,  "mobileNodeId": "2677:1369", "mobileHeight": 550  }
+    ],
+    "pageHeight": { "desktop": 7789, "mobile": 8471 }
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Scaffold standalone Next 16.2 app, pin versions, own port and git repo",
+      "files": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "next.config.ts",
+        "postcss.config.mjs",
+        "eslint.config.mjs",
+        ".gitignore",
+        ".claude/launch.json",
+        "src/app/layout.tsx",
+        "src/app/page.tsx",
+        "src/app/globals.css"
+      ],
+      "interface": "This directory ALREADY EXISTS and already contains PLAN.md, tasks.json and a git repo. create-next-app refuses to scaffold into a directory holding files outside its allow-list, so do NOT run it here directly. Instead: run create-next-app into the sibling temp directory 'D:/Orbix Sofrwares/projects/.soniq-scaffold-tmp' with App Router, src/ dir, TypeScript, Tailwind v4, ESLint and --no-git; then move every entry out of it (including dotfiles such as .gitignore, excluding any .git) into 'D:/Orbix Sofrwares/projects/soniq-landing'; then delete the temp directory. Never overwrite the existing PLAN.md or tasks.json. Pin next and eslint-config-next to 16.2.4, react and react-dom to 19.2.4, typescript ^5, @tailwindcss/postcss ^4. package.json scripts: dev='next dev -p 3017', start='next start -p 3017', build='next build', lint='eslint .'. NEVER 'next lint' — removed in Next 16. Port 3017 is chosen because 3001 (pulse-crm), 3004 (agency-command-center), 3005 (lead-finder) and 3000 are in use on this machine; preflight it. .gitignore must include .next/, node_modules/, playwright-report/, test-results/, scripts/out/, reports/. .claude/launch.json: { version: '0.0.1', configurations: [{ name: 'soniq-landing', runtimeExecutable: 'npm', runtimeArgs: ['run','dev'], port: 3017 }] }. The git repo already exists here with PLAN.md and tasks.json committed — do NOT run 'git init' again, and never initialise a repo in the parent 'D:/Orbix Sofrwares', which is not one and must not become one. Before writing any framework code in T3/T4, read node_modules/next/dist/docs/ for next/font, next/image and metadata: this Next version has breaking changes versus training data (see landing-page/AGENTS.md). Read '../../landing-page/src/app/globals.css' READ-ONLY for the house token pattern; copy the pattern, never the values.",
+      "verify": "npm install && npm run build && npm run lint && test \"$(git rev-parse --show-toplevel)\" = \"$(pwd -W)\" && node -e \"const p=require('./package.json');if(!/16\\.2/.test(p.dependencies.next))throw new Error('next not pinned to 16.2.x');if(/next lint/.test(p.scripts.lint))throw new Error('lint must be eslint .');console.log('T1 ok')\"",
+      "depends_on": []
+    },
+    {
+      "id": "T2",
+      "title": "Extract per-section context, screenshots and every asset in one pass",
+      "files": [
+        "design/raw/*.md",
+        "design/ref/*.png",
+        "design/sections.json",
+        "public/assets/*",
+        "public/assets/manifest.json",
+        "scripts/check-design.mjs",
+        "scripts/check-assets.mjs",
+        "package.json",
+        "PLAN.md"
+      ],
+      "interface": "For each of the 14 whitelisted node ids in tasks.json figma.sections (7 desktop + 7 mobile): call get_design_context and save the raw output verbatim to design/raw/<nodeId>.md; call get_screenshot and curl the returned image_url to design/ref/<nodeId>.png at 1x (maxDimension 1440 for desktop, 393 for mobile); then immediately download every asset URL found in that section's context to public/assets/<sha256>.<ext> and append a record to public/assets/manifest.json before moving on. Asset URLs are short-lived (~7 days) — download in the same pass, never later. NEVER call any tool on 2655:706, 2655:707 or 2665:311. If a section's get_design_context returns an SSE JSON parse error (~32 KB limit; 2655:708 at 102 nodes and 2665:459 at 157 nodes are the likely offenders), call get_metadata on that SECTION id, then get_design_context per direct child frame, and stitch the results into the section .md. Never retry the failing call unchanged. Inline <svg> in the context is saved verbatim as .svg. manifest.json record shape: { nodeIds: string[], section: string, kind: 'image'|'vector', localPath: string, width: number, height: number, sha256: string, alt: string } where alt is '' for decorative art and a real description for content photos. design/sections.json shape: { id, desktopNodeId, mobileNodeId, desktopHeight, mobileHeight, copy, paddings, columnWidths, typography, gradients, assets, faqInitialOpen, mixedSizeSpans }. Record in sections.json which FAQ item is drawn open (the height gate depends on it) and the hero headline's mixed-size spans. Override both stale mobile headings with desktop copy: habits -> 'Build Better Financial Habits With Soniq', faq -> 'Questions About Managing Money With Soniq?'. scripts/check-design.mjs asserts: exactly 14 raw files present, none of the 3 forbidden ids appear anywhere in design/, each raw context's root frame size matches the tasks.json table, each design/ref PNG is a valid PNG, and both stale headings are overridden. scripts/check-assets.mjs asserts: every image/vector node id in sections.json maps to an existing non-empty file whose sha256 matches, no manifest localPath points off-disk, no figma.com URL survives in src/ or public/; and PRINTS (does not fail on) every raster whose pixel width is below 2x its largest rendered width. Add scripts verify:design and verify:assets to package.json. Commit design/raw/, design/ref/, design/sections.json, public/assets/ and the manifest as an explicit step in this task.",
+      "verify": "npm run verify:design && npm run verify:assets && test $(ls design/raw/*.md | wc -l) -eq 14 && test $(ls design/ref/*.png | wc -l) -eq 14 && ! grep -rq '2665:311' design/ && ! grep -rq 'api/mcp/asset' src/ public/assets/manifest.json && git status --porcelain design public | wc -l | grep -q '^0$'",
+      "depends_on": ["T1"]
+    },
+    {
+      "id": "T3",
+      "title": "Self-host Satoshi and Inter Tight via next/font/local",
+      "files": [
+        "src/fonts/Satoshi-400.woff2",
+        "src/fonts/Satoshi-500.woff2",
+        "src/fonts/InterTight-Variable.woff2",
+        "src/fonts/LICENSES.md",
+        "src/lib/fonts.ts",
+        "src/app/layout.tsx"
+      ],
+      "interface": "src/lib/fonts.ts exports 'satoshi' and 'interTight' from next/font/local. Satoshi is the body face (Fontshare Free Font Licence); Inter Tight replaces Helvetica Neue for display (SIL OFL). Each: variable ('--font-body' / '--font-display'), display 'swap', preload true. Ship only the weights that appear in design/sections.json typography (expected: Satoshi 400 and 500; Inter Tight 400 and 500). Satoshi acquisition: download the Fontshare zip; if that endpoint has moved, fetch 'https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700', read the woff2 URLs out of the returned CSS and download those. Inter Tight: copy the woff2 out of the @fontsource-variable/inter-tight npm package once, then commit it and drop the dependency. NEVER a runtime CDN <link> to fontshare, googleapis or gstatic. Commit both licence texts in LICENSES.md. layout.tsx applies both CSS variables on <html> and sets metadata (title, description, openGraph title/description); do not invent a metadataBase deployment URL.",
+      "verify": "npm run build && ls src/fonts/*.woff2 | wc -l | grep -qv '^0$' && test -f src/fonts/LICENSES.md && ! grep -rEq 'fonts\\.googleapis\\.com|fonts\\.gstatic\\.com|api\\.fontshare\\.com' src/ && grep -q 'next/font/local' src/lib/fonts.ts && node -e \"console.log('T3 ok')\"",
+      "depends_on": ["T1"]
+    },
+    {
+      "id": "T4",
+      "title": "Token layer, sections.ts, page shell with seven stub sections",
+      "files": [
+        "src/app/globals.css",
+        "src/app/page.tsx",
+        "src/lib/sections.ts",
+        "src/components/ui/Container.tsx",
+        "src/components/ui/Button.tsx",
+        "src/components/ui/SectionHeading.tsx",
+        "src/components/sections/Hero.tsx",
+        "src/components/sections/Transactions.tsx",
+        "src/components/sections/Features.tsx",
+        "src/components/sections/Habits.tsx",
+        "src/components/sections/Pricing.tsx",
+        "src/components/sections/Faq.tsx",
+        "src/components/sections/Footer.tsx"
+      ],
+      "interface": "globals.css follows the house pattern: '@import \"tailwindcss\";' then :root custom properties, then '@theme inline' mapping them to Tailwind utilities, then .ds-* classes. Colour tokens — ink: #000000, #141507 (page canvas), #25251d, #373737, #5f5f5f, #727272. light: #ffffff, #fffff5 (absorbs #f5f6ee), #f7f7f7, #f0f2e7, #e6e9d7. lime: #b0f10e (absorbs #b5fa08), #9ddd39, #9fab26. neutral: #bbbcb3, #d9d9d9, #595959, #585a62. Six linear gradients from sections.json. PLUS --color-lime-text-on-light: a darkened lime measured at >= 4.5:1 against BOTH #ffffff and #fffff5, used ONLY for lime text on light surfaces. Verified facts: #b0f10e on white is 1.36:1 and #9ddd39/#9fab26 are 2.52:1 or worse, so no palette lime is usable as text on light — do not substitute another palette lime. Radius tokens: 12, 20, 24, 90, pill(9999). Radius 90 is first-class (21 uses, large cards) — never fold it into pill. Snap drift: 11->12, 12.5->12, 23->24, 190.5->pill. Type tokens from sections.json typography, folding stray Manrope and Inter Variable into Satoshi/Inter Tight. Layout switch: mobile comp structure below 768px, desktop comp at and above; sizes differing between comps use clamp(<m>px, calc(<m>px + (<d> - <m>) * (100vw - 393px) / 1047), <d>px) so 393 and 1440 land exactly on comp values. src/lib/sections.ts is generated from design/sections.json and is the SINGLE source of truth for heights; it exports SECTIONS (id, desktopNodeId, mobileNodeId, desktopHeight, mobileHeight), PAGE_HEIGHT and a SectionId type, and asserts at module load that the per-section heights sum to PAGE_HEIGHT (desktop 7789, mobile 8471 — verified correct). page.tsx renders a skip link, then all seven sections in order, each as <section id={id} data-section={id}>; stubs render only a heading. THIS TASK OWNS page.tsx — section tasks T6..T10 must never edit it. Styling in section components is Tailwind utilities plus <Name>.module.css; NO global per-section .css files (silent order-dependent class collisions, and @apply outside globals.css needs @reference in Tailwind v4). Button: variant 'lime'|'dark'|'ghost'; renders <a> only for real in-page anchors, otherwise <button type=\"button\"> — never href=\"#\", which jumps the viewport to the top.",
+      "verify": "npx tsc --noEmit && npm run lint && npm run build && node -e \"const c=require('fs').readFileSync('src/app/globals.css','utf8');for(const t of ['--color-lime-text-on-light','--radius-90'])if(!c.includes(t))throw new Error('missing token '+t);if(/hero\\.css|pricing\\.css/.test(require('fs').readdirSync('src/components/sections').join()))throw new Error('global per-section css found');console.log('T4 ok')\" && grep -c 'data-section' src/components/sections/*.tsx | wc -l | grep -q '^7$'",
+      "depends_on": ["T2", "T3"]
+    },
+    {
+      "id": "T5",
+      "title": "measure.mjs height and overflow harness, with self-test",
+      "files": [
+        "scripts/measure.mjs",
+        "scripts/fixtures/stub-pass.html",
+        "scripts/fixtures/stub-fail.html",
+        "package.json",
+        "package-lock.json"
+      ],
+      "interface": "scripts/measure.mjs uses Playwright + Chromium ONLY — no axe, no Lighthouse (those are page-level and belong in T11). Add @playwright/test as a devDependency; 'npx playwright install chromium' is part of this task. Reads src/lib/sections.ts (or design/sections.json) for the height table. Flags: --section <comma-separated ids> | --all; --overflow-only (skip height deltas, for use against stubs); --url <url> (point at an already-running server instead of spawning one). Default behaviour: PORT PREFLIGHT first — if 3017 is already listening, exit nonzero with 'port 3017 occupied by a server this script did not start' rather than measuring it (connecting to a stale server is how a false pass happens); then spawn 'npm run start', wait for readiness by polling the port, measure, and kill ONLY its own process tree. Asserts, for each requested section: rendered height of [data-section=<id>] within +/-2% of the table value at viewport 1440x900 and at 393x852, measured only after 'document.fonts.ready' resolves and all <img> have decoded; document.documentElement.scrollWidth <= window.innerWidth at 320, 393, 768, 1024, 1440 and 1920; zero console errors during load. Prints a per-section table of measured height, expected height and delta percent, then exits nonzero on any breach. Self-test: scripts/fixtures/stub-pass.html contains fixed-height divs with the exact data-section ids and heights from the table and MUST pass with --url; stub-fail.html is empty and MUST fail with a per-section report. If Chromium is missing, fail immediately with an actionable install message rather than a stack trace.",
+      "verify": "npx playwright install chromium && node scripts/measure.mjs --url \"file://$(pwd)/scripts/fixtures/stub-pass.html\" --all && ( node scripts/measure.mjs --url \"file://$(pwd)/scripts/fixtures/stub-fail.html\" --all ; test $? -ne 0 ) && echo 'T5 ok: harness passes on stub-pass and fails on stub-fail'",
+      "depends_on": ["T2"]
+    },
+    {
+      "id": "T6",
+      "title": "Hero section — CALIBRATION GATE. Blocks every other section",
+      "files": [
+        "src/components/sections/Hero.tsx",
+        "src/components/sections/Hero.module.css",
+        "src/components/sections/hero/SiteHeader.tsx",
+        "src/components/sections/hero/MobileNav.tsx",
+        "src/lib/assets.ts",
+        "src/app/globals.css",
+        "PLAN.md"
+      ],
+      "interface": "Server Component (MobileNav is the one 'use client' child). Renders the site header/nav, the headline 'Get Your Financial Future Under Control' as one <h1> with the mixed-size spans recorded in design/sections.json mixedSizeSpans, the CTA, the feature strip, sub-copy, and the three stat cards (50M+, 4.9, 120+) using the radius-90 token. All 13 hero image fills come from public/assets via next/image with explicit width/height from the manifest; ONLY the single LCP image gets 'priority' — marking all 13 preloads 13 assets and risks the CLS and performance gates. SiteHeader: <header><nav aria-label=\"Primary\"> with a desktop link list hidden below 768px and <MobileNav> exposing <button aria-expanded aria-controls=\"mobile-menu\">; all links are real in-page anchors (#transactions, #features, #pricing, #faq). src/lib/assets.ts exports typed static imports keyed by manifest sha. THIS IS THE CALIBRATION TASK: build the hero from the extracted spec WITHOUT pre-tuning, then run the gate. Inter Tight is not metrically identical to Helvetica Neue, so a first-try miss is expected. Fix any drift in the TOKEN LAYER (globals.css: font size-adjust, letter-spacing, line-height) so every later section inherits the correction, never by patching the hero alone. Record the measured heights at 1440 and 393 and the final delta percentages in PLAN.md under 'Open risks / R1'. If either width still misses by more than ~6% after reasonable token tuning, STOP and escalate to the user: the +/-2% tolerance is then wrong, and distorting the type to hit it is worse than renegotiating it.",
+      "verify": "npm run build && npm run lint && node scripts/measure.mjs --section hero && grep -q 'R1 CALIBRATION RESULT' PLAN.md && node -e \"const h=require('fs').readFileSync('src/components/sections/Hero.tsx','utf8');const n=(h.match(/priority/g)||[]).length;if(n>1)throw new Error('only the LCP image may use priority, found '+n);if(/href=\\\"#\\\"/.test(h))throw new Error('href=\\\"#\\\" jumps to top');console.log('T6 ok')\"",
+      "depends_on": ["T4", "T5"]
+    },
+    {
+      "id": "T7",
+      "title": "Transactions section — app-UI mockup as a single labelled image",
+      "files": [
+        "src/components/sections/Transactions.tsx",
+        "src/components/sections/Transactions.module.css",
+        "src/components/sections/transactions/TransactionList.tsx",
+        "src/components/sections/transactions/BalanceCard.tsx"
+      ],
+      "interface": "Server Component. The real section heading 'See Every Transaction In One Place' is a live <h2>; the intro copy is live text. The app-UI mockup (157 nodes, 43 text nodes, 23 vectors, some at 10px) is built as crisp HTML — not a screenshot — but is presented to assistive technology as ONE image: wrapper gets role=\"img\" plus an aria-label describing what it shows, and all inner markup is aria-hidden=\"true\" with NO heading elements and NO focusable elements inside. Rationale: those 43 strings are fake product data; left live, a screen reader announces 'Groceries minus 42.10, Netflix minus 15.99...' as page content between two real section headings, and any inner heading breaks heading-order and the >=95 Lighthouse gate. TransactionList renders a local const array as a <ul>; BalanceCard renders 'Your Available Balance' and '$1,234.00' plus the card tiles. The 23 vectors come from public/assets as downloaded SVG. Source of truth is design/raw/2665-459.md and design/raw/2676-988.md — use node 2665:459, NEVER the designer's copy 2665:311. Mobile stacks the list under the balance card. No fixed pixel widths below 768px (w-full + max-w only), or the 320px overflow check fails.",
+      "verify": "npm run build && npm run lint && node scripts/measure.mjs --section transactions && node -e \"const t=require('fs').readFileSync('src/components/sections/Transactions.tsx','utf8');if(!/role=\\\"img\\\"/.test(t))throw new Error('mockup must be role=img');if(!/aria-hidden/.test(t))throw new Error('mockup inner must be aria-hidden');console.log('T7 ok')\" && ! grep -rq '2665:311' src/",
+      "depends_on": ["T6"]
+    },
+    {
+      "id": "T8",
+      "title": "Features and Habits sections",
+      "files": [
+        "src/components/sections/Features.tsx",
+        "src/components/sections/Features.module.css",
+        "src/components/sections/Habits.tsx",
+        "src/components/sections/Habits.module.css"
+      ],
+      "interface": "Both Server Components. Features: <h2>Everything You Need To Manage Money Better</h2> plus four live feature columns as a <ul> (one column below 768px, four at and above), over the one large baked photo rendered with next/image using object-position from the measured crop and a descriptive alt. This is the one section whose height is image-driven, so it may carry a min-height matching the comp. Add a SECOND desktop/mobile image source ONLY if public/assets/manifest.json shows the desktop and mobile rasters differ by sha256 or dimensions — a hidden/md:block <Image> pair still fetches both, doubling bandwidth for nothing. Habits: <h2>Build Better Financial Habits With Soniq</h2> at BOTH widths — the mobile frame 2676:1010 carries the stale heading 'See Every Transaction In One Place' and the desktop copy is inherited per PLAN.md R3. Testimonial as <figure><blockquote>..</blockquote><figcaption>name, role</figcaption></figure>; the 4.9/5 and 50k stats as live text, not headings; portrait via next/image with a descriptive alt; the 8 star/decoration vectors get alt=\"\". Any lime text sitting on a light surface must use --color-lime-text-on-light.",
+      "verify": "npm run build && npm run lint && node scripts/measure.mjs --section features,habits && grep -q 'Build Better Financial Habits With Soniq' src/components/sections/Habits.tsx && ! grep -q 'See Every Transaction' src/components/sections/Habits.tsx",
+      "depends_on": ["T6"]
+    },
+    {
+      "id": "T9",
+      "title": "Pricing section — two plan cards",
+      "files": [
+        "src/components/sections/Pricing.tsx",
+        "src/components/sections/Pricing.module.css"
+      ],
+      "interface": "Server Component. <h2>Match Your Goals to Your Plan</h2>, then a <ul> of two plan cards from a local const PLANS array ({ name, price, period, blurb, features: string[], cta }). Each card is an <article> with an <h3> plan name, the price ($0 / $12) as live text and NOT a heading, a <ul> of features using the exported check vector with alt=\"\", and a CTA. CTAs are presentational: use <button type=\"button\">, never href=\"#\" (which jumps the viewport to the top). Cards sit side by side at and above 768px and stack below. The mobile comp is 1370px tall against 933px desktop, so height must come from stacking plus paddings — do not set a min-height. Any lime text on the light card surface uses --color-lime-text-on-light; decorative lime fills keep the raw lime token.",
+      "verify": "npm run build && npm run lint && node scripts/measure.mjs --section pricing && node -e \"const p=require('fs').readFileSync('src/components/sections/Pricing.tsx','utf8');if(/href=\\\"#\\\"/.test(p))throw new Error('href=\\\"#\\\" jumps to top');console.log('T9 ok')\"",
+      "depends_on": ["T6"]
+    },
+    {
+      "id": "T10",
+      "title": "FAQ accordion and Footer",
+      "files": [
+        "src/components/sections/Faq.tsx",
+        "src/components/sections/Faq.module.css",
+        "src/components/ui/Accordion.tsx",
+        "src/components/sections/Footer.tsx",
+        "src/components/sections/Footer.module.css"
+      ],
+      "interface": "Accordion is a Client Component ('use client') and the only interactive part of the FAQ: props items ({ id, question, answer }[]) and initialOpenId. Each item renders <h3><button aria-expanded aria-controls={id+'-panel'}>question</button></h3> and <div id={id+'-panel'} role=\"region\" aria-labelledby={id+'-btn'} hidden={!open}>. Native <button> gives Enter and Space for free; keep a visible focus ring. No external accordion dependency. Faq: <h2>Questions About Managing Money With Soniq?</h2> at BOTH widths — mobile frame 2677:1262 carries the stale transactions heading and desktop copy is inherited per PLAN.md R3. Background is the exported photo via next/image fill plus the FAQ gradient overlay. initialOpenId MUST be the item recorded as drawn open in design/sections.json faqInitialOpen, because the +/-2% height gate is measured in that state. Footer: <footer data-section=\"footer\"> with a visually hidden <h2>Footer</h2> so column headings can be <h3> without a heading-level jump, <nav aria-label=\"Footer\"> with link columns, the oversized SONIQ wordmark as text in the display font with aria-hidden=\"true\" (the accessible brand name is already in the header), a legal row, and the 5 social vectors from public/assets with accessible names on their links.",
+      "verify": "npm run build && npm run lint && node scripts/measure.mjs --section faq,footer && grep -q 'Questions About Managing Money With Soniq' src/components/sections/Faq.tsx && grep -q 'aria-expanded' src/components/ui/Accordion.tsx && grep -q 'aria-controls' src/components/ui/Accordion.tsx",
+      "depends_on": ["T6"]
+    },
+    {
+      "id": "T11",
+      "title": "Consolidated gate — axe, Lighthouse, network, console, visual overlay",
+      "files": [
+        "tests/landing.spec.ts",
+        "tests/a11y.spec.ts",
+        "playwright.config.ts",
+        "scripts/lighthouse.mjs",
+        "scripts/overlay.mjs",
+        "package.json",
+        "PLAN.md"
+      ],
+      "interface": "Prerequisite: 'node scripts/measure.mjs --all' is green. playwright.config.ts uses webServer { command: 'npm run start', url: 'http://localhost:3017', reuseExistingServer: false } so the suite can never bind to a stale server and report a false pass. tests/landing.spec.ts asserts: the seven data-section ids appear in document order; every section and the page total within +/-2% at 1440 and 393 in the documented FAQ state, measured after document.fonts.ready and image decode; scrollWidth <= innerWidth at 320/393/768/1024/1440/1920; every <img> has an alt attribute; exactly one <h1> and no heading-level jumps greater than 1; every image, svg and font request is same-origin with zero requests whose host matches figma.com, fontshare, googleapis or gstatic; font preload links present; zero console errors. tests/a11y.spec.ts runs @axe-core/playwright with wcag2a and wcag2aa at both viewports expecting zero violations (color-contrast is the known risk — the lime-on-light token exists for exactly this), and drives the FAQ by keyboard: Tab to the first question, Enter toggles aria-expanded to 'true' and reveals the aria-controls region, Space toggles it back; a separate case opens every item and asserts the page grows without clipping. scripts/lighthouse.mjs runs TWICE with EXPLICIT screenEmulation — { width: 393, height: 852, mobile: true, deviceScaleFactor: 3 } and { width: 1440, height: 900, mobile: false, deviceScaleFactor: 1 } — because Lighthouse defaults to 412x823 and 1350x940 and would audit neither designed width; asserts accessibility >= 95 and CLS < 0.1; writes reports/ (gitignored). scripts/overlay.mjs renders each built section at 1440 and writes a side-by-side against the committed design/ref/<nodeId>.png into scripts/out/ (gitignored) for the visual-fidelity judgement. Record final measured per-section deltas and every deviation from the comp in PLAN.md.",
+      "verify": "npx playwright install chromium && npm run build && npm run lint && node scripts/measure.mjs --all && npx playwright test && node scripts/lighthouse.mjs && node scripts/overlay.mjs && git status --porcelain reports scripts/out | wc -l | grep -q '^0$'",
+      "depends_on": ["T7", "T8", "T9", "T10"]
+    },
+    {
+      "id": "T12",
+      "title": "Dev-server smoke, README, commit",
+      "files": [
+        "README.md",
+        "scripts/dev-smoke.mjs",
+        "package.json",
+        "PLAN.md"
+      ],
+      "interface": "scripts/dev-smoke.mjs covers definition-of-done item 2, which is about 'npm run dev' and not the production server: port-preflight 3017, spawn 'npm run dev', poll for readiness, assert all seven data-section elements are present and that every asset in public/assets/manifest.json returns 200, then kill ONLY its own process tree (on Windows use taskkill /T /PID on its own child pid — do not kill by port or by name). README.md documents install, dev/start/build/lint, the verify scripts, port 3017, asset and font provenance with licences, the recorded design corrections (stale mobile headings, font substitution, colour and radius collapse, the lime-on-light contrast token), and that all CTAs are presentational. Final commit includes src/, public/assets/, src/fonts/, design/raw/, design/ref/, design/sections.json, PLAN.md, tasks.json and the lockfile; it excludes .next/, reports/, scripts/out/, playwright-report/ and test-results/. Do NOT push and do NOT deploy — that is out of scope.",
+      "verify": "npm run verify:design && npm run verify:assets && node scripts/dev-smoke.mjs && test -f README.md && git status --porcelain | wc -l | grep -q '^0$' && test \"$(git rev-parse --show-toplevel)\" = \"$(pwd -W)\" && git log --oneline | head -1",
+      "depends_on": ["T11"]
+    }
+  ]
+}

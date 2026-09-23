@@ -1,0 +1,728 @@
+/*
+ * Hero section — calibration gate.
+ *
+ * Fluid values use exact-endpoint interpolation between the 393px mobile
+ * comp and the 1440px desktop comp, matching the pattern already
+ * established in globals.css:
+ *   clamp(<mobile>px, calc(<mobile>px + (<desktop> - <mobile>) *
+ *     (100vw - 393px) / 1047), <desktop>px)
+ * For a DESCENDING value (letter-spacing tracking tightens as width grows,
+ * so the desktop end is the smaller number) the two bounds swap: clamp() is
+ * max(MIN, min(VAL, MAX)), so writing the mobile end as MIN pins the value
+ * at the mobile figure forever and the interpolation silently never runs.
+ *
+ * Two gaps (--hero-lead-gap, --hero-panel-gap) are not literal auto-layout
+ * values from the Figma export — the source positions those blocks with
+ * absolute top offsets instead of explicit gaps, and the offsets bake in
+ * Helvetica Neue's line-wrap count. They start as best-effort estimates
+ * derived from the offsets and are the values this task's calibration
+ * pass is expected to true up against the measured heights.
+ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-ink-canvas);
+  color: var(--color-light-ivory);
+}
+
+.backgroundLayer {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  height: clamp(852px, calc(852px + (1240 - 852) * (100vw - 393px) / 1047), 1240px);
+  overflow: hidden;
+  z-index: 0;
+  /* The photo does not cover the layer's bottom band (see
+     .backgroundImage); paint the canvas colour so it can never read as an
+     empty gap. */
+  background: var(--color-ink-canvas);
+}
+
+.backgroundImage {
+  /* Mobile 2672:687, scaleMode CROP: box 393x852, transform sx .275210
+     sy .894958 ox .362745 oy .104943 -> image 1427.9x951.9 at (-517.9,-99.9).
+     These already cover the layer at every mobile width (the image spans
+     -517.9..910 horizontally and -99.9..852.0 vertically).
+     Rendered at full opacity: the comp darkens this with the blurred masses
+     in .backgroundGlow, not by fading the photograph.
+     max-width: none is required -- Tailwind preflight's img { max-width:
+     100% } silently clamps a CROP image back into its box and squashes it. */
+  position: absolute;
+  left: -517.9px;
+  top: -99.9px;
+  width: 1427.9px;
+  height: 951.9px;
+  max-width: none;
+  object-fit: cover;
+}
+
+.backgroundGlow {
+  /* Mobile stack (2672:689 gradient, :690 dark, :691 #2a2d16, :692 dark),
+     topmost first. :692 is a real ellipse -- centre (107.5, 1002.5), radii
+     (746.5, 282), blur 157.1 -> feather 78.5, size 825x360, stop 56%. The
+     two VECTORs are fitted: as full-bbox ellipses they reached y344 and ran
+     48-69 luminance too dark across y480-600, which the comp keeps light. */
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      825px 361px at 98px 977px,
+      rgba(20, 21, 7, 1) 0%,
+      rgba(20, 21, 7, 1) 56%,
+      rgba(20, 21, 7, 0) 100%
+    ),
+    radial-gradient(
+      378px 198px at 205px -17px,
+      rgba(42, 45, 22, 0.95) 0%,
+      rgba(42, 45, 22, 0.6) 30%,
+      rgba(42, 45, 22, 0) 100%
+    ),
+    radial-gradient(
+      847px 700px at 187px 1290px,
+      rgba(20, 21, 7, 0.95) 0%,
+      rgba(20, 21, 7, 0.78) 58%,
+      rgba(20, 21, 7, 0) 100%
+    ),
+    radial-gradient(
+      560px 400px at -27px 980px,
+      rgba(107, 116, 64, 0.34) 0%,
+      rgba(40, 44, 18, 0.26) 45%,
+      rgba(20, 21, 7, 0) 100%
+    );
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- header / nav ------------------------------------------------- */
+
+.header {
+  margin-top: clamp(10px, calc(10px + (31 - 10) * (100vw - 393px) / 1047), 31px);
+  padding-inline: clamp(12px, calc(12px + (52 - 12) * (100vw - 393px) / 1047), 52px);
+}
+
+.navPill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-inline: auto;
+  max-width: clamp(369px, calc(369px + (929 - 369) * (100vw - 393px) / 1047), 929px);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-90);
+  padding-block: clamp(6px, calc(6px + (8 - 6) * (100vw - 393px) / 1047), 8px);
+  padding-inline-start: clamp(10px, calc(10px + (24 - 10) * (100vw - 393px) / 1047), 24px);
+  padding-inline-end: clamp(6px, calc(6px + (10 - 6) * (100vw - 393px) / 1047), 10px);
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.navLogoMark {
+  width: clamp(29.5px, calc(29.5px + (40 - 29.5) * (100vw - 393px) / 1047), 40px);
+  height: auto;
+}
+
+.navWordmark {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(20px, calc(20px + (24 - 20) * (100vw - 393px) / 1047), 24px);
+  letter-spacing: clamp(-1.2px, calc(-1px + (-1.2 - -1) * (100vw - 393px) / 1047), -1px);
+  color: var(--color-light-ivory);
+  white-space: nowrap;
+}
+
+.navLinks {
+  align-items: center;
+  gap: 32px;
+  background: rgba(255, 255, 245, 0.03);
+  border-radius: var(--radius-90);
+  padding: 12px 24px;
+  list-style: none;
+}
+
+.navLink {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.64px;
+  color: var(--color-light-ivory);
+  white-space: nowrap;
+}
+
+.navCta {
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--color-light-ivory);
+  color: var(--color-ink-black);
+  border-radius: var(--radius-90);
+  padding: 14px 28px;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  /* Comp 2655:800 is 50 tall: 14+14 padding over a 22px label box. The
+     inherited 24px made it 52 and the whole nav 68 against the comp's 66. */
+  line-height: 22px;
+  letter-spacing: -0.64px;
+  white-space: nowrap;
+}
+
+.navToggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: var(--color-light-white);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-90);
+}
+
+.navToggleBar {
+  width: 26px;
+  height: 2px;
+  border-radius: 50px;
+  background: var(--color-ink-black);
+}
+
+.mobileMenu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--color-ink-strong);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-20);
+  padding: 12px;
+  list-style: none;
+  z-index: 20;
+}
+
+.mobileMenu[data-open="true"] {
+  display: flex;
+}
+
+.mobileMenuLink {
+  display: block;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--color-light-ivory);
+  padding: 10px 12px;
+  border-radius: var(--radius-12);
+}
+
+.mobileMenuLink:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- headline ------------------------------------------------------- */
+
+.hero {
+  /* Comp content ends at y1890 of 1951, i.e. 61px below, not 130. */
+  /* Comp trailing space below the lower block: 1951-1890 = 61 on mobile and
+     1923-1786 = 137 on desktop. The old 190 was absorbing the panel offset
+     and the dropped line-height above. */
+  padding-bottom: clamp(61px, calc(61px + (137 - 61) * (100vw - 393px) / 1047), 137px);
+}
+
+.headlineBlock {
+  /* Comp 2672:703 starts at y313 on mobile and 2655:802 at y267 on desktop,
+     below navs that end at 66 and 99. Descending, so the bounds are swapped.
+     The old 237/130 landed the block at y303 and y229 -- the desktop miss
+     carried every landmark below it up by the same 38px. */
+  margin-top: clamp(170px, calc(247px + (170 - 247) * (100vw - 393px) / 1047), 247px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 38px;
+  max-width: clamp(369px, calc(369px + (700 - 369) * (100vw - 393px) / 1047), 700px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.headlineText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.headline {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(34px, calc(34px + (60 - 34) * (100vw - 393px) / 1047), 60px);
+  line-height: clamp(44px, calc(44px + (72 - 44) * (100vw - 393px) / 1047), 72px);
+  letter-spacing: clamp(-3px, calc(-1.7px + (-3 - -1.7) * (100vw - 393px) / 1047), -1.7px);
+  color: var(--color-light-ivory);
+  text-transform: capitalize;
+}
+
+.subhead {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(15px, calc(15px + (18 - 15) * (100vw - 393px) / 1047), 18px);
+  line-height: clamp(24px, calc(24px + (28 - 24) * (100vw - 393px) / 1047), 28px);
+  letter-spacing: clamp(
+    -0.36px,
+    calc(-0.3px + (-0.36 - -0.3) * (100vw - 393px) / 1047),
+    -0.3px
+  );
+  color: #eff2d3;
+  max-width: clamp(369px, calc(369px + (493 - 369) * (100vw - 393px) / 1047), 493px);
+  /*
+   * The comp's box is 35px at 393 (2672:706) and 41px at 1440 (2655:805)
+   * while its two rendered lines need 48 and 56 -- both nodes are HUG with a
+   * stale stored height, so the text overflows the box and the CTA row below
+   * is positioned from the BOX, not the text. Both exported references agree:
+   * the lime CTA sits at y493 on mobile and y509 on desktop, which is
+   * 313+88+18+35+38 and 267+144+18+41+38 exactly. Letting the box hug the
+   * text instead pushed the CTA 13px (mobile) and 15px (desktop) too low.
+   */
+  height: clamp(35px, calc(35px + (41 - 35) * (100vw - 393px) / 1047), 41px);
+  flex: none;
+}
+
+.ctaRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, calc(10px + (16 - 10) * (100vw - 393px) / 1047), 16px);
+}
+
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.14);
+  color: var(--color-light-ivory);
+  border-radius: var(--radius-90);
+  /* Padding-block is a flat 14 in both comps (2672:710 / 2655:809); only the
+     label box grows, 19px at font-size 14 to 22px at 16. Interpolating the
+     padding instead, with no line-height at all, gave 52/56 for 47/50. */
+  padding: 14px clamp(18px, calc(21px + (18 - 21) * (100vw - 393px) / 1047), 21px);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: clamp(19px, calc(19px + (22 - 19) * (100vw - 393px) / 1047), 22px);
+  letter-spacing: clamp(
+    -0.32px,
+    calc(-0.28px + (-0.32 - -0.28) * (100vw - 393px) / 1047),
+    -0.28px
+  );
+  white-space: nowrap;
+}
+
+/* ---- about-soniq panel ----------------------------------------------- */
+
+.panel {
+  /* Comp 2672:830 starts at y852 on mobile and 2655:715 at y818 on desktop.
+     The old 305/203 landed them at y844 and y761; the 57px desktop miss was
+     what carried the logo strip and the stat cards out of place. */
+  margin-top: clamp(260px, calc(313px + (260 - 313) * (100vw - 393px) / 1047), 313px);
+  max-width: 1336px;
+  margin-inline: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  /* No inset on mobile: in 2672:830 the about strip starts flush at the
+     block's top edge (both at y852). The 21/24 inset here was 45px of the
+     section's height excess. */
+  padding-top: clamp(0px, calc(0px + (30 - 0) * (100vw - 393px) / 1047), 30px);
+  padding-bottom: clamp(0px, calc(0px + (52 - 0) * (100vw - 393px) / 1047), 52px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(60px, calc(60px + (82 - 60) * (100vw - 393px) / 1047), 82px);
+}
+
+.eyebrowRow {
+  /*
+   * Comp 2672:729 is 139 tall: a hairline, 24, a row holding the label and
+   * the tag SIDE BY SIDE (2672:713, 23 tall), 24, the body (44), 24, the
+   * closing hairline. The old flex column stacked the tag under the label at
+   * a 12px gap for 108, and that 31px shortfall carried the logo strip and
+   * the stat cards up by the same amount -- the reference (y840..1010) shows
+   * the tag on the label's row. display:contents lifts the tag and the body
+   * out of .eyebrowRight into this grid without touching the markup.
+   */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  row-gap: 24px;
+  padding-block: 24px;
+  align-items: center;
+}
+
+.eyebrowRow > .eyebrowRight {
+  display: contents;
+}
+
+.eyebrowRow > .eyebrowRight > .eyebrowTag {
+  justify-self: end;
+}
+
+.eyebrowRow > .eyebrowRight > .eyebrowBody {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .eyebrowRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0;
+  }
+
+  /* Back to the desktop arrangement: 2655:716 is a single 44-tall row. */
+  .eyebrowRow > .eyebrowRight {
+    display: flex;
+  }
+
+  .eyebrowRow > .eyebrowRight > .eyebrowTag {
+    justify-self: auto;
+  }
+
+  .eyebrowRow > .eyebrowRight > .eyebrowBody {
+    grid-column: auto;
+  }
+
+
+  /* Desktop stack, topmost first:
+       2655:714 dark    centre (694, 1132)  radii (1230, 465)  blur 157.1
+       2655:713 #2a2d16 centre (799, -358)  radii (1303, 465)  blur 500
+       2655:712 dark    VECTOR 2293x1997 at (-322, 296)  blur 302.2
+       2655:711 grad    VECTOR 1571x983  at (-312, 296)  blur 302.2
+     714 and 713 are real ellipses and use their own geometry with the b/2
+     feather rule. 711 and 712 are VECTOR nodes whose paths cannot be
+     recovered from a bounding box, so they are fitted. 714 carries a -1.96deg
+     rotation, omitted: at that angle on a 1230px-radius blurred ellipse it is
+     well under a pixel of displacement. */
+  /* Horizontal terms as percentages of the layer, vertical left in px (the
+     desktop layer height is a fixed 1240). At 1440 these are identical to
+     the measured px values; as px the whole stack stopped at the 1440 the
+     design was fitted at, so above ~1650 the photo's bottom edge showed as a
+     hard seam with nothing dark over it. Scaling horizontally keeps the dark
+     masses over that edge at any width. */
+  .backgroundGlow {
+    background:
+      radial-gradient(
+        29.861% 340px at 2.083% 430px,
+        rgba(20, 21, 7, 0.82) 0%,
+        rgba(20, 21, 7, 0.45) 50%,
+        rgba(20, 21, 7, 0) 100%
+      ),
+      radial-gradient(
+        90.833% 543px at 48.194% 1132px,
+        rgba(20, 21, 7, 1) 0%,
+        rgba(20, 21, 7, 1) 71%,
+        rgba(20, 21, 7, 0) 100%
+      ),
+      radial-gradient(
+        107.847% 715px at 55.486% -358px,
+        rgba(42, 45, 22, 0.95) 0%,
+        rgba(42, 45, 22, 0.75) 30%,
+        rgba(42, 45, 22, 0) 100%
+      ),
+      radial-gradient(
+        76.389% 900px at 20.833% 1500px,
+        rgba(20, 21, 7, 0.97) 0%,
+        rgba(20, 21, 7, 0.85) 60%,
+        rgba(20, 21, 7, 0) 100%
+      ),
+      radial-gradient(
+        62.5% 560px at 26.389% 1080px,
+        rgba(107, 116, 64, 0.45) 0%,
+        rgba(40, 44, 18, 0.35) 45%,
+        rgba(20, 21, 7, 0) 100%
+      );
+  }
+
+  /* 2655:709 CROP: box 1440x1240, transform sx .768 sy .992 ox .116
+     oy .241525.
+     The horizontal half is expressed as a ratio of the layer rather than in
+     px. At 1440 it is identical to the measured -217.5/1875, but as px the
+     image stopped at x1657, so every viewport wider than that showed a hard
+     edge where the photograph ran out -- which is what "it should be filled"
+     reported. As percentages it spans -15.1% to 115.1% of the layer at any
+     width and can never run out.
+     The vertical stays in px. The transform's ty + sy = 1.2335 exceeds 1,
+     which is impossible for a crop, so the vertical offset cannot be derived
+     this way and these values were fitted against the reference instead.
+     They leave the layer's bottom 292px uncovered, which is invisible: that
+     band is where .backgroundGlow's dark masses sit and the comp is
+     near-black there too. Closing it by scaling the image up 1.23x was
+     measured and costs real fidelity (mean|d| 18.64 -> 23.82), so the gap is
+     kept and .backgroundLayer paints the canvas colour behind it. */
+  .backgroundImage {
+    left: -15.104%;
+    top: -301.9px;
+    width: 130.208%;
+    height: 1250px;
+  }
+}
+
+.eyebrowLeft {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.eyebrowIcon {
+  width: 23px;
+  height: 23px;
+}
+
+.eyebrowLabel {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  color: var(--color-neutral-200);
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.eyebrowRight {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .eyebrowRight {
+    flex-direction: row;
+    align-items: center;
+    gap: 208px;
+  }
+}
+
+.eyebrowTag {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  color: var(--color-neutral-200);
+  white-space: nowrap;
+  /* The comp applies capitalize here; the source string is sentence case,
+     so omitting it rendered visibly different copy. */
+  text-transform: capitalize;
+}
+
+.eyebrowBody {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  line-height: 22px;
+  color: var(--color-neutral-200);
+  max-width: 316px;
+}
+
+.logosRow {
+  /* The comp keeps all six marks on ONE row at both widths -- mobile node
+     2672:714 is 393x51 -- and lets the row run past the frame edges under
+     the .logosFade mask. Wrapping instead produced three rows 185px tall on
+     mobile against the comp's 51, which was 134px of the section's total
+     179px height excess on its own. */
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.logoCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: clamp(
+    12.753px,
+    calc(12.753px + (14.5 - 12.753) * (100vw - 393px) / 1047),
+    14.5px
+  );
+  padding-block: clamp(
+    9.565px,
+    calc(9.565px + (10.875 - 9.565) * (100vw - 393px) / 1047),
+    10.875px
+  );
+}
+
+.logoCell img {
+  height: clamp(
+    31.882px,
+    calc(31.882px + (36.25 - 31.882) * (100vw - 393px) / 1047),
+    36.25px
+  );
+  width: auto;
+}
+
+.logosFade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.featureIntro {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 400;
+  font-size: clamp(26px, calc(26px + (40 - 26) * (100vw - 393px) / 1047), 40px);
+  /*
+   * Was clamp(1.32, calc(1.32 + ...), 1.36) -- UNITLESS. Inside calc() that
+   * adds a number to a length, which is invalid, so the whole declaration
+   * was dropped and this inherited body's 1.5: 60px per line instead of
+   * 54.4, making the block 180 against the comp's 162. Unitless ratios
+   * cannot be interpolated this way; the endpoints are resolved to px here
+   * (26 * 1.32 and 40 * 1.36).
+   */
+  line-height: clamp(34.32px, calc(34.32px + (54.4 - 34.32) * (100vw - 393px) / 1047), 54.4px);
+  letter-spacing: clamp(-2px, calc(-1.3px + (-2 - -1.3) * (100vw - 393px) / 1047), -1.3px);
+  /* 2672:730 is 369 wide, 2655:741 is 1060 -- not the full panel width, so
+     without this the desktop line breaks fall in the wrong places. */
+  max-width: clamp(369px, calc(369px + (1060 - 369) * (100vw - 393px) / 1047), 1060px);
+  color: var(--color-light-cream);
+}
+
+.featureIntroDim {
+  color: var(--color-light-cream);
+  opacity: 0.4;
+}
+
+.statCardsRow {
+  margin-top: clamp(40px, calc(40px + (100 - 40) * (100vw - 393px) / 1047), 100px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(8px, calc(8px + (10 - 8) * (100vw - 393px) / 1047), 10px);
+}
+
+@media (min-width: 768px) {
+  .statCardsRow {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.statCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  min-height: clamp(238px, calc(238px + (358 - 238) * (100vw - 393px) / 1047), 358px);
+  border-radius: var(--radius-24);
+  padding: clamp(12px, calc(12px + (30 - 12) * (100vw - 393px) / 1047), 30px);
+}
+
+.statCardTrusted {
+  background: var(--color-light-sage);
+  color: var(--color-ink-black);
+}
+
+.statCardDark {
+  background: var(--color-ink-strong);
+  color: var(--color-light-ivory);
+}
+
+.statCardPhoto {
+  color: var(--color-light-ivory);
+}
+
+.statCardPhotoImage {
+  object-fit: cover;
+}
+
+.avatarStack {
+  display: flex;
+  align-items: center;
+}
+
+/*
+ * DIRECT children only. As a descendant selector this also caught the 14px
+ * plus glyph nested inside .avatarPlus, stretching it to 12x56 -- a tall
+ * white sliver spiking out above and below the badge, where the comp
+ * (2655:750) has a 14x14 plus centred in a 26px circle.
+ */
+.avatarStack > img {
+  width: clamp(48px, calc(48px + (56 - 48) * (100vw - 393px) / 1047), 56px);
+  height: clamp(48px, calc(48px + (56 - 48) * (100vw - 393px) / 1047), 56px);
+  margin-right: -12px;
+  border-radius: 50%;
+}
+
+.avatarPlus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  /*
+   * 5, not the comp's 6. Figma's 1px border does not consume the content box,
+   * so 26 with 6px padding leaves it a 14px plus (2655:750). Under CSS
+   * border-box the border does consume it: 26 - 12 - 2 = 12, which rendered
+   * the glyph two pixels small. 5px restores the 14.
+   */
+  padding: 5px;
+  background: var(--color-ink-canvas);
+  border: 1px solid #e8ebd6;
+  /* Comp 2655:749 is rounded-[12.5px], not the 12px token, on a 26px box. */
+  border-radius: 12.5px;
+}
+
+.trustedText {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, calc(12px + (22 - 12) * (100vw - 393px) / 1047), 22px);
+}
+
+.trustedHeading {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(16px, calc(16px + (18 - 16) * (100vw - 393px) / 1047), 18px);
+  line-height: 26px;
+  letter-spacing: -0.36px;
+}
+
+.trustedBody {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
+  line-height: 20px;
+  letter-spacing: -0.32px;
+  color: rgba(20, 21, 7, 0.6);
+}
+
+.statCardLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statIcon {
+  width: clamp(19px, calc(19px + (25 - 19) * (100vw - 393px) / 1047), 25px);
+  height: clamp(19px, calc(19px + (25 - 19) * (100vw - 393px) / 1047), 25px);
+}
+
+.statLabel {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, calc(14px + (18 - 14) * (100vw - 393px) / 1047), 18px);
+  letter-spacing: -0.28px;
+  white-space: nowrap;
+}
+
+.statValue {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(40px, calc(40px + (60 - 40) * (100vw - 393px) / 1047), 60px);
+  letter-spacing: clamp(-3px, calc(-2px + (-3 - -2) * (100vw - 393px) / 1047), -2px);
+  line-height: 0.99;
+}

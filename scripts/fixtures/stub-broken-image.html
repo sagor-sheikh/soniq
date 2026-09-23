@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Stub - Broken Image</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    [data-section] {
+      width: 100%;
+      background: linear-gradient(180deg, #f0f0f0 0%, #ffffff 100%);
+      border-bottom: 1px solid #eee;
+    }
+
+    [data-section]:nth-child(odd) {
+      background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
+    }
+
+    /* Desktop heights (1440px viewport) */
+    [data-section="hero"] {
+      height: 1923px;
+    }
+
+    [data-section="transactions"] {
+      height: 1326px;
+    }
+
+    [data-section="features"] {
+      height: 1238px;
+    }
+
+    [data-section="habits"] {
+      height: 956px;
+    }
+
+    [data-section="pricing"] {
+      height: 933px;
+    }
+
+    [data-section="faq"] {
+      height: 859px;
+    }
+
+    [data-section="footer"] {
+      height: 554px;
+    }
+
+    /* Mobile heights (393px viewport) */
+    @media (max-width: 768px) {
+      [data-section="hero"] {
+        height: 1951px;
+      }
+
+      [data-section="transactions"] {
+        height: 1841px;
+      }
+
+      [data-section="features"] {
+        height: 849px;
+      }
+
+      [data-section="habits"] {
+        height: 1042px;
+      }
+
+      [data-section="pricing"] {
+        height: 1370px;
+      }
+
+      [data-section="faq"] {
+        height: 868px;
+      }
+
+      [data-section="footer"] {
+        height: 550px;
+      }
+    }
+
+    .section-label {
+      padding: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <!-- Self-test fixture: identical to stub-pass.html except for the one
+       broken <img> below. It exists to prove the settle check in
+       measure.mjs can actually FAIL. A missing asset reports
+       complete === true with naturalWidth === 0, and next/image reserves
+       the box from width/height, so heights stay correct and the tolerance
+       gate alone would report a clean pass. -->
+  <img src="./this-file-does-not-exist.png" alt="" width="10" height="10">
+  <section data-section="hero">
+    <div class="section-label">Hero Section</div>
+  </section>
+  <section data-section="transactions">
+    <div class="section-label">Transactions Section</div>
+  </section>
+  <section data-section="features">
+    <div class="section-label">Features Section</div>
+  </section>
+  <section data-section="habits">
+    <div class="section-label">Habits Section</div>
+  </section>
+  <section data-section="pricing">
+    <div class="section-label">Pricing Section</div>
+  </section>
+  <section data-section="faq">
+    <div class="section-label">FAQ Section</div>
+  </section>
+  <section data-section="footer">
+    <div class="section-label">Footer Section</div>
+  </section>
+
+  <script>
+    // Wait for fonts and images to be ready
+    async function onPageReady() {
+      try {
+        await document.fonts.ready;
+      } catch (e) {
+        // Ignore font loading errors
+      }
+
+      // Wait for all images to decode
+      const images = Array.from(document.querySelectorAll('img'));
+      await Promise.all(images.map(img => {
+        return img.decode ? img.decode().catch(() => {}) : Promise.resolve();
+      }));
+    }
+
+    onPageReady();
+  </script>
+</body>
+</html>
