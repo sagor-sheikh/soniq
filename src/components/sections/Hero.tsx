@@ -137,16 +137,32 @@ export function Hero() {
               </div>
 
               <div className={styles.logosRow} data-reveal data-reveal-delay="2">
-                {partnerLogos.map((logo) => (
-                  <div key={logo.name} className={styles.logoCell}>
-                    <Image
-                      src={logo.src}
-                      alt={logo.alt}
-                      width={logo.width}
-                      height={logo.height}
-                    />
+                <div className={styles.logosTrack} data-logo-carousel>
+                  <div className={styles.logosGroup}>
+                    {partnerLogos.concat(partnerLogos).map((logo, idx) => (
+                      <div key={`${logo.name}-a-${idx}`} className={styles.logoCell}>
+                        <Image
+                          src={logo.src}
+                          alt={logo.alt}
+                          width={logo.width}
+                          height={logo.height}
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <div className={styles.logosGroup} aria-hidden="true">
+                    {partnerLogos.concat(partnerLogos).map((logo, idx) => (
+                      <div key={`${logo.name}-b-${idx}`} className={styles.logoCell}>
+                        <Image
+                          src={logo.src}
+                          alt={logo.alt}
+                          width={logo.width}
+                          height={logo.height}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div
                   className={styles.logosFade}
                   aria-hidden

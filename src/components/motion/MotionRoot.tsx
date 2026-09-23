@@ -3,6 +3,9 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initCardTilt } from "./tilt";
+import { initMagneticButtons } from "./magnetic";
+import { initAmbientMotion } from "./ambient";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -84,7 +87,7 @@ export function MotionRoot() {
     const triggers: ScrollTrigger[] = [];
     const elementTriggers = new Map<HTMLElement, ScrollTrigger>();
 
-    // Trigger reveal on an element with silky GSAP tween
+    // Trigger reveal on an element with silky, calibrated GSAP tween
     const revealElement = (el: HTMLElement) => {
       if (el.dataset.revealed === "true") return;
       el.dataset.revealed = "true";
@@ -111,7 +114,7 @@ export function MotionRoot() {
         {
           opacity: 1,
           y: 0,
-          duration: 0.85,
+          duration: isLead ? 0.95 : 0.85,
           delay,
           ease: "power3.out",
           force3D: true,
@@ -123,6 +126,60 @@ export function MotionRoot() {
           },
         },
       );
+
+      // Micro-stagger child items if present for a luxurious cascade
+      const txRows = el.querySelectorAll<HTMLElement>("[class*='txItem']");
+      if (txRows.length > 0) {
+        gsap.fromTo(
+          txRows,
+          { opacity: 0, x: -12 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.07,
+            delay: delay + 0.15,
+            ease: "power2.out",
+            clearProps: "transform,opacity",
+          },
+        );
+      }
+
+      const stars = el.querySelectorAll<HTMLElement>("[class*='star']");
+      if (stars.length > 0) {
+        gsap.fromTo(
+          stars,
+          { scale: 0.4, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.05,
+            delay: delay + 0.2,
+            ease: "back.out(1.8)",
+            clearProps: "transform,opacity",
+          },
+        );
+      }
+
+      const featureItems = el.querySelectorAll<HTMLElement>(
+        "[class*='featureList'] > li",
+      );
+      if (featureItems.length > 0) {
+        gsap.fromTo(
+          featureItems,
+          { opacity: 0, y: 8 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.04,
+            delay: delay + 0.18,
+            ease: "power2.out",
+            clearProps: "transform,opacity",
+          },
+        );
+      }
 
       // Find any count-up counters inside this revealed element
       const innerCounters = Array.from(
@@ -274,6 +331,11 @@ export function MotionRoot() {
     window.addEventListener("scroll", releaseStranded, { passive: true });
     window.addEventListener("resize", releaseStranded, { passive: true });
 
+    // ---- 6. Initialize Luxury Motion Suites (Tilt, Magnetic, Ambient) --------
+    const cleanupTilt = initCardTilt();
+    const cleanupMagnetic = initMagneticButtons();
+    const cleanupAmbient = initAmbientMotion();
+
     // Initial refresh on mount
     requestAnimationFrame(() => {
       ScrollTrigger.refresh();
@@ -300,6 +362,9 @@ export function MotionRoot() {
       window.removeEventListener("scroll", releaseStranded);
       window.removeEventListener("resize", releaseStranded);
       window.removeEventListener("load", syncRefresh);
+      cleanupTilt();
+      cleanupMagnetic();
+      cleanupAmbient();
       observer.disconnect();
       videoObserver.disconnect();
       elementTriggers.forEach((t) => t.kill());

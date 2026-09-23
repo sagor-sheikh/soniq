@@ -530,18 +530,27 @@
 }
 
 .logosRow {
-  /* The comp keeps all six marks on ONE row at both widths -- mobile node
-     2672:714 is 393x51 -- and lets the row run past the frame edges under
-     the .logosFade mask. Wrapping instead produced three rows 185px tall on
-     mobile against the comp's 51, which was 134px of the section's total
-     179px height excess on its own. */
   position: relative;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
   overflow: hidden;
+  width: 100%;
+}
+
+.logosTrack {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+.logosGroup {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: clamp(24px, calc(24px + (48 - 24) * (100vw - 393px) / 1047), 48px);
+  padding-right: clamp(24px, calc(24px + (48 - 24) * (100vw - 393px) / 1047), 48px);
 }
 
 .logoCell {
@@ -573,6 +582,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 2;
 }
 
 .featureIntro {
