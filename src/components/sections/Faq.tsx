@@ -1,10 +1,6 @@
-import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Accordion, type AccordionItemData } from "@/components/ui/Accordion";
-// Same exported photo the hero uses (design/sections.json faq.assets,
-// node 2655:1111 / 2677:1263).
-import backgroundPhoto from "../../../public/assets/141ed5a52e94bc09de7c21540d2f7831bfd5eebe64afa9b194ae75706951c568.png";
 import styles from "./Faq.module.css";
 
 // Copy is verbatim from design/sections.json faq.copy. The heading is the
@@ -57,46 +53,7 @@ const FAQ_ITEMS: AccordionItemData[] = [
 export function Faq() {
   return (
     <section id="faq" data-section="faq" className={styles.section}>
-      <div className={styles.background} aria-hidden>
-        {/* 2655:1111 -- the fill is scaleMode CROP, not a cover fit, so the
-            photo box and the image inside it are both sized explicitly at
-            desktop. Mobile keeps the cover fit. */}
-        <div className={styles.photoBox}>
-          <Image
-            src={backgroundPhoto}
-            alt=""
-            width={2382}
-            height={1588}
-            sizes="100vw"
-            className={styles.backgroundImage}
-          />
-          {/* Ambient loop generated from this very still (Higgsfield/Grok
-              image-to-video), so its first frame is the comp image. It stays
-              transparent until MotionRoot assigns a src, which it never does
-              for a reduced-motion reader -- they keep the still above. */}
-          <video
-            className={styles.backgroundImage}
-            data-bg-video
-            data-src="/video/hero-loop.mp4"
-            muted
-            loop
-            playsInline
-            preload="none"
-            aria-hidden="true"
-            tabIndex={-1}
-          />
-        </div>
-        {/* Desktop stack, bottom to top: 2655:1112 cream, 2655:1113 glass
-            card, then 2655:1117 lime and 2655:1118 dark -- the last two sit
-            ON TOP of the card, which is why the card lives here rather than
-            in the accordion column. */}
-        <div className={styles.cream} />
-        <div className={styles.glass} />
-        <div className={styles.darkWide} />
-        <div className={styles.lime} />
-        <div className={styles.dark} />
-        <div className={styles.overlay} />
-      </div>
+      <div className={styles.background} aria-hidden />
 
       <div className={styles.content}>
         <Container>
@@ -116,8 +73,9 @@ export function Faq() {
             </div>
 
             <div className={styles.accordionColumn} data-reveal data-reveal-delay="1">
-              <div className={styles.accordionCard} aria-hidden />
-              <Accordion items={FAQ_ITEMS} initialOpenId={FAQ_ITEMS[0].id} />
+              <div className={styles.accordionCard}>
+                <Accordion items={FAQ_ITEMS} initialOpenId={FAQ_ITEMS[0].id} />
+              </div>
             </div>
           </div>
         </Container>

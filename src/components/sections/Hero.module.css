@@ -389,34 +389,13 @@
   margin-top: clamp(260px, calc(313px + (260 - 313) * (100vw - 393px) / 1047), 313px);
   max-width: 1336px;
   margin-inline: auto;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   padding-top: 0;
   padding-bottom: clamp(24px, calc(24px + (44 - 24) * (100vw - 393px) / 1047), 44px);
   padding-inline: clamp(16px, calc(16px + (36 - 16) * (100vw - 393px) / 1047), 36px);
   display: flex;
   flex-direction: column;
   gap: clamp(40px, calc(40px + (60 - 40) * (100vw - 393px) / 1047), 60px);
-}
-
-.panel::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.05) 35%,
-    rgba(176, 241, 14, 0.22) 75%,
-    rgba(255, 255, 255, 0.16) 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 1;
 }
 
 .eyebrowRow {
