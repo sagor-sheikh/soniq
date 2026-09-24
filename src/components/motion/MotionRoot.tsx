@@ -19,7 +19,8 @@ const BG_VIDEO_SELECTOR = "[data-bg-video]";
 const COUNT_DURATION = 1.6;
 
 /**
- * Counts up to a target number using GSAP with exact label formatting preserved.
+ * Counts up to a target number using GSAP with exact label formatting preserved
+ * and a subtle tactile lock-in pulse on completion.
  */
 function animateCount(el: HTMLElement, done?: () => void) {
   if (el.dataset.countupStarted === "true") return;
@@ -45,7 +46,7 @@ function animateCount(el: HTMLElement, done?: () => void) {
   gsap.to(proxy, {
     val: target,
     duration: COUNT_DURATION,
-    ease: "power2.out",
+    ease: "power3.out",
     onUpdate: () => {
       const shown = grouped
         ? proxy.val.toLocaleString(undefined, {
@@ -57,6 +58,18 @@ function animateCount(el: HTMLElement, done?: () => void) {
     },
     onComplete: () => {
       el.textContent = finalText;
+      gsap.fromTo(
+        el,
+        { scale: 1 },
+        {
+          scale: 1.05,
+          duration: 0.14,
+          yoyo: true,
+          repeat: 1,
+          ease: "power2.out",
+          clearProps: "transform",
+        }
+      );
       if (done) done();
     },
   });
@@ -70,6 +83,23 @@ export function MotionRoot() {
     if (typeof window === "undefined") return;
 
     root.dataset.motion = "on";
+
+    // Header navigation soft entrance
+    const headerNav = document.querySelector<HTMLElement>("header nav");
+    if (headerNav) {
+      gsap.fromTo(
+        headerNav,
+        { y: -12, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          delay: 0.08,
+          clearProps: "transform,opacity",
+        },
+      );
+    }
 
     const revealTargets = Array.from(
       document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR),
@@ -132,13 +162,86 @@ export function MotionRoot() {
       if (txRows.length > 0) {
         gsap.fromTo(
           txRows,
-          { opacity: 0, x: -12 },
+          { opacity: 0, x: -14 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.5,
+            duration: 0.55,
             stagger: 0.07,
             delay: delay + 0.15,
+            ease: "power2.out",
+            clearProps: "transform,opacity",
+          },
+        );
+      }
+
+      const statCards = el.querySelectorAll<HTMLElement>("[class*='statCard']");
+      if (statCards.length > 0) {
+        gsap.fromTo(
+          statCards,
+          { opacity: 0, y: 16, scale: 0.97 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.08,
+            delay: delay + 0.1,
+            ease: "power2.out",
+            clearProps: "transform,opacity,scale",
+          },
+        );
+      }
+
+      const avatars = el.querySelectorAll<HTMLElement>(
+        "[class*='avatarStack'] > *"
+      );
+      if (avatars.length > 0) {
+        gsap.fromTo(
+          avatars,
+          { opacity: 0, scale: 0.5, x: -8 },
+          {
+            opacity: 1,
+            scale: 1,
+            x: 0,
+            duration: 0.45,
+            stagger: 0.06,
+            delay: delay + 0.22,
+            ease: "back.out(1.8)",
+            clearProps: "transform,opacity",
+          },
+        );
+      }
+
+      const badges = el.querySelectorAll<HTMLElement>("[class*='badge']");
+      if (badges.length > 0) {
+        gsap.fromTo(
+          badges,
+          { opacity: 0, scale: 0.75, y: 10 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            delay: delay + 0.2,
+            ease: "back.out(1.5)",
+            clearProps: "transform,opacity",
+          },
+        );
+      }
+
+      const tickItems = el.querySelectorAll<HTMLElement>("[class*='tickItem']");
+      if (tickItems.length > 0) {
+        gsap.fromTo(
+          tickItems,
+          { opacity: 0, x: -10 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.45,
+            stagger: 0.05,
+            delay: delay + 0.18,
             ease: "power2.out",
             clearProps: "transform,opacity",
           },
@@ -149,14 +252,14 @@ export function MotionRoot() {
       if (stars.length > 0) {
         gsap.fromTo(
           stars,
-          { scale: 0.4, opacity: 0 },
+          { scale: 0.35, opacity: 0 },
           {
             scale: 1,
             opacity: 1,
-            duration: 0.4,
+            duration: 0.45,
             stagger: 0.05,
             delay: delay + 0.2,
-            ease: "back.out(1.8)",
+            ease: "back.out(2)",
             clearProps: "transform,opacity",
           },
         );

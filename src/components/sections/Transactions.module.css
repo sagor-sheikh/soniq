@@ -278,6 +278,17 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .txItem:hover {
+    transform: translate3d(4px, 0, 0);
+  }
+
+  .txItem:hover .txIcon {
+    transform: scale(1.08);
+  }
 }
 
 .txDivider {
@@ -322,6 +333,7 @@
 .txIcon {
   width: 24px;
   height: 24px;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .txIconRound {

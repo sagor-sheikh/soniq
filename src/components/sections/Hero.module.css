@@ -40,17 +40,9 @@
 }
 
 .backgroundImage {
-  /* Mobile 2672:687, scaleMode CROP: box 393x852, transform sx .275210
-     sy .894958 ox .362745 oy .104943 -> image 1427.9x951.9 at (-517.9,-99.9).
-     These already cover the layer at every mobile width (the image spans
-     -517.9..910 horizontally and -99.9..852.0 vertically).
-     Rendered at full opacity: the comp darkens this with the blurred masses
-     in .backgroundGlow, not by fading the photograph.
-     max-width: none is required -- Tailwind preflight's img { max-width:
-     100% } silently clamps a CROP image back into its box and squashes it. */
   position: absolute;
   left: -517.9px;
-  top: -99.9px;
+  top: 0;
   width: 1427.9px;
   height: 951.9px;
   max-width: none;
@@ -58,36 +50,27 @@
 }
 
 .backgroundGlow {
-  /* Mobile stack (2672:689 gradient, :690 dark, :691 #2a2d16, :692 dark),
-     topmost first. :692 is a real ellipse -- centre (107.5, 1002.5), radii
-     (746.5, 282), blur 157.1 -> feather 78.5, size 825x360, stop 56%. The
-     two VECTORs are fitted: as full-bbox ellipses they reached y344 and ran
-     48-69 luminance too dark across y480-600, which the comp keeps light. */
   position: absolute;
   inset: 0;
   background:
+    /* Smooth bottom transition to dark canvas */
+    linear-gradient(
+      to bottom,
+      rgba(20, 21, 7, 0) 48%,
+      rgba(20, 21, 7, 0.45) 68%,
+      rgba(20, 21, 7, 0.88) 82%,
+      rgba(20, 21, 7, 1) 94%
+    ),
+    /* Soft left vignette for text legibility */
     radial-gradient(
-      825px 361px at 98px 977px,
-      rgba(20, 21, 7, 1) 0%,
-      rgba(20, 21, 7, 1) 56%,
+      ellipse 65% 55% at 0% 45%,
+      rgba(20, 21, 7, 0.65) 0%,
       rgba(20, 21, 7, 0) 100%
     ),
+    /* Soft headline text contrast */
     radial-gradient(
-      378px 198px at 205px -17px,
-      rgba(42, 45, 22, 0.95) 0%,
-      rgba(42, 45, 22, 0.6) 30%,
-      rgba(42, 45, 22, 0) 100%
-    ),
-    radial-gradient(
-      847px 700px at 187px 1290px,
-      rgba(20, 21, 7, 0.95) 0%,
-      rgba(20, 21, 7, 0.78) 58%,
-      rgba(20, 21, 7, 0) 100%
-    ),
-    radial-gradient(
-      560px 400px at -27px 980px,
-      rgba(107, 116, 64, 0.34) 0%,
-      rgba(40, 44, 18, 0.26) 45%,
+      ellipse 55% 35% at 50% 30%,
+      rgba(20, 21, 7, 0.25) 0%,
       rgba(20, 21, 7, 0) 100%
     );
   pointer-events: none;
@@ -101,6 +84,8 @@
 /* ---- header / nav ------------------------------------------------- */
 
 .header {
+  position: relative;
+  z-index: 50;
   margin-top: clamp(10px, calc(10px + (31 - 10) * (100vw - 393px) / 1047), 31px);
   padding-inline: clamp(12px, calc(12px + (52 - 12) * (100vw - 393px) / 1047), 52px);
 }
@@ -110,70 +95,112 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   margin-inline: auto;
-  max-width: clamp(369px, calc(369px + (929 - 369) * (100vw - 393px) / 1047), 929px);
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-90);
+  max-width: clamp(369px, calc(369px + (940 - 369) * (100vw - 393px) / 1047), 940px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
   padding-block: clamp(6px, calc(6px + (8 - 6) * (100vw - 393px) / 1047), 8px);
-  padding-inline-start: clamp(10px, calc(10px + (24 - 10) * (100vw - 393px) / 1047), 24px);
-  padding-inline-end: clamp(6px, calc(6px + (10 - 6) * (100vw - 393px) / 1047), 10px);
+  padding-inline-start: clamp(12px, calc(12px + (20 - 12) * (100vw - 393px) / 1047), 20px);
+  padding-inline-end: clamp(6px, calc(6px + (8 - 6) * (100vw - 393px) / 1047), 8px);
+}
+
+.navPill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: rgba(255, 255, 255, 0.18);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .navBrand {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .navLogoMark {
-  width: clamp(29.5px, calc(29.5px + (40 - 29.5) * (100vw - 393px) / 1047), 40px);
+  width: clamp(29.5px, calc(29.5px + (38 - 29.5) * (100vw - 393px) / 1047), 38px);
   height: auto;
 }
 
 .navWordmark {
   font-family: var(--font-display), sans-serif;
   font-size: clamp(20px, calc(20px + (24 - 20) * (100vw - 393px) / 1047), 24px);
-  letter-spacing: clamp(-1.2px, calc(-1px + (-1.2 - -1) * (100vw - 393px) / 1047), -1px);
-  color: var(--color-light-ivory);
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  color: #ffffff;
   white-space: nowrap;
 }
 
 .navLinks {
   align-items: center;
-  gap: 32px;
-  background: rgba(255, 255, 245, 0.03);
-  border-radius: var(--radius-90);
-  padding: 12px 24px;
+  gap: clamp(20px, calc(20px + (32 - 20) * (100vw - 393px) / 1047), 32px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+  padding: 10px 28px;
   list-style: none;
 }
 
 .navLink {
   font-family: var(--font-body), sans-serif;
   font-weight: 500;
-  font-size: 16px;
-  letter-spacing: -0.64px;
-  color: var(--color-light-ivory);
+  font-size: 15px;
+  letter-spacing: -0.3px;
+  color: rgba(255, 255, 255, 0.92);
   white-space: nowrap;
+  transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
+}
+
+.navLink:hover {
+  color: #ffffff;
+  opacity: 1;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
 }
 
 .navCta {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: var(--color-light-ivory);
-  color: var(--color-ink-black);
-  border-radius: var(--radius-90);
-  padding: 14px 28px;
+  background: #ffffff;
+  color: #0b0f0b;
+  border-radius: var(--radius-pill);
+  padding: 12px 26px;
   font-family: var(--font-body), sans-serif;
   font-weight: 500;
-  font-size: 16px;
-  /* Comp 2655:800 is 50 tall: 14+14 padding over a 22px label box. The
-     inherited 24px made it 52 and the whole nav 68 against the comp's 66. */
-  line-height: 22px;
-  letter-spacing: -0.64px;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.3px;
   white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+}
+
+.navCta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: #fbfbfb;
+}
+
+.navCta:active {
+  transform: translateY(0);
 }
 
 .navToggle {
@@ -181,36 +208,44 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  width: 44px;
-  height: 44px;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
-  background: var(--color-light-white);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-90);
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-pill);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.navToggle:hover {
+  transform: scale(1.05);
 }
 
 .navToggleBar {
-  width: 26px;
+  width: 20px;
   height: 2px;
   border-radius: 50px;
-  background: var(--color-ink-black);
+  background: #0b0f0b;
 }
 
 .mobileMenu {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 10px);
   right: 0;
   left: 0;
   flex-direction: column;
-  gap: 4px;
-  background: var(--color-ink-strong);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  gap: 6px;
+  background: rgba(20, 21, 7, 0.88);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-20);
   padding: 12px;
   list-style: none;
-  z-index: 20;
+  z-index: 50;
 }
 
 .mobileMenu[data-open="true"] {
@@ -223,12 +258,14 @@
   font-weight: 500;
   font-size: 15px;
   color: var(--color-light-ivory);
-  padding: 10px 12px;
+  padding: 10px 14px;
   border-radius: var(--radius-12);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .mobileMenuLink:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 /* ---- headline ------------------------------------------------------- */
@@ -308,12 +345,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: rgba(0, 0, 0, 0.14);
+  background: rgba(20, 21, 7, 0.32);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   color: var(--color-light-ivory);
   border-radius: var(--radius-90);
-  /* Padding-block is a flat 14 in both comps (2672:710 / 2655:809); only the
-     label box grows, 19px at font-size 14 to 22px at 16. Interpolating the
-     padding instead, with no line-height at all, gave 52/56 for 47/50. */
   padding: 14px clamp(18px, calc(21px + (18 - 21) * (100vw - 393px) / 1047), 21px);
   font-family: var(--font-body), sans-serif;
   font-size: clamp(14px, calc(14px + (16 - 14) * (100vw - 393px) / 1047), 16px);
@@ -324,45 +362,79 @@
     -0.28px
   );
   white-space: nowrap;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.secondaryCta:hover {
+  background: rgba(20, 21, 7, 0.45);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+}
+
+.secondaryCta:active {
+  transform: translateY(0);
 }
 
 /* ---- about-soniq panel ----------------------------------------------- */
 
 .panel {
+  position: relative;
   /* Comp 2672:830 starts at y852 on mobile and 2655:715 at y818 on desktop.
      The old 305/203 landed them at y844 and y761; the 57px desktop miss was
      what carried the logo strip and the stat cards out of place. */
   margin-top: clamp(260px, calc(313px + (260 - 313) * (100vw - 393px) / 1047), 313px);
   max-width: 1336px;
   margin-inline: auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  /* No inset on mobile: in 2672:830 the about strip starts flush at the
-     block's top edge (both at y852). The 21/24 inset here was 45px of the
-     section's height excess. */
-  padding-top: clamp(0px, calc(0px + (30 - 0) * (100vw - 393px) / 1047), 30px);
-  padding-bottom: clamp(0px, calc(0px + (52 - 0) * (100vw - 393px) / 1047), 52px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 0;
+  padding-bottom: clamp(24px, calc(24px + (44 - 24) * (100vw - 393px) / 1047), 44px);
+  padding-inline: clamp(16px, calc(16px + (36 - 16) * (100vw - 393px) / 1047), 36px);
   display: flex;
   flex-direction: column;
-  gap: clamp(60px, calc(60px + (82 - 60) * (100vw - 393px) / 1047), 82px);
+  gap: clamp(40px, calc(40px + (60 - 40) * (100vw - 393px) / 1047), 60px);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.05) 35%,
+    rgba(176, 241, 14, 0.22) 75%,
+    rgba(255, 255, 255, 0.16) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .eyebrowRow {
   /*
    * Comp 2672:729 is 139 tall: a hairline, 24, a row holding the label and
    * the tag SIDE BY SIDE (2672:713, 23 tall), 24, the body (44), 24, the
-   * closing hairline. The old flex column stacked the tag under the label at
-   * a 12px gap for 108, and that 31px shortfall carried the logo strip and
-   * the stat cards up by the same amount -- the reference (y840..1010) shows
-   * the tag on the label's row. display:contents lifts the tag and the body
+   * closing hairline. display:contents lifts the tag and the body
    * out of .eyebrowRight into this grid without touching the markup.
    */
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 12px;
-  row-gap: 24px;
-  padding-block: 24px;
+  row-gap: 20px;
+  padding-block: clamp(16px, calc(16px + (22 - 16) * (100vw - 393px) / 1047), 22px);
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-inline: calc(-1 * clamp(16px, calc(16px + (36 - 16) * (100vw - 393px) / 1047), 36px));
+  padding-inline: clamp(16px, calc(16px + (36 - 16) * (100vw - 393px) / 1047), 36px);
 }
 
 .eyebrowRow > .eyebrowRight {
@@ -383,7 +455,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-block: 0;
+    padding-block: clamp(18px, calc(18px + (24 - 18) * (100vw - 393px) / 1047), 24px);
   }
 
   /* Back to the desktop arrangement: 2655:716 is a single 44-tall row. */
@@ -418,34 +490,24 @@
      masses over that edge at any width. */
   .backgroundGlow {
     background:
+      /* Smooth bottom transition to dark canvas */
+      linear-gradient(
+        to bottom,
+        rgba(20, 21, 7, 0) 48%,
+        rgba(20, 21, 7, 0.35) 65%,
+        rgba(20, 21, 7, 0.82) 80%,
+        rgba(20, 21, 7, 1) 92%
+      ),
+      /* Left subtle vignette for text legibility */
       radial-gradient(
-        29.861% 340px at 2.083% 430px,
-        rgba(20, 21, 7, 0.82) 0%,
-        rgba(20, 21, 7, 0.45) 50%,
+        ellipse 50% 55% at 0% 42%,
+        rgba(20, 21, 7, 0.6) 0%,
         rgba(20, 21, 7, 0) 100%
       ),
+      /* Center headline soft contrast */
       radial-gradient(
-        90.833% 543px at 48.194% 1132px,
-        rgba(20, 21, 7, 1) 0%,
-        rgba(20, 21, 7, 1) 71%,
-        rgba(20, 21, 7, 0) 100%
-      ),
-      radial-gradient(
-        107.847% 715px at 55.486% -358px,
-        rgba(42, 45, 22, 0.95) 0%,
-        rgba(42, 45, 22, 0.75) 30%,
-        rgba(42, 45, 22, 0) 100%
-      ),
-      radial-gradient(
-        76.389% 900px at 20.833% 1500px,
-        rgba(20, 21, 7, 0.97) 0%,
-        rgba(20, 21, 7, 0.85) 60%,
-        rgba(20, 21, 7, 0) 100%
-      ),
-      radial-gradient(
-        62.5% 560px at 26.389% 1080px,
-        rgba(107, 116, 64, 0.45) 0%,
-        rgba(40, 44, 18, 0.35) 45%,
+        ellipse 50% 35% at 50% 30%,
+        rgba(20, 21, 7, 0.2) 0%,
         rgba(20, 21, 7, 0) 100%
       );
   }
@@ -468,7 +530,7 @@
      kept and .backgroundLayer paints the canvas colour behind it. */
   .backgroundImage {
     left: -15.104%;
-    top: -301.9px;
+    top: 0;
     width: 130.208%;
     height: 1250px;
   }
@@ -637,15 +699,49 @@
 .statCardTrusted {
   background: var(--color-light-sage);
   color: var(--color-ink-black);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.statCardTrusted:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
 }
 
 .statCardDark {
-  background: var(--color-ink-strong);
+  background:
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(176, 241, 14, 0.18) 0%,
+      rgba(157, 221, 57, 0.05) 45%,
+      transparent 72%
+    ),
+    var(--color-ink-strong);
   color: var(--color-light-ivory);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.statCardDark:hover {
+  border-color: rgba(176, 241, 14, 0.25);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .statCardPhoto {
   color: var(--color-light-ivory);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.statCardPhoto:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 .statCardPhotoImage {

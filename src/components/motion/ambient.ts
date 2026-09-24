@@ -3,8 +3,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
  * Initializes continuous ambient micro-motion (breathing glow ellipses,
- * parallax footer wordmark, and subtle card floats) to give the page
- * a living, high-end fintech atmosphere.
+ * zero-gravity floating badges, subtle texture drifts, and parallax scrubs)
+ * to give the page a living, high-end fintech atmosphere.
  */
 export function initAmbientMotion(): () => void {
   if (typeof window === "undefined") return () => {};
@@ -13,7 +13,20 @@ export function initAmbientMotion(): () => void {
   const triggers: ScrollTrigger[] = [];
   const tweens: gsap.core.Tween[] = [];
 
-  // 1. Ambient breathing / floating on Transactions mockup ellipses & balance glow
+  // 1. Hero background glow organic pulse
+  const heroGlow = document.querySelector<HTMLElement>("[class*='backgroundGlow']");
+  if (heroGlow) {
+    const t = gsap.to(heroGlow, {
+      opacity: 0.82,
+      duration: 7.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+    tweens.push(t);
+  }
+
+  // 2. Ambient breathing / floating on Transactions mockup ellipses & balance glow
   const ellipseTop = document.querySelector<HTMLElement>("[class*='mockupEllipseTop']");
   const ellipseBottom = document.querySelector<HTMLElement>("[class*='mockupEllipseBottom']");
   const balanceGlow = document.querySelector<HTMLElement>("[class*='balanceGlow']");
@@ -57,7 +70,79 @@ export function initAmbientMotion(): () => void {
     tweens.push(t);
   }
 
-  // 2. Footer giant decorative "Soniq" wordmark ScrollTrigger parallax scrub
+  // 3. Floating zero-G badges in Transactions mockup
+  const badgeExpense = document.querySelector<HTMLElement>("[class*='badgeExpense']");
+  const badgeIncome = document.querySelector<HTMLElement>("[class*='badgeIncome']");
+
+  if (badgeExpense) {
+    const t = gsap.to(badgeExpense, {
+      y: -6,
+      rotation: -0.8,
+      duration: 4.2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+    tweens.push(t);
+  }
+
+  if (badgeIncome) {
+    const t = gsap.to(badgeIncome, {
+      y: 6,
+      rotation: 0.8,
+      duration: 4.8,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 0.6,
+    });
+    tweens.push(t);
+  }
+
+  // 4. Subtle textural counter-drift inside Balance card
+  const textureLarge = document.querySelector<HTMLElement>("[class*='balanceTextureLarge']");
+  const textureSmall = document.querySelector<HTMLElement>("[class*='balanceTextureSmall']");
+
+  if (textureLarge) {
+    const t = gsap.to(textureLarge, {
+      y: -5,
+      rotation: 1.5,
+      duration: 6.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+    tweens.push(t);
+  }
+
+  if (textureSmall) {
+    const t = gsap.to(textureSmall, {
+      y: 5,
+      rotation: -1.5,
+      duration: 5.8,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 0.7,
+    });
+    tweens.push(t);
+  }
+
+  // 5. Habits quote icon gentle breathing
+  const quoteIcon = document.querySelector<HTMLElement>("[class*='quoteIcon']");
+  if (quoteIcon) {
+    const t = gsap.to(quoteIcon, {
+      y: -3,
+      scale: 1.03,
+      duration: 3.8,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+    tweens.push(t);
+  }
+
+  // 6. Footer giant decorative "Soniq" wordmark ScrollTrigger parallax scrub
   const wordmark = document.querySelector<HTMLElement>("[data-decorative='wordmark']");
   if (wordmark) {
     const footer = wordmark.closest("footer");
@@ -81,7 +166,7 @@ export function initAmbientMotion(): () => void {
     }
   }
 
-  // 3. Subtle parallax on features image
+  // 7. Subtle parallax on features image
   const featuresPhoto = document.querySelector<HTMLElement>("[class*='photoImage']");
   if (featuresPhoto) {
     const featuresSection = document.querySelector<HTMLElement>("#features");
@@ -105,7 +190,7 @@ export function initAmbientMotion(): () => void {
     }
   }
 
-  // 4. Partner Logos continuous infinite looping carousel
+  // 8. Partner Logos continuous infinite looping carousel
   const logoTrack = document.querySelector<HTMLElement>("[data-logo-carousel]");
   if (logoTrack) {
     gsap.set(logoTrack, { xPercent: 0 });
@@ -139,3 +224,4 @@ export function initAmbientMotion(): () => void {
     cleanups.forEach((c) => c());
   };
 }
+
