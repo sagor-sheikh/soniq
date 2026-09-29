@@ -149,15 +149,15 @@ export function initAmbientMotion(): () => void {
     if (footer) {
       const tween = gsap.fromTo(
         wordmark,
-        { y: 0, xPercent: -50, opacity: 0.8 },
+        { yPercent: -60, xPercent: -50, opacity: 0 },
         {
-          y: 40,
+          yPercent: 0,
           xPercent: -50,
           opacity: 1,
           ease: "none",
           scrollTrigger: {
             trigger: footer,
-            start: "top 85%",
+            start: "top 95%",
             end: "bottom bottom",
             scrub: 1.2,
           },

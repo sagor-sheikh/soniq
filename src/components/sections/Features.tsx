@@ -103,6 +103,8 @@ export function Features() {
           />
         </div>
       </div>
+
+      <div className={styles.bottomGradient} aria-hidden="true" />
     </section>
   );
 }

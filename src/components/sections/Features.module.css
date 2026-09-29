@@ -277,3 +277,33 @@
     );
   }
 }
+
+.bottomGradient {
+  display: none;
+}
+
+@media (min-width: 1440px) {
+  .bottomGradient {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 480px;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(20, 21, 7, 0) 0%,
+      rgba(20, 21, 7, 0.04) 15%,
+      rgba(20, 21, 7, 0.15) 28%,
+      rgba(20, 21, 7, 0.36) 42%,
+      rgba(20, 21, 7, 0.62) 55%,
+      rgba(20, 21, 7, 0.82) 68%,
+      rgba(20, 21, 7, 0.94) 80%,
+      var(--color-ink-canvas, #141507) 92%,
+      var(--color-ink-canvas, #141507) 100%
+    );
+  }
+}
+
