@@ -382,22 +382,20 @@
 /* ---- about-soniq panel ----------------------------------------------- */
 
 .panel {
+  position: relative;
   /* Comp 2672:830 starts at y852 on mobile and 2655:715 at y818 on desktop.
      The old 305/203 landed them at y844 and y761; the 57px desktop miss was
      what carried the logo strip and the stat cards out of place. */
   margin-top: clamp(260px, calc(313px + (260 - 313) * (100vw - 393px) / 1047), 313px);
   max-width: 1336px;
   margin-inline: auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  /* No inset on mobile: in 2672:830 the about strip starts flush at the
-     block's top edge (both at y852). The 21/24 inset here was 45px of the
-     section's height excess. */
-  padding-top: clamp(0px, calc(0px + (30 - 0) * (100vw - 393px) / 1047), 30px);
-  padding-bottom: clamp(0px, calc(0px + (52 - 0) * (100vw - 393px) / 1047), 52px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 0;
+  padding-bottom: clamp(24px, calc(24px + (44 - 24) * (100vw - 393px) / 1047), 44px);
+  padding-inline: clamp(16px, calc(16px + (36 - 16) * (100vw - 393px) / 1047), 36px);
   display: flex;
   flex-direction: column;
-  gap: clamp(60px, calc(60px + (82 - 60) * (100vw - 393px) / 1047), 82px);
+  gap: clamp(40px, calc(40px + (60 - 40) * (100vw - 393px) / 1047), 60px);
 }
 
 .eyebrowRow {
@@ -410,9 +408,12 @@
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 12px;
-  row-gap: 24px;
-  padding-block: 24px;
+  row-gap: 20px;
+  padding-block: clamp(16px, calc(16px + (22 - 16) * (100vw - 393px) / 1047), 22px);
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-inline: calc(-1 * clamp(16px, calc(16px + (36 - 16) * (100vw - 393px) / 1047), 36px));
+  padding-inline: clamp(16px, calc(16px + (36 - 16) * (100vw - 393px) / 1047), 36px);
 }
 
 .eyebrowRow > .eyebrowRight {
@@ -433,7 +434,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-block: 0;
+    padding-block: clamp(18px, calc(18px + (24 - 18) * (100vw - 393px) / 1047), 24px);
   }
 
   /* Back to the desktop arrangement: 2655:716 is a single 44-tall row. */
@@ -570,18 +571,27 @@
 }
 
 .logosRow {
-  /* The comp keeps all six marks on ONE row at both widths -- mobile node
-     2672:714 is 393x51 -- and lets the row run past the frame edges under
-     the .logosFade mask. Wrapping instead produced three rows 185px tall on
-     mobile against the comp's 51, which was 134px of the section's total
-     179px height excess on its own. */
   position: relative;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
   overflow: hidden;
+  width: 100%;
+}
+
+.logosTrack {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+.logosGroup {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: clamp(24px, calc(24px + (48 - 24) * (100vw - 393px) / 1047), 48px);
+  padding-right: clamp(24px, calc(24px + (48 - 24) * (100vw - 393px) / 1047), 48px);
 }
 
 .logoCell {
@@ -613,6 +623,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 2;
 }
 
 .featureIntro {
@@ -667,37 +678,53 @@
 .statCardTrusted {
   background: var(--color-light-sage);
   color: var(--color-ink-black);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.statCardTrusted:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
 }
 
 .statCardDark {
-  position: relative;
-  background-color: var(--color-ink-strong);
-  background-image: radial-gradient(
-    ellipse 75% 55% at 95% 0%,
-    rgba(159, 171, 38, 0.28) 0%,
-    rgba(159, 171, 38, 0.20) 25%,
-    rgba(159, 171, 38, 0.10) 45%,
-    rgba(159, 171, 38, 0.02) 65%,
-    transparent 78%
-  );
+  background:
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(176, 241, 14, 0.18) 0%,
+      rgba(157, 221, 57, 0.05) 45%,
+      transparent 72%
+    ),
+    var(--color-ink-strong);
   color: var(--color-light-ivory);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.statCardDark:hover {
+  border-color: rgba(176, 241, 14, 0.25);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .statCardPhoto {
-  position: relative;
   color: var(--color-light-ivory);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
 }
 
-.statCardPhoto .statCardLabelRow,
-.statCardPhoto .statValue {
-  position: relative;
-  z-index: 2;
+.statCardPhoto:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 .statCardPhotoImage {
   object-fit: cover;
-  object-position: center 28%;
-  z-index: 1;
 }
 
 .avatarStack {
@@ -724,10 +751,17 @@
   justify-content: center;
   width: 26px;
   height: 26px;
+  /*
+   * 5, not the comp's 6. Figma's 1px border does not consume the content box,
+   * so 26 with 6px padding leaves it a 14px plus (2655:750). Under CSS
+   * border-box the border does consume it: 26 - 12 - 2 = 12, which rendered
+   * the glyph two pixels small. 5px restores the 14.
+   */
   padding: 5px;
   background: var(--color-ink-canvas);
-  border: none;
-  border-radius: 50%;
+  border: 1px solid #e8ebd6;
+  /* Comp 2655:749 is rounded-[12.5px], not the 12px token, on a 26px box. */
+  border-radius: 12.5px;
 }
 
 .trustedText {
@@ -750,7 +784,6 @@
   line-height: 20px;
   letter-spacing: -0.32px;
   color: rgba(20, 21, 7, 0.6);
-  max-width: clamp(180px, calc(180px + (220 - 180) * (100vw - 393px) / 1047), 220px);
 }
 
 .statCardLabelRow {

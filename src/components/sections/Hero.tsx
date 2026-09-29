@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { SiteHeader } from "@/components/sections/hero/SiteHeader";
-import { HeroVideo } from "@/components/sections/hero/HeroVideo";
 import {
   heroBackgroundPhoto,
   partnerLogos,
@@ -66,13 +65,25 @@ export function Hero() {
           height={1250}
           priority
           sizes="100vw"
+          className={styles.backgroundImage} data-parallax="-60"
+        />
+        {/* Ambient loop generated from this very still (Higgsfield/Grok
+            image-to-video), so its first frame is the comp image. It stays
+            transparent until MotionRoot assigns a src, which it never does
+            for a reduced-motion reader -- they keep the still above. */}
+        <video
           className={styles.backgroundImage}
           data-parallax="-60"
-          style={{ zIndex: 0 }}
+          data-bg-video
+          data-src="/video/hero-loop.mp4"
+          muted
+          loop
+          playsInline
+          preload="none"
+          aria-hidden="true"
+          tabIndex={-1}
         />
-        {/* Ambient background video loop */}
-        <HeroVideo src="/video/hero-loop.mp4" parallax="-60" />
-        <div className={styles.backgroundGlow} style={{ zIndex: 2 }} />
+        <div className={styles.backgroundGlow} />
       </div>
 
       <div className={styles.content}>
@@ -126,16 +137,32 @@ export function Hero() {
               </div>
 
               <div className={styles.logosRow} data-reveal data-reveal-delay="2">
-                {partnerLogos.map((logo) => (
-                  <div key={logo.name} className={styles.logoCell}>
-                    <Image
-                      src={logo.src}
-                      alt={logo.alt}
-                      width={logo.width}
-                      height={logo.height}
-                    />
+                <div className={styles.logosTrack} data-logo-carousel>
+                  <div className={styles.logosGroup}>
+                    {partnerLogos.concat(partnerLogos).map((logo, idx) => (
+                      <div key={`${logo.name}-a-${idx}`} className={styles.logoCell}>
+                        <Image
+                          src={logo.src}
+                          alt={logo.alt}
+                          width={logo.width}
+                          height={logo.height}
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <div className={styles.logosGroup} aria-hidden="true">
+                    {partnerLogos.concat(partnerLogos).map((logo, idx) => (
+                      <div key={`${logo.name}-b-${idx}`} className={styles.logoCell}>
+                        <Image
+                          src={logo.src}
+                          alt={logo.alt}
+                          width={logo.width}
+                          height={logo.height}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div
                   className={styles.logosFade}
                   aria-hidden
