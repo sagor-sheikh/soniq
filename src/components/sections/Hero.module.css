@@ -670,16 +670,34 @@
 }
 
 .statCardDark {
-  background: var(--color-ink-strong);
+  position: relative;
+  background-color: var(--color-ink-strong);
+  background-image: radial-gradient(
+    ellipse 75% 55% at 95% 0%,
+    rgba(159, 171, 38, 0.28) 0%,
+    rgba(159, 171, 38, 0.20) 25%,
+    rgba(159, 171, 38, 0.10) 45%,
+    rgba(159, 171, 38, 0.02) 65%,
+    transparent 78%
+  );
   color: var(--color-light-ivory);
 }
 
 .statCardPhoto {
+  position: relative;
   color: var(--color-light-ivory);
+}
+
+.statCardPhoto .statCardLabelRow,
+.statCardPhoto .statValue {
+  position: relative;
+  z-index: 2;
 }
 
 .statCardPhotoImage {
   object-fit: cover;
+  object-position: center 28%;
+  z-index: 1;
 }
 
 .avatarStack {
@@ -706,17 +724,10 @@
   justify-content: center;
   width: 26px;
   height: 26px;
-  /*
-   * 5, not the comp's 6. Figma's 1px border does not consume the content box,
-   * so 26 with 6px padding leaves it a 14px plus (2655:750). Under CSS
-   * border-box the border does consume it: 26 - 12 - 2 = 12, which rendered
-   * the glyph two pixels small. 5px restores the 14.
-   */
   padding: 5px;
   background: var(--color-ink-canvas);
-  border: 1px solid #e8ebd6;
-  /* Comp 2655:749 is rounded-[12.5px], not the 12px token, on a 26px box. */
-  border-radius: 12.5px;
+  border: none;
+  border-radius: 50%;
 }
 
 .trustedText {
@@ -739,6 +750,7 @@
   line-height: 20px;
   letter-spacing: -0.32px;
   color: rgba(20, 21, 7, 0.6);
+  max-width: clamp(180px, calc(180px + (220 - 180) * (100vw - 393px) / 1047), 220px);
 }
 
 .statCardLabelRow {
