@@ -14,18 +14,16 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: var(--color-ink-canvas);
-  padding-top: clamp(91px, calc(91px + (230 - 91) * (100vw - 393px) / 1047), 230px);
-  padding-bottom: clamp(0px, calc(0px + (15 - 0) * (100vw - 393px) / 1047), 15px);
+  background: #0d1208;
+  padding-top: clamp(80px, calc(80px + (190 - 80) * (100vw - 393px) / 1047), 190px);
+  padding-bottom: clamp(24px, calc(24px + (36 - 24) * (100vw - 393px) / 1047), 36px);
 }
 
-/* Decorative oversized wordmark bleeding off the top edge. Its font-size is
-   33.05% of the comp width at both breakpoints (441.482/1336, 129.867/393)
-   and its tracking is -0.05em at both. */
+/* Decorative oversized wordmark bleeding across the top edge. */
 .wordmark {
   position: absolute;
   z-index: 0;
-  top: clamp(10px, calc(10px + (24 - 10) * (100vw - 393px) / 1047), 24px);
+  top: clamp(-185px, calc(-62px + (-185 + 62) * (100vw - 393px) / 1047), -62px);
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -33,14 +31,17 @@
   padding-inline: clamp(12px, calc(12px + (52 - 12) * (100vw - 393px) / 1047), 52px);
   margin: 0;
   font-family: var(--font-display), sans-serif;
-  font-weight: 400;
-  font-size: clamp(118px, calc(118px + (375 - 118) * (100vw - 393px) / 1047), 375px);
-  line-height: 1;
-  letter-spacing: -0.05em;
+  font-weight: 600;
+  font-size: clamp(130px, calc(130px + (440 - 130) * (100vw - 393px) / 1047), 440px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: var(--color-ink-strong);
+  text-align: center;
+  white-space: nowrap;
+  color: #25251d;
   pointer-events: none;
   user-select: none;
+  will-change: transform;
 }
 
 .content {

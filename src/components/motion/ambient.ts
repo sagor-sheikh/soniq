@@ -142,23 +142,24 @@ export function initAmbientMotion(): () => void {
     tweens.push(t);
   }
 
-  // 6. Footer giant decorative "Soniq" wordmark ScrollTrigger parallax scrub
+  // 6. Giant decorative "SONIQ" wordmark ScrollTrigger up-to-down vertical scroll animation
   const wordmark = document.querySelector<HTMLElement>("[data-decorative='wordmark']");
   if (wordmark) {
     const footer = wordmark.closest("footer");
     if (footer) {
       const tween = gsap.fromTo(
         wordmark,
-        { yPercent: 0, opacity: 0.75 },
+        { y: 0, xPercent: -50, opacity: 0.8 },
         {
-          yPercent: 6,
+          y: 40,
+          xPercent: -50,
           opacity: 1,
           ease: "none",
           scrollTrigger: {
             trigger: footer,
-            start: "top bottom",
+            start: "top 85%",
             end: "bottom bottom",
-            scrub: 0.6,
+            scrub: 1.2,
           },
         }
       );

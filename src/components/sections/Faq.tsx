@@ -20,31 +20,31 @@ const SUBHEAD =
 const FAQ_ITEMS: AccordionItemData[] = [
   {
     id: "faq-0",
-    question: "What can I manage with Soniq?",
+    question: "What Can I Manage With Soniq?",
     answer:
       "You can track income and expenses, manage budgets, monitor payments, review financial insights, and set personalized savings goals.",
   },
   {
     id: "faq-1",
-    question: "Is my financial information secure?",
+    question: "Is My Financial Information Secure?",
     answer:
       "Yes, Soniq uses bank-grade 256-bit encryption and strict biometric authentication to keep your accounts, payments, and personal data fully protected at all times.",
   },
   {
     id: "faq-2",
-    question: "Can Soniq automatically categorize transactions?",
+    question: "Can Soniq Automatically Categorize Transactions?",
     answer:
       "Yes, our smart AI engine automatically sorts and tags every purchase into clear categories like Entertainment, Groceries, and Utilities in real time.",
   },
   {
     id: "faq-3",
-    question: "Can I use Soniq without financial experience?",
+    question: "Can I Use Soniq Without Financial Experience?",
     answer:
       "Absolutely. Soniq is designed for everyone with an intuitive dashboard, plain-English summaries, and automated budgeting tools that guide you step-by-step.",
   },
   {
     id: "faq-4",
-    question: "Can I change or cancel my plan?",
+    question: "Can I Change Or Cancel My Plan?",
     answer:
       "Yes, you can upgrade, downgrade, or cancel your plan at any time directly from your account settings with no hidden fees or cancellation penalties.",
   },

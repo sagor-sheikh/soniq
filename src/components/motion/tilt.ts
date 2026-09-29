@@ -17,8 +17,6 @@ export function initCardTilt(): () => void {
 
   // Select key interactive cards across sections
   const cardSelectors = [
-    // Hero stat cards
-    "[class*='statCard']",
     // Transactions cards
     "[class*='balanceCard']",
     "[class*='planCard']",
@@ -56,7 +54,7 @@ export function initCardTilt(): () => void {
 
     card.style.setProperty(
       "--spotlight-color",
-      isDark ? "rgba(176, 241, 14, 0.08)" : "rgba(255, 255, 255, 0.38)"
+      isDark ? "rgba(176, 241, 14, 0.1)" : "rgba(255, 255, 255, 0.25)"
     );
 
     const xRotTo = gsap.quickTo(card, "rotationX", {

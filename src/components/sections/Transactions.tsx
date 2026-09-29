@@ -63,14 +63,17 @@ export function Transactions() {
                 <video
                   className={styles.mockupPhotoVideo}
                   data-bg-video
-                  data-src="/video/tx-loop.mp4"
+                  src="/video/tx-loop.mp4"
+                  autoPlay
                   muted
                   loop
                   playsInline
-                  preload="none"
+                  preload="auto"
                   aria-hidden="true"
                   tabIndex={-1}
-                />
+                >
+                  <source src="/video/tx-loop.mp4" type="video/mp4" />
+                </video>
                 <Image
                   src={mockupEllipseTopSrc}
                   alt=""

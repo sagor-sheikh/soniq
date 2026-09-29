@@ -55,10 +55,9 @@ const LEGAL_LINKS = ["Privacy Policy", "Team of Services", "Licences"];
 export function Footer() {
   return (
     <footer id="footer" data-section="footer" className={styles.footer}>
-      {/* Oversized decorative wordmark (2655:1161 / 2677:1319). The brand
-          name is already announced by the header and the logo row below. */}
+      {/* Oversized decorative wordmark */}
       <p className={styles.wordmark} aria-hidden="true" data-decorative="wordmark">
-        Soniq
+        SONIQ
       </p>
 
       <div className={styles.content}>

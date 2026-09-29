@@ -11,8 +11,7 @@ export default function Home() {
     <>
       <a
         href="#main"
-        className="ds-button sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 bg-lime-bright text-ink-canvas px-5 py-2.5 text-sm"
-      >
+        className="ds-button sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 bg-lime-bright text-ink-canvas px-5 py-2.5 text-sm">
         Skip to content
       </a>
       <main id="main">
@@ -22,8 +21,8 @@ export default function Home() {
         <Habits />
         <Pricing />
         <Faq />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

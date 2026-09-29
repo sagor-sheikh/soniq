@@ -391,6 +391,33 @@ export function MotionRoot() {
     });
 
     // ---- 4. Ambient Background Video Playback -------------------------------
+    videoTargets.forEach((video) => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+
+      const markReady = () => {
+        video.dataset.ready = "true";
+        if (video.paused) {
+          void video.play().catch(() => {});
+        }
+      };
+
+      if (video.readyState >= 2) {
+        markReady();
+      } else {
+        video.addEventListener("loadeddata", markReady, { once: true });
+        video.addEventListener("canplay", markReady, { once: true });
+        video.addEventListener("playing", markReady, { once: true });
+      }
+
+      if (!video.getAttribute("src") && video.dataset.src) {
+        video.setAttribute("src", video.dataset.src);
+      }
+
+      void video.play().catch(() => {});
+    });
+
     const videoObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -400,13 +427,6 @@ export function MotionRoot() {
             continue;
           }
           if (!video.getAttribute("src") && video.dataset.src) {
-            video.addEventListener(
-              "loadeddata",
-              () => {
-                video.dataset.ready = "true";
-              },
-              { once: true },
-            );
             video.setAttribute("src", video.dataset.src);
           }
           void video.play().catch(() => {});
@@ -415,6 +435,18 @@ export function MotionRoot() {
       { rootMargin: "200px 0px" },
     );
     for (const video of videoTargets) videoObserver.observe(video);
+
+    // Guaranteed unlock: if strict browser policies pause autoplay on load,
+    // immediately trigger playback on the very first user interaction
+    const unlockVideos = () => {
+      videoTargets.forEach((v) => {
+        if (v.paused) void v.play().catch(() => {});
+      });
+    };
+    window.addEventListener("pointerdown", unlockVideos, { passive: true, once: true });
+    window.addEventListener("touchstart", unlockVideos, { passive: true, once: true });
+    window.addEventListener("scroll", unlockVideos, { passive: true, once: true });
+    window.addEventListener("keydown", unlockVideos, { passive: true, once: true });
 
     // ---- 5. Completeness Guard for Stranded Elements ------------------------
     const releaseStranded = () => {
@@ -465,6 +497,10 @@ export function MotionRoot() {
       window.removeEventListener("scroll", releaseStranded);
       window.removeEventListener("resize", releaseStranded);
       window.removeEventListener("load", syncRefresh);
+      window.removeEventListener("pointerdown", unlockVideos);
+      window.removeEventListener("touchstart", unlockVideos);
+      window.removeEventListener("scroll", unlockVideos);
+      window.removeEventListener("keydown", unlockVideos);
       cleanupTilt();
       cleanupMagnetic();
       cleanupAmbient();

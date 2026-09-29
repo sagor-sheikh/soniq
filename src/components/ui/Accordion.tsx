@@ -198,7 +198,6 @@ function AccordionItemComponent({
           </span>
         </button>
       </h3>
-
       <div
         ref={wrapperRef}
         id={panelId}
